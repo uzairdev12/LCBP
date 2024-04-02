@@ -91,17 +91,53 @@ module.exports.signup = async (req, res, next) => {
             });
             res.status(201).json({ success: true, user });
           } else {
-            const user = await userModel.create({
-              username,
-              password,
-              phone,
-              name,
-              reffer,
-              chaintwo: chaintwouser.username,
-              chainthree: chainthreeuser.username,
-              email,
+            const chainfouruser = await userModel.findOne({
+              username: chainthreeuser.reffer,
             });
-            res.status(201).json({ success: true, user });
+            if (!chainfouruser) {
+              const user = await userModel.create({
+                username,
+                password,
+                phone,
+                name,
+                reffer,
+                chaintwo: chaintwouser.username,
+                chainthree: chainthreeuser.username,
+                email,
+              });
+              res.status(201).json({ success: true, user });
+            } else {
+              const chainfiveuser = await userModel.findOne({
+                username: chainfouruser.reffer,
+              });
+              if (!chainfiveuser) {
+                const user = await userModel.create({
+                  username,
+                  password,
+                  phone,
+                  name,
+                  reffer,
+                  chaintwo: chaintwouser.username,
+                  chainthree: chainthreeuser.username,
+                  chainfour: chainfouruser.username,
+                  email,
+                });
+                res.status(201).json({ success: true, user });
+              } else {
+                const user = await userModel.create({
+                  username,
+                  password,
+                  phone,
+                  name,
+                  reffer,
+                  chaintwo: chaintwouser.username,
+                  chainthree: chainthreeuser.username,
+                  chainfour: chainfouruser.username,
+                  chainfive: chainfiveuser.username,
+                  email,
+                });
+              }
+            }
           }
         }
       }
@@ -135,29 +171,72 @@ module.exports.getDetails = async (req, res, next) => {
     res.status(400).json({ success: false, message: e.message });
   }
 };
+// module.exports.getReffersDetais = async (req, res, next) => {
+//   try {
+//     let { username } = req.body;
+
+//     const refferUsers = await userModel.find(
+//       { reffer: username },
+//       { name: 1, username: 1 }
+//     );
+//     const chaintwoUsers = await userModel.find(
+//       { chaintwo: username },
+//       { name: 1, username: 1 }
+//     );
+//     const chainthreeUsers = await userModel.find(
+//       { chainthree: username },
+//       { name: 1, username: 1 }
+//     );
+//     const chainfourUsers = await userModel.find(
+//       { chainfour: username },
+//       { name: 1, username: 1 }
+//     );
+//     const chainfiveUsers = await userModel.find(
+//       { chainfive: username },
+//       { name: 1, username: 1 }
+//     );
+
+//     res.status(200).json({
+//       success: true,
+//       reffers: refferUsers,
+//       chaintwo: chaintwoUsers,
+//       chainthree: chainthreeUsers,
+//       chainfour: chainfourUsers,
+//       chainfive: chainfiveUsers,
+//     });
+//   } catch (e) {
+//     res.status(400).json({ success: false, message: e.message });
+//   }
+// };
+
 module.exports.getReffers = async (req, res, next) => {
   try {
     let { username } = req.body;
+    if (!username) {
+      throw new Error("Username not found");
+    }
 
-    const refferUsers = await userModel.find(
-      { reffer: username },
-      { name: 1, username: 1 }
-    );
-    const chaintwoUsers = await userModel.find(
-      { chaintwo: username },
-      { name: 1, username: 1 }
-    );
-
-    const chainthreeUsers = await userModel.find(
-      { chainthree: username },
-      { name: 1, username: 1 }
-    );
+    const refferCount = await userModel.countDocuments({ reffer: username });
+    const chaintwoCount = await userModel.countDocuments({
+      chaintwo: username,
+    });
+    const chainthreeCount = await userModel.countDocuments({
+      chainthree: username,
+    });
+    const chainfourCount = await userModel.countDocuments({
+      chainfour: username,
+    });
+    const chainfiveCount = await userModel.countDocuments({
+      chainfive: username,
+    });
 
     res.status(200).json({
       success: true,
-      reffers: refferUsers,
-      chaintwo: chaintwoUsers,
-      chainthree: chainthreeUsers,
+      referrs: refferCount,
+      chaintwo: chaintwoCount,
+      chainthree: chainthreeCount,
+      chainfour: chainfourCount,
+      chainfive: chainfiveCount,
     });
   } catch (e) {
     res.status(400).json({ success: false, message: e.message });

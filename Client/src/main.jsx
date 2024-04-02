@@ -3,9 +3,9 @@ import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import Login from "./pages/Login";
-import Signup from "./pages/Signup";
 import HomePage from "./pages/HomePage";
-import Dashboard from "./pages/DashboardPage";
+import Profile from "./pages/Profile";
+import Referrals from "./pages/Referrals";
 
 const router = createBrowserRouter([
   {
@@ -28,13 +28,12 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/signup",
-
-        element: <Signup />,
+        path: "/profile",
+        element: <Profile />,
       },
       {
-        path: "/dashboard",
-        element: <Dashboard />,
+        path: "/referrals",
+        element: <Referrals />,
       },
     ],
   },

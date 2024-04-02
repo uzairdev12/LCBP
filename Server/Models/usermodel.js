@@ -36,6 +36,16 @@ const userSchema = new mongoose.Schema({
     type: "string",
     default: null,
   },
+
+  chainfour: {
+    type: "string",
+    default: null,
+  },
+
+  chainfive: {
+    type: "string",
+    default: null,
+  },
 });
 
 module.exports = mongoose.model("users", userSchema);

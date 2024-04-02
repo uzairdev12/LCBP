@@ -3,11 +3,13 @@ import "./login.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { getBottomNavigationUtilityClass } from "@mui/material";
 
 const Login = () => {
   let [active, setActive] = useState(true);
   let [active2, setActive2] = useState(false);
   const userID = localStorage.getItem("AUTHUSERUNIQUEID");
+  const apiUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
 
   let [data, setData] = useState({
@@ -17,6 +19,7 @@ const Login = () => {
     number: "",
     password: "",
     confirmPassword: "",
+    reffer: getBottomNavigationUtilityClass,
   });
 
   let { id } = useParams();
@@ -30,7 +33,7 @@ const Login = () => {
   const login = async () => {
     try {
       if (data.email && data.password) {
-        let res = await fetch("http://localhost:5000/api/auth/login", {
+        let res = await fetch(`${apiUrl}/api/auth/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -50,7 +53,8 @@ const Login = () => {
         toast.success("Logged in successfully");
         console.log(result);
         localStorage.setItem("AUTHUSERUNIQUEID", result.user._id);
-        navigate("/dashboard");
+        localStorage.setItem("LCBPUSERNAME", result.user.username);
+        navigate("/profile");
       } else {
         toast.error("Please fill all the fields");
       }
@@ -79,7 +83,8 @@ const Login = () => {
             toast.error("Username can only contain letters and numbers");
             return;
           }
-          let res = await fetch("http://localhost:5000/api/auth/signup", {
+
+          let res = await fetch(`${apiUrl}/api/auth/signup`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -90,7 +95,7 @@ const Login = () => {
               username: `@${data.username}`,
               phone: data.number,
               password: data.password,
-              reffer: id,
+              reffer: data.reffer,
             }),
           });
 
@@ -103,7 +108,8 @@ const Login = () => {
 
           toast.success("Account created successfully");
           localStorage.setItem("AUTHUSERUNIQUEID", result.user._id);
-          navigate("/dashboard");
+          localStorage.setItem("LCBPUSERNAME", result.user.username);
+          navigate("/profile");
         } else {
           toast.error("Passwords do not match");
         }
@@ -167,6 +173,12 @@ const Login = () => {
                 setData({ ...data, confirmPassword: e.target.value })
               }
             />
+            <input
+              type="text"
+              placeholder="Reffer code"
+              value={data.reffer}
+              onChange={(e) => setData({ ...data, reffer: e.target.value })}
+            />
             <button
               onClick={(e) => {
                 e.preventDefault();
@@ -229,6 +241,12 @@ const Login = () => {
                   onChange={(e) =>
                     setData({ ...data, confirmPassword: e.target.value })
                   }
+                />
+                <input
+                  type="text"
+                  placeholder="Reffer code"
+                  value={data.reffer}
+                  onChange={(e) => setData({ ...data, reffer: e.target.value })}
                 />{" "}
               </>
             ) : (

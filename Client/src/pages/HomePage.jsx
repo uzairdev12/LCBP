@@ -71,10 +71,10 @@ function HomePage() {
                 <li
                   className="nav-item nav-custom-link btn btn-demo-small"
                   style={{ padding: "0px 20px; margin-left: 30px" }}
-                  onClick={() => navigate("/dashboard")}
+                  onClick={() => navigate("/profile")}
                 >
                   <a className="nav-link" style={{ fontSize: "17px" }}>
-                    Dashboard{" "}
+                    Profile{" "}
                     <i className="icon ion-ios-arrow-forward icon-mobile"></i>
                   </a>
                 </li>
@@ -115,10 +115,10 @@ function HomePage() {
               <p>Learn and Earn online with LCBP's easy-to-use platform.</p>
               {userid ? (
                 <a
-                  onClick={() => navigate("dashboard")}
+                  onClick={() => navigate("profile")}
                   className="btn btn-regular"
                 >
-                  Dashboard
+                  Profile
                 </a>
               ) : (
                 <a
@@ -151,9 +151,9 @@ function HomePage() {
                 {userid ? (
                   <a
                     className="btn btn-regular"
-                    onClick={() => navigate("/dashboard")}
+                    onClick={() => navigate("/profile")}
                   >
-                    Dashboard{" "}
+                    Profile{" "}
                   </a>
                 ) : (
                   <a
@@ -180,7 +180,18 @@ function HomePage() {
           <h2>Increase your online earning with LCBP</h2>
           <div className="title-block">
             <p>Buy a plan to start your online earning journey with LCBP.</p>
-            <a className="btn btn-regular">Get Started</a>
+            {userid ? (
+              <a
+                className="btn btn-regular"
+                onClick={() => {
+                  navigate("/profile");
+                }}
+              >
+                Profile
+              </a>
+            ) : (
+              <a className="btn btn-regular">Get Started</a>
+            )}
           </div>
         </div>
       </section>
