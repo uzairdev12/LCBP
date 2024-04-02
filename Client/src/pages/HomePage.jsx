@@ -172,7 +172,7 @@ function HomePage() {
         </div>
       </section>
       <div className="demopage">
-        <h1>LC Professionals PAGE</h1>
+        <h1>LC-Freelancers PAGE</h1>
       </div>
 
       <section id="call-to-action">
