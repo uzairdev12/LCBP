@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 function HomePage() {
   const navigate = useNavigate();
+  const userid = localStorage.getItem("AUTHUSERUNIQUEID");
+
   return (
     <div className="home">
       <nav
@@ -65,16 +67,29 @@ function HomePage() {
                   <i className="icon ion-ios-arrow-forward icon-mobile"></i>
                 </a>
               </li>
-              <li
-                className="nav-item nav-custom-link btn btn-demo-small"
-                style={{ padding: "0px 20px; margin-left: 30px" }}
-                onClick={() => navigate("/login")}
-              >
-                <a className="nav-link" style={{ fontSize: "17px" }}>
-                  Login{" "}
-                  <i className="icon ion-ios-arrow-forward icon-mobile"></i>
-                </a>
-              </li>
+              {userid ? (
+                <li
+                  className="nav-item nav-custom-link btn btn-demo-small"
+                  style={{ padding: "0px 20px; margin-left: 30px" }}
+                  onClick={() => navigate("/dashboard")}
+                >
+                  <a className="nav-link" style={{ fontSize: "17px" }}>
+                    Dashboard{" "}
+                    <i className="icon ion-ios-arrow-forward icon-mobile"></i>
+                  </a>
+                </li>
+              ) : (
+                <li
+                  className="nav-item nav-custom-link btn btn-demo-small"
+                  style={{ padding: "0px 20px; margin-left: 30px" }}
+                  onClick={() => navigate("/login")}
+                >
+                  <a className="nav-link" style={{ fontSize: "17px" }}>
+                    Login{" "}
+                    <i className="icon ion-ios-arrow-forward icon-mobile"></i>
+                  </a>
+                </li>
+              )}
             </ul>
           </div>
         </div>
@@ -98,9 +113,21 @@ function HomePage() {
                 LCB Learn and Earn <b> With LCBP's Digital contributions </b>
               </h1>
               <p>Learn and Earn online with LCBP's easy-to-use platform.</p>
-              <a onClick={() => navigate("/login")} className="btn btn-regular">
-                Login
-              </a>
+              {userid ? (
+                <a
+                  onClick={() => navigate("dashboard")}
+                  className="btn btn-regular"
+                >
+                  Dashboard
+                </a>
+              ) : (
+                <a
+                  onClick={() => navigate("/login")}
+                  className="btn btn-regular"
+                >
+                  Login
+                </a>
+              )}
             </div>
           </div>
         </div>
@@ -121,12 +148,21 @@ function HomePage() {
                   educational programs to equip newcomers for success. It's
                   online income, simplified.
                 </p>
-                <a
-                  className="btn btn-regular"
-                  onClick={() => navigate("/login")}
-                >
-                  Login{" "}
-                </a>
+                {userid ? (
+                  <a
+                    className="btn btn-regular"
+                    onClick={() => navigate("/dashboard")}
+                  >
+                    Dashboard{" "}
+                  </a>
+                ) : (
+                  <a
+                    className="btn btn-regular"
+                    onClick={() => navigate("/login")}
+                  >
+                    Login{" "}
+                  </a>
+                )}
               </div>
             </div>
             <div>
@@ -152,16 +188,16 @@ function HomePage() {
         <div className="container">
           <div className="row">
             <div className="col-md-3">
-              <h5>Buy plans</h5>
+              <h5>Company</h5>
               <ul>
                 <li>
-                  <a>Basic Plan</a>
+                  <a>Terms of services</a>
                 </li>
                 <li>
-                  <a>Standard Plan</a>
+                  <a>Privacy policy</a>
                 </li>
                 <li>
-                  <a>Premium Plan</a>
+                  <a>Contact</a>
                 </li>
               </ul>
             </div>

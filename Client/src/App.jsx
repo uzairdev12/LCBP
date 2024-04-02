@@ -1,10 +1,12 @@
 import React from "react";
-import Home from "./pages/HomePage";
+import { Outlet } from "react-router-dom";
+import { Toaster } from "sonner";
 
 const App = () => {
   return (
     <>
-      <Home />
+      <Toaster richColors position="bottom-left" closeButton />
+      <Outlet />
     </>
   );
 };

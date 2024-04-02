@@ -5,13 +5,7 @@ const authRoute = require("./Routes/authroute");
 require("dotenv").config();
 
 const app = express();
-
-app.use(
-  cors({
-    credentials: true,
-    origin: "http://localhost:5173",
-  })
-);
+app.use(cors());
 
 app.use(express.json());
 
@@ -24,8 +18,8 @@ mongoose
     console.log("Database connection error: " + err);
   });
 
-app.use("/auth", authRoute);
+app.use("/api/auth", authRoute);
 
-server.listen(5000, () => {
+app.listen(5000, () => {
   console.log("Server is running on port 5000");
 });
