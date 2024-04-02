@@ -20,7 +20,9 @@ module.exports.login = async (req, res, next) => {
 
 module.exports.signup = async (req, res, next) => {
   try {
-    const { name, username, email, phone, password, reffer } = req.body;
+    const { name, username, email, phone, password, reffer, balance } =
+      req.body;
+    console.log(balance);
 
     if (!name || !email || !phone || !password) {
       return res.status(400).json({

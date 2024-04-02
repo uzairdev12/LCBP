@@ -8,95 +8,19 @@ import PersonIcon from "@mui/icons-material/Person";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import SchoolIcon from "@mui/icons-material/School";
+import { TailSpin } from "react-loader-spinner";
+import { toast } from "sonner";
 
 const Profile = () => {
   const navigate = useNavigate();
 
-  const apiUrl = import.meta.env.VITE_API_URL;
-  const userid = localStorage.getItem("AUTHUSERUNIQUEID");
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  // const apiUrl = import.meta.env.VITE_API_URL;
+  // const userid = localStorage.getItem("AUTHUSERUNIQUEID");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (!userid) {
-          navigate("/login");
-        } else {
-          const res = await fetch(`${apiUrl}/api/auth/details`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              userID: userid,
-            }),
-          });
-
-          const result = await res.json();
-          if (!res.ok || result.success === false) {
-            toast.error(result.message);
-            return;
-          } else {
-            setName(result.user.name);
-            setUsername(result.user.username);
-            setEmail(result.user.email);
-            setPhone(result.user.phone);
-            localStorage.setItem(
-              "refferLink",
-              `${apiUrl}/login/${result.user.username}`
-            );
-          }
-        }
-      } catch (e) {
-        toast.error(e.message);
-      }
-    };
-
-    fetchData();
-  }, [userid]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (!username) {
-          return;
-        } else {
-          const res = await fetch("http://localhost:5000/api/auth/getReffers", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              username,
-            }),
-          });
-
-          const result = await res.json();
-          if (!res.ok || result.success === false) {
-            toast.error(result.message);
-            return;
-          } else {
-            setReffers((prev) =>
-              result.reffers ? [...prev, ...result.reffers] : prev
-            );
-            setChaintwo((prev) =>
-              result.chaintwo ? [...prev, ...result.chaintwo] : prev
-            );
-            setChainthree((prev) =>
-              result.chainthree ? [...prev, ...result.chainthree] : prev
-            );
-          }
-        }
-      } catch (e) {
-        toast.error(e.message);
-      }
-    };
-
-    fetchData();
-  }, [username]);
+  const name = localStorage.getItem("LCBPNAME");
+  const username = localStorage.getItem("LCBPUSERNAME");
+  const email = localStorage.getItem("LCBPEMAIL");
+  const phone = localStorage.getItem("LCBPPHONE");
 
   return (
     <div className="dahboardPage">
@@ -140,7 +64,12 @@ const Profile = () => {
           <MonetizationOnIcon />
           <h1>Professional Earning</h1>
         </div>
-        <div className="profileoption">
+        <div
+          className="profileoption"
+          onClick={() => {
+            window.open("https://lcbp-community.vercel.app", "_blank");
+          }}
+        >
           <SchoolIcon />
           <h1>Learn Skills</h1>
         </div>

@@ -3,7 +3,7 @@ import "./login.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { getBottomNavigationUtilityClass } from "@mui/material";
+import { TailSpin } from "react-loader-spinner";
 
 const Login = () => {
   let [active, setActive] = useState(true);
@@ -11,6 +11,7 @@ const Login = () => {
   const userID = localStorage.getItem("AUTHUSERUNIQUEID");
   const apiUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   let [data, setData] = useState({
     name: "",
@@ -19,7 +20,8 @@ const Login = () => {
     number: "",
     password: "",
     confirmPassword: "",
-    reffer: getBottomNavigationUtilityClass,
+    reffer: "@",
+    balance: "",
   });
 
   let { id } = useParams();
@@ -32,6 +34,7 @@ const Login = () => {
 
   const login = async () => {
     try {
+      setLoading(true);
       if (data.email && data.password) {
         let res = await fetch(`${apiUrl}/api/auth/login`, {
           method: "POST",
@@ -48,18 +51,24 @@ const Login = () => {
 
         if (!res.ok || res.success === false) {
           toast.error(result.message);
+          setLoading(false);
           return;
         }
         toast.success("Logged in successfully");
-        console.log(result);
         localStorage.setItem("AUTHUSERUNIQUEID", result.user._id);
         localStorage.setItem("LCBPUSERNAME", result.user.username);
+        localStorage.setItem("LCBPNAME", result.user.name);
+        localStorage.setItem("LCBPPHONE", result.user.phone);
+        localStorage.setItem("LCBPEMAIL", result.user.email);
         navigate("/profile");
+        setLoading(false);
       } else {
         toast.error("Please fill all the fields");
+        setLoading(false);
       }
     } catch (e) {
       toast.error(e.message);
+      setLoading(false);
     }
   };
   function isValidUsername(username) {
@@ -76,13 +85,16 @@ const Login = () => {
         data.username &&
         data.number &&
         data.password &&
-        data.confirmPassword
+        data.confirmPassword &&
+        data.balance &&
+        data.reffer
       ) {
         if (data.password === data.confirmPassword) {
           if (!isValidUsername(data.username)) {
             toast.error("Username can only contain letters and numbers");
             return;
           }
+          setLoading(true);
 
           let res = await fetch(`${apiUrl}/api/auth/signup`, {
             method: "POST",
@@ -96,6 +108,7 @@ const Login = () => {
               phone: data.number,
               password: data.password,
               reffer: data.reffer,
+              balance: data.balance,
             }),
           });
 
@@ -103,21 +116,29 @@ const Login = () => {
 
           if (!res.ok || res.success === false) {
             toast.error(result.message);
+            setLoading(false);
             return;
           }
 
           toast.success("Account created successfully");
           localStorage.setItem("AUTHUSERUNIQUEID", result.user._id);
           localStorage.setItem("LCBPUSERNAME", result.user.username);
+          localStorage.setItem("LCBPNAME", result.user.name);
+          localStorage.setItem("LCBPPHONE", result.user.phone);
+          localStorage.setItem("LCBPEMAIL", result.user.email);
           navigate("/profile");
+          setLoading(false);
         } else {
           toast.error("Passwords do not match");
+          setLoading(false);
         }
       } else {
         toast.error("Please fill all the fields");
+        setLoading(false);
       }
     } catch (e) {
       toast.error(e.message);
+      setLoading(false);
     }
   };
   return (
@@ -155,6 +176,7 @@ const Login = () => {
 
             <input
               type="number"
+              className="inputNumber"
               placeholder="Phone Number"
               value={data.number}
               onChange={(e) => setData({ ...data, number: e.target.value })}
@@ -179,13 +201,33 @@ const Login = () => {
               value={data.reffer}
               onChange={(e) => setData({ ...data, reffer: e.target.value })}
             />
+            <input
+              type="number"
+              className="inputNumber"
+              placeholder="Balance"
+              value={data.balance}
+              onChange={(e) => setData({ ...data, balance: e.target.value })}
+            />
             <button
               onClick={(e) => {
                 e.preventDefault();
                 signup();
               }}
             >
-              Sign Up
+              {loading ? (
+                <TailSpin
+                  visible={true}
+                  height="20"
+                  width="20"
+                  color="#ffff"
+                  ariaLabel="tail-spin-loading"
+                  radius="1"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                />
+              ) : (
+                "Signup"
+              )}
             </button>
           </form>
         </div>
@@ -223,6 +265,7 @@ const Login = () => {
                 <input
                   type="number"
                   placeholder="Phone Number"
+                  className="inputNumber"
                   value={data.number}
                   onChange={(e) => setData({ ...data, number: e.target.value })}
                 />
@@ -247,6 +290,15 @@ const Login = () => {
                   placeholder="Reffer code"
                   value={data.reffer}
                   onChange={(e) => setData({ ...data, reffer: e.target.value })}
+                />
+                <input
+                  type="number"
+                  className="inputNumber"
+                  placeholder="Balance"
+                  value={data.balance}
+                  onChange={(e) =>
+                    setData({ ...data, balance: e.target.value })
+                  }
                 />{" "}
               </>
             ) : (
@@ -276,7 +328,22 @@ const Login = () => {
                 }
               }}
             >
-              {active2 ? "Sign Up" : "Log In"}
+              {loading ? (
+                <TailSpin
+                  visible={true}
+                  height="20"
+                  width="20"
+                  color="#ffff"
+                  ariaLabel="tail-spin-loading"
+                  radius="1"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                />
+              ) : active2 ? (
+                "Sign Up"
+              ) : (
+                "Log In"
+              )}
             </button>
             {active2 ? (
               <p className="ratherText">

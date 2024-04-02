@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import "./referrals.css";
+import { TailSpin } from "react-loader-spinner";
 
 const Referrals = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const Referrals = () => {
   const [chainThree, setChainThree] = React.useState(0);
   const [chainFour, setChainFour] = React.useState(0);
   const [chainFive, setChainFive] = React.useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,6 +22,7 @@ const Referrals = () => {
         if (!username) {
           navigate("/login");
         } else {
+          setLoading(true);
           const res = await fetch(`${apiUrl}/api/auth/getReffers`, {
             method: "POST",
             headers: {
@@ -33,6 +36,10 @@ const Referrals = () => {
           const result = await res.json();
           if (!res.ok || result.success === false) {
             toast.error(result.message);
+
+            localStorage.clear();
+            navigate("/login");
+            setLoading(false);
             return;
           } else {
             console.log(result);
@@ -44,10 +51,14 @@ const Referrals = () => {
             setChainThree(chainthree);
             setChainFour(chainfour);
             setChainFive(chainfive);
+            setLoading(false);
           }
         }
       } catch (e) {
         toast.error(e.message);
+        localStorage.clear();
+        navigate("/login");
+        setLoading(false);
       }
     };
 
@@ -64,7 +75,10 @@ const Referrals = () => {
           Your referral link :{" "}
           <span
             onClick={() => {
-              window.location.href = `http://localhost:5173/login/${username}`;
+              navigator.clipboard.writeText(
+                `http://localhost:5173/login/${username}`
+              );
+              toast.success("copied to clipboard");
             }}
           >
             http://localhost:5173/login/{username}
@@ -73,23 +87,98 @@ const Referrals = () => {
       </div>
       <div className="profileoptions">
         <div className="profileoption" onClick={() => navigate("/referrals")}>
-          <h1 className="numbers">{referrs}</h1>
+          <h1 className="numbers">
+            {loading ? (
+              <TailSpin
+                visible={true}
+                height="20"
+                width="20"
+                color="#000000"
+                ariaLabel="tail-spin-loading"
+                radius="1"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            ) : (
+              referrs
+            )}
+          </h1>
           <h1>Direct Referrals</h1>
         </div>
         <div className="profileoption">
-          <h1 className="numbers">{chainTwo}</h1>
+          <h1 className="numbers">
+            {loading ? (
+              <TailSpin
+                visible={true}
+                height="20"
+                width="20"
+                color="#000000"
+                ariaLabel="tail-spin-loading"
+                radius="1"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            ) : (
+              chainTwo
+            )}
+          </h1>
           <h1>Second chain Referrals</h1>
         </div>
         <div className="profileoption">
-          <h1 className="numbers">{chainThree}</h1>
+          <h1 className="numbers">
+            {loading ? (
+              <TailSpin
+                visible={true}
+                height="20"
+                width="20"
+                color="#000000"
+                ariaLabel="tail-spin-loading"
+                radius="1"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            ) : (
+              chainThree
+            )}
+          </h1>
           <h1>Third Chain Referrals</h1>
         </div>
         <div className="profileoption">
-          <h1 className="numbers">{chainFour}</h1>
+          <h1 className="numbers">
+            {loading ? (
+              <TailSpin
+                visible={true}
+                height="20"
+                width="20"
+                color="#000000"
+                ariaLabel="tail-spin-loading"
+                radius="1"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            ) : (
+              chainFour
+            )}
+          </h1>
           <h1>Fourth chain Referrals</h1>
         </div>
         <div className="profileoption">
-          <h1 className="numbers">{chainFive}</h1>
+          <h1 className="numbers">
+            {loading ? (
+              <TailSpin
+                visible={true}
+                height="20"
+                width="20"
+                color="#000000"
+                ariaLabel="tail-spin-loading"
+                radius="1"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            ) : (
+              chainFive
+            )}
+          </h1>
           <h1>Fifth Chain Referrals</h1>
         </div>
       </div>

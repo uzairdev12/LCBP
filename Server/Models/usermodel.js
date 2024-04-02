@@ -24,6 +24,11 @@ const userSchema = new mongoose.Schema({
     type: "string",
     required: [true, "Phone number is required."],
   },
+  balance: {
+    type: "number",
+    required: false,
+    default: 0,
+  },
   reffer: {
     type: "string",
     default: null,

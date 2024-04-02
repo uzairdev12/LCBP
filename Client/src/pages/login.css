@@ -30,7 +30,19 @@
   overflow: hidden;
   width: 768px;
   max-width: 95vw;
-  min-height: 580px;
+  min-height: 630px;
+}
+button {
+  outline: none !important;
+}
+.inputNumber::-webkit-inner-spin-button,
+.inputNumber::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.inputNumber {
+  -moz-appearance: textfield;
 }
 
 .loginPage .container p {
@@ -44,6 +56,7 @@
   top: 20px;
   left: 20px;
   cursor: pointer;
+  z-index: 10000;
 }
 .Back > * {
   font-size: 3rem !important;

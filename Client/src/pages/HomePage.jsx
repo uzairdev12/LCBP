@@ -172,14 +172,17 @@ function HomePage() {
         </div>
       </section>
       <div className="demopage">
-        <h1>FIVERR PAGE</h1>
+        <h1>LC_Freelancers PAGE</h1>
       </div>
 
       <section id="call-to-action">
         <div className="container text-center">
           <h2>Increase your online earning with LCBP</h2>
           <div className="title-block">
-            <p>Buy a plan to start your online earning journey with LCBP.</p>
+            <p>
+              Signup and create an account to start your online earning journey
+              with LCBP.
+            </p>
             {userid ? (
               <a
                 className="btn btn-regular"
@@ -187,10 +190,12 @@ function HomePage() {
                   navigate("/profile");
                 }}
               >
-                Profile
+                Get Started
               </a>
             ) : (
-              <a className="btn btn-regular">Get Started</a>
+              <a className="btn btn-regular" onClick={() => navigate("/login")}>
+                Get Started
+              </a>
             )}
           </div>
         </div>
