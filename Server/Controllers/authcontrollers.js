@@ -75,6 +75,7 @@ module.exports.signup = async (req, res, next) => {
             name,
             reffer,
             email,
+            balance,
           });
           res.status(201).json({ success: true, user });
         } else {
@@ -90,6 +91,7 @@ module.exports.signup = async (req, res, next) => {
               reffer,
               chaintwo: chaintwouser.username,
               email,
+              balance,
             });
             res.status(201).json({ success: true, user });
           } else {
@@ -106,6 +108,7 @@ module.exports.signup = async (req, res, next) => {
                 chaintwo: chaintwouser.username,
                 chainthree: chainthreeuser.username,
                 email,
+                balance,
               });
               res.status(201).json({ success: true, user });
             } else {
@@ -123,6 +126,7 @@ module.exports.signup = async (req, res, next) => {
                   chainthree: chainthreeuser.username,
                   chainfour: chainfouruser.username,
                   email,
+                  balance,
                 });
                 res.status(201).json({ success: true, user });
               } else {
@@ -137,7 +141,9 @@ module.exports.signup = async (req, res, next) => {
                   chainfour: chainfouruser.username,
                   chainfive: chainfiveuser.username,
                   email,
+                  balance,
                 });
+                res.status(201).json({ success: true, user });
               }
             }
           }
@@ -151,8 +157,9 @@ module.exports.signup = async (req, res, next) => {
         name,
         reffer,
         email,
+        balance,
       });
-      res.status(201).json({ success: true, user });
+      res.status(200).json({ success: true, user });
     }
   } catch (err) {
     res.status(400).json({ success: false, message: err.message });
@@ -242,5 +249,38 @@ module.exports.getReffers = async (req, res, next) => {
     });
   } catch (e) {
     res.status(400).json({ success: false, message: e.message });
+  }
+};
+module.exports.updateProfile = async (req, res) => {
+  const { id, name, email, number, password } = req.body;
+
+  try {
+    let userToUpdate = await userModel.findById(id);
+
+    if (!userToUpdate) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    if (name !== "") {
+      userToUpdate.name = name;
+    }
+    if (email !== "") {
+      userToUpdate.email = email;
+    }
+    if (number !== "") {
+      userToUpdate.number = number;
+    }
+    if (password !== "" && password !== null && password !== undefined) {
+      userToUpdate.password = password;
+    }
+
+    const updatedUser = await userToUpdate.save();
+
+    res.status(200).json({
+      message: "User profile updated successfully.",
+      user: updatedUser,
+    });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
   }
 };

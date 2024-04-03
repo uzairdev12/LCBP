@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import HomePage from "./pages/HomePage";
 import Profile from "./pages/Profile";
 import Referrals from "./pages/Referrals";
+import UpdateProfile from "./pages/EditProfile";
 
 const router = createBrowserRouter([
   {
@@ -30,10 +31,15 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+        children: [],
       },
       {
         path: "/referrals",
         element: <Referrals />,
+      },
+      {
+        path: "/updateprofile",
+        element: <UpdateProfile />,
       },
     ],
   },

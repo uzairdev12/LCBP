@@ -8,8 +8,6 @@ import PersonIcon from "@mui/icons-material/Person";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import SchoolIcon from "@mui/icons-material/School";
-import { TailSpin } from "react-loader-spinner";
-import { toast } from "sonner";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -46,7 +44,7 @@ const Profile = () => {
           >
             Logout
           </button>
-          <div className="editIcon">
+          <div className="editIcon" onClick={() => navigate("/updateprofile")}>
             <EditIcon />
           </div>
         </div>

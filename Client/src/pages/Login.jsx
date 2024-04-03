@@ -17,7 +17,7 @@ const Login = () => {
     name: "",
     email: "",
     username: "",
-    number: "",
+    number: 0,
     password: "",
     confirmPassword: "",
     reffer: "@",
@@ -76,7 +76,14 @@ const Login = () => {
 
     return regex.test(username);
   }
+  function isValidNumber(inputString) {
+    return /^\d+$/.test(inputString);
+  }
+  function hasEmail(text) {
+    const emailPattern = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/;
 
+    return emailPattern.test(text);
+  }
   const signup = async () => {
     try {
       if (
@@ -92,6 +99,18 @@ const Login = () => {
         if (data.password === data.confirmPassword) {
           if (!isValidUsername(data.username)) {
             toast.error("Username can only contain letters and numbers");
+            return;
+          } else if (!isValidNumber(data.number)) {
+            toast.error(`Phone number can only contain numbers`);
+            return;
+          } else if (!isValidNumber(data.balance)) {
+            toast.error("Balance can only contain numbers");
+            return;
+          } else if (data.number.length < 11) {
+            toast.error("Phone number must be 11 digits");
+            return;
+          } else if (!hasEmail(data.email)) {
+            toast.error("Invalid Email");
             return;
           }
           setLoading(true);
@@ -134,6 +153,7 @@ const Login = () => {
         }
       } else {
         toast.error("Please fill all the fields");
+        console.log(data);
         setLoading(false);
       }
     } catch (e) {
@@ -175,7 +195,7 @@ const Login = () => {
             />
 
             <input
-              type="number"
+              type="text"
               className="inputNumber"
               placeholder="Phone Number"
               value={data.number}
@@ -202,7 +222,7 @@ const Login = () => {
               onChange={(e) => setData({ ...data, reffer: e.target.value })}
             />
             <input
-              type="number"
+              type="text"
               className="inputNumber"
               placeholder="Balance"
               value={data.balance}
@@ -263,7 +283,7 @@ const Login = () => {
                   onChange={(e) => setData({ ...data, email: e.target.value })}
                 />
                 <input
-                  type="number"
+                  type="text"
                   placeholder="Phone Number"
                   className="inputNumber"
                   value={data.number}
@@ -292,7 +312,7 @@ const Login = () => {
                   onChange={(e) => setData({ ...data, reffer: e.target.value })}
                 />
                 <input
-                  type="number"
+                  type="text"
                   className="inputNumber"
                   placeholder="Balance"
                   value={data.balance}

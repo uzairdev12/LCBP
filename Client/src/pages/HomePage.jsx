@@ -172,11 +172,7 @@ function HomePage() {
         </div>
       </section>
       <div className="demopage">
-<<<<<<< HEAD
-        <h1>LC_Freelancers PAGE</h1>
-=======
         <h1>LC-Freelancers PAGE</h1>
->>>>>>> 372d36f90c550a4305e3af471c773a2b8bdb8cee
       </div>
 
       <section id="call-to-action">
