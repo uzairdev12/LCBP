@@ -13,7 +13,6 @@ import Addgig from "./pages/Addgig";
 import GigDetails from "./pages/GigDetails";
 import Editgig from "./pages/editgig";
 import BasicEarning from "./pages/BasicEarning";
-import AdminDashboard from "./pages/AdminDashboard";
 import AdminPass from "./pages/Adminpass";
 import Dashboard from "./pages/dashboard/Dashboard";
 
