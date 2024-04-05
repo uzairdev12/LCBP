@@ -10,6 +10,12 @@ const userSchema = new mongoose.Schema({
     required: [true, "Username is required."],
     unique: [true, "This username is already in use."],
   },
+  imageurl: {
+    type: "string",
+    required: false,
+    default:
+      "https://i.pinimg.com/736x/0d/64/98/0d64989794b1a4c9d89bff571d3d5842.jpg",
+  },
   email: {
     type: "string",
     unique: [true, "This email is already in use."],

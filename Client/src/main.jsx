@@ -7,6 +7,12 @@ import HomePage from "./pages/HomePage";
 import Profile from "./pages/Profile";
 import Referrals from "./pages/Referrals";
 import UpdateProfile from "./pages/EditProfile";
+import Freelancers from "./pages/Freelancers";
+import MyGigs from "./pages/MyGigs";
+import Addgig from "./pages/Addgig";
+import GigDetails from "./pages/GigDetails";
+import Editgig from "./pages/editgig";
+import BasicEarning from "./pages/BasicEarning";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +46,30 @@ const router = createBrowserRouter([
       {
         path: "/updateprofile",
         element: <UpdateProfile />,
+      },
+      {
+        path: "/freelancers",
+        element: <Freelancers />,
+      },
+      {
+        path: "/mygigs",
+        element: <MyGigs />,
+      },
+      {
+        path: "/addgig",
+        element: <Addgig />,
+      },
+      {
+        path: "/gigdetails/:gigid",
+        element: <GigDetails />,
+      },
+      {
+        path: "/editgig/:edtgigid",
+        element: <Editgig />,
+      },
+      {
+        path: "/basicEarning",
+        element: <BasicEarning />,
       },
     ],
   },

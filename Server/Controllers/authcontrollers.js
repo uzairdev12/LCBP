@@ -252,7 +252,7 @@ module.exports.getReffers = async (req, res, next) => {
   }
 };
 module.exports.updateProfile = async (req, res) => {
-  const { id, name, email, number, password } = req.body;
+  const { id, name, email, number, imageurl, password } = req.body;
 
   try {
     let userToUpdate = await userModel.findById(id);
@@ -272,6 +272,9 @@ module.exports.updateProfile = async (req, res) => {
     }
     if (password !== "" && password !== null && password !== undefined) {
       userToUpdate.password = password;
+    }
+    if (imageurl !== "" && imageurl !== null && imageurl !== undefined) {
+      userToUpdate.imageurl = imageurl;
     }
 
     const updatedUser = await userToUpdate.save();

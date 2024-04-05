@@ -8,6 +8,7 @@ const UpdateProfile = () => {
   const navigate = useNavigate();
   const id = localStorage.getItem("AUTHUSERUNIQUEID");
   const apiUrl = import.meta.env.VITE_API_URL;
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const [data, setData] = useState({
     name: "" || localStorage.getItem("LCBPNAME"),
@@ -45,38 +46,105 @@ const UpdateProfile = () => {
       toast.error("Invalid Email");
       return;
     }
+    if (!selectedImage) {
+      toast.error("No image selected.");
+      return;
+    } else if (
+      selectedImage.type !== "image/jpeg" &&
+      selectedImage.type !== "image/png" &&
+      selectedImage.type !== "image/jpg"
+    ) {
+      toast.error(
+        "Invalid image format. Only JPEG, PNG, and JPG formats are allowed."
+      );
+      return;
+    }
     try {
-      const response = await fetch(`${apiUrl}/api/auth/updateprofile`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id,
-          name: data.name,
-          email: data.email,
-          number: data.number,
-          password: data.password,
-        }),
-      });
+      if (selectedImage) {
+        console.log("InSelectedImage");
+        let image = new FormData();
+        image.append("file", selectedImage);
+        image.append("cloud_name", "dbntul88v");
+        image.append("upload_preset", "pvkxzd6k");
+        const url = "https://api.cloudinary.com/v1_1/dbntul88v/image/upload";
+        console.log("Before req");
+        const resp = await fetch(url, {
+          method: "POST",
+          body: image,
+        });
+        console.log("after req");
 
-      const result = await response.json();
+        var data1 = await resp.json();
+        if (!data1) {
+          toast.error("Error with image");
+          return;
+        }
+        const response = await fetch(`${apiUrl}/api/auth/updateprofile`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id,
+            name: data.name,
+            email: data.email,
+            number: data.number,
+            password: data.password,
+            imageurl: data1.url,
+          }),
+        });
 
-      if (!response.ok || !result || result.success === false) {
-        toast.error(result?.message || "Could not update profile");
-        console.error({ result, response });
-        return;
+        const result = await response.json();
+        console.log(result);
+
+        if (!response.ok || !result || result.success === false) {
+          toast.error(result?.message || "Could not update profile");
+          console.error({ result, response });
+          return;
+        }
+
+        toast.success(result.message);
+
+        localStorage.setItem("LCBPNAME", result.user.name);
+        localStorage.setItem("LCBPEMAIL", result.user.email);
+        localStorage.setItem("LCBPPHONE", result.user.number);
+        localStorage.setItem("LCBPIMAGEURL", result.user.imageurl);
+        localStorage.setItem("LCBPPASSWORD", result.user.password);
+
+        navigate("/profile");
+      } else {
+        const response = await fetch(`${apiUrl}/api/auth/updateprofile`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id,
+            name: data.name,
+            email: data.email,
+            number: data.number,
+            password: data.password,
+          }),
+        });
+
+        const result = await response.json();
+        console.log(result);
+
+        if (!response.ok || !result || result.success === false) {
+          toast.error(result?.message || "Could not update profile");
+          console.error({ result, response });
+          return;
+        }
+
+        toast.success(result.message);
+
+        localStorage.setItem("LCBPNAME", result.user.name);
+        localStorage.setItem("LCBPEMAIL", result.user.email);
+        localStorage.setItem("LCBPPHONE", result.user.number);
+        localStorage.setItem("LCBPPASSWORD", result.user.password);
+
+        navigate("/profile");
       }
-
-      toast.success(result.message);
-
-      localStorage.setItem("LCBPNAME", data.name);
-      localStorage.setItem("LCBPEMAIL", data.email);
-      localStorage.setItem("LCBPPHONE", data.number);
-
-      localStorage.setItem("LCBPPASSWORD", data.password);
-
-      navigate("/profile");
     } catch (error) {
       toast.error(error?.message || "Could not update profile");
       console.error({ error });
@@ -90,6 +158,17 @@ const UpdateProfile = () => {
         <ArrowBackIcon />
       </div>
       <h1>Update Profile</h1>
+      <label className="updateProfileLabel" htmlFor="image">
+        Change Image
+      </label>
+      <input
+        id="image"
+        type="file"
+        accept="image/png image/jpeg image/jpg"
+        onChange={(e) => {
+          setSelectedImage(e.target.files[0]);
+        }}
+      />
       <label className="updateProfileLabel" htmlFor="name">
         Change Name
       </label>

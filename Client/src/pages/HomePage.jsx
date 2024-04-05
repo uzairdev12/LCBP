@@ -3,10 +3,46 @@ import logo from "../images/logo.png";
 import hero from "../images/hero-img.png";
 import demo from "../images/demo-image.png";
 import { useNavigate } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import image from "../images/pfp.jpg";
+import { useEffect, useState } from "react";
 
 function HomePage() {
   const navigate = useNavigate();
   const userid = localStorage.getItem("AUTHUSERUNIQUEID");
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const [data, setData] = useState([]);
+  const load = async () => {
+    try {
+      let res = await fetch(`${apiUrl}/api/gig/load`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          skip: 0,
+        }),
+      });
+
+      let result = await res.json();
+
+      if (!res.ok || res.success === false) {
+        return;
+      }
+      if (!result.data && data.length === 0) {
+        return;
+      } else if (!result.data && data.length !== 0) {
+        return;
+      }
+      console.log(result);
+      setData(result.data);
+    } catch (e) {
+      console.error(e.message);
+    }
+  };
+  useEffect(() => {
+    load();
+  }, []);
 
   return (
     <div className="home">
@@ -43,30 +79,39 @@ function HomePage() {
               data-speed="1250"
               data-offset="65"
             >
-              <li className="nav-item nav-custom-link">
+              <li
+                className="nav-item nav-custom-link"
+                style={{ cursor: "pointer" }}
+                onClick={() => navigate("/")}
+              >
                 <a className="nav-link">
                   Home{" "}
                   <i className="icon ion-ios-arrow-forward icon-mobile"></i>
                 </a>
               </li>
               <li className="nav-item nav-custom-link">
-                <a className="nav-link">
+                <a
+                  className="nav-link"
+                  onClick={() => navigate("/freelancers")}
+                  style={{ cursor: "pointer" }}
+                >
                   Freelancers
                   <i className="icon ion-ios-arrow-forward icon-mobile"></i>
                 </a>
               </li>
               <li className="nav-item nav-custom-link">
-                <a className="nav-link">
+                <a
+                  className="nav-link"
+                  onClick={() =>
+                    window.open("https://lcbp-community.vercel.app", "_blank")
+                  }
+                  style={{ cursor: "pointer" }}
+                >
                   Communities
                   <i className="icon ion-ios-arrow-forward icon-mobile"></i>
                 </a>
               </li>
-              <li className="nav-item nav-custom-link">
-                <a className="nav-link">
-                  Plans{" "}
-                  <i className="icon ion-ios-arrow-forward icon-mobile"></i>
-                </a>
-              </li>
+
               {userid ? (
                 <li
                   className="nav-item nav-custom-link btn btn-demo-small"
@@ -171,8 +216,46 @@ function HomePage() {
           </div>
         </div>
       </section>
-      <div className="demopage">
-        <h1>LC-Freelancers PAGE</h1>
+      <div className="lcFreelancersPage">
+        <div className="lcfreelancers">
+          <h1 style={{ marginBottom: "50px" }}>LC - Freelancers</h1>
+
+          <div className="cards">
+            {data?.map((item, index) => (
+              <div
+                className="card"
+                key={index}
+                onClick={() => navigate(`/gigdetails/${item._id}`)}
+              >
+                <div className="imageDiv">
+                  <img src={item.imageurl} alt="Image" />
+                </div>
+                <div className="textDiv">
+                  <div className="infoDiv">
+                    <img
+                      src={
+                        item.byimge ||
+                        "https://i.pinimg.com/736x/0d/64/98/0d64989794b1a4c9d89bff571d3d5842.jpg"
+                      }
+                      alt="Image"
+                    />
+                    <p>{item.byname}</p>
+                  </div>
+                  <h3>{item.title}</h3>
+                </div>
+              </div>
+            ))}
+
+            <button
+              className="seemore"
+              onClick={() => {
+                navigate("/freelancers");
+              }}
+            >
+              See more
+            </button>
+          </div>
+        </div>
       </div>
 
       <section id="call-to-action">

@@ -28,7 +28,7 @@ const Profile = () => {
       </div>
       <div className="info">
         <div className="profileImageContainer">
-          <img src={pfp} alt="profile image" />
+          <img src={localStorage.getItem("LCBPIMAGEURL")} alt="profile image" />
         </div>
         <div className="textContainer">
           <h1>{name}</h1>
@@ -54,11 +54,14 @@ const Profile = () => {
           <PersonIcon />
           <h1>Referrals</h1>
         </div>
-        <div className="profileoption">
+        <div
+          className="profileoption"
+          onClick={() => navigate("/basicearning")}
+        >
           <LocalAtmIcon />
           <h1>Basic Earning</h1>
         </div>
-        <div className="profileoption">
+        <div className="profileoption" onClick={() => navigate("/mygigs")}>
           <MonetizationOnIcon />
           <h1>Professional Earning</h1>
         </div>

@@ -55,11 +55,13 @@ const Login = () => {
           return;
         }
         toast.success("Logged in successfully");
+        console.log(result);
         localStorage.setItem("AUTHUSERUNIQUEID", result.user._id);
         localStorage.setItem("LCBPUSERNAME", result.user.username);
         localStorage.setItem("LCBPNAME", result.user.name);
         localStorage.setItem("LCBPPHONE", result.user.phone);
         localStorage.setItem("LCBPEMAIL", result.user.email);
+        localStorage.setItem("LCBPIMAGEURL", result.user.imageurl);
         navigate("/profile");
         setLoading(false);
       } else {
@@ -138,13 +140,17 @@ const Login = () => {
             setLoading(false);
             return;
           }
-
+          console.log(result);
           toast.success("Account created successfully");
           localStorage.setItem("AUTHUSERUNIQUEID", result.user._id);
           localStorage.setItem("LCBPUSERNAME", result.user.username);
           localStorage.setItem("LCBPNAME", result.user.name);
           localStorage.setItem("LCBPPHONE", result.user.phone);
           localStorage.setItem("LCBPEMAIL", result.user.email);
+          localStorage.setItem(
+            "LCBPIMAGEURL",
+            "https://i.pinimg.com/736x/0d/64/98/0d64989794b1a4c9d89bff571d3d5842.jpg"
+          );
           navigate("/profile");
           setLoading(false);
         } else {
