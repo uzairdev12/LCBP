@@ -13,6 +13,9 @@ import Addgig from "./pages/Addgig";
 import GigDetails from "./pages/GigDetails";
 import Editgig from "./pages/editgig";
 import BasicEarning from "./pages/BasicEarning";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminPass from "./pages/Adminpass";
+import Dashboard from "./pages/dashboard/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -70,6 +73,17 @@ const router = createBrowserRouter([
       {
         path: "/basicEarning",
         element: <BasicEarning />,
+      },
+
+      {
+        path: "/lcbpadminssecretdashboard",
+        element: <AdminPass />,
+        children: [
+          {
+            path: "/lcbpadminssecretdashboard",
+            element: <Dashboard />,
+          },
+        ],
       },
     ],
   },

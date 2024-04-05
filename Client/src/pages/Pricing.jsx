@@ -5,13 +5,13 @@ const Pricing = () => {
     <>
       <section id="pricing">
         <div className="container">
-          <div className="title-block">
+          {/* <div className="title-block">
             <h2>Plans and Pricing</h2>
             <p>
               The best opportunity to earn online by using your contacts and
               social circle.
             </p>
-          </div>
+          </div> */}
           <div className="row">
             <div className="col-md-4">
               <div className="pricing-box">
