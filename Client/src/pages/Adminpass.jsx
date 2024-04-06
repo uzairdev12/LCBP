@@ -7,7 +7,7 @@ const AdminPass = () => {
   const [password, setPassword] = useState("");
   return (
     <div>
-      {validated ? (
+      {validated || localStorage.getItem("ISLCBPADMINAPPROVES") === "true" ? (
         <Outlet />
       ) : (
         <div className="validateUser">
@@ -20,9 +20,12 @@ const AdminPass = () => {
             />
             <button
               onClick={() => {
-                password === "lcbpbusinessplanpass"
-                  ? setValidated(true)
-                  : alert("Wrong Password");
+                if (password === "lcbpbusinessplanpass") {
+                  setValidated(true);
+                  localStorage.setItem("ISLCBPADMINAPPROVES", true);
+                } else {
+                  alert("Invalid Password");
+                }
               }}
             >
               Validate

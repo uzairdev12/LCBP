@@ -23,7 +23,7 @@
   font-size: 17px;
 }
 .single-product {
-  background-color: rgb(196, 196, 196);
+  background-color: rgb(170, 188, 204);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -42,7 +42,7 @@
   background-color: rgb(171, 224, 181);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  filter: blur(10px);
+  filter: blur(30px);
 }
 .single-product::after {
   content: "";
@@ -54,7 +54,7 @@
   background-color: rgb(174, 208, 209);
   border-radius: 50%;
   transform: translate(50%, 50%);
-  filter: blur(10px);
+  filter: blur(30px);
 }
 .addplan {
   margin: 20px 0;

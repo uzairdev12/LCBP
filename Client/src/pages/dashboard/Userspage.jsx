@@ -94,7 +94,6 @@ const Users = ({ show, scroll }) => {
       )}
     </div>
   );
-  s;
 };
 
 export default Users;

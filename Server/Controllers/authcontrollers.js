@@ -287,3 +287,20 @@ module.exports.updateProfile = async (req, res) => {
     res.status(400).json({ success: false, message: error.message });
   }
 };
+module.exports.getPlanDetails = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const user = await userModel.findById(id);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+    if (user.plan) {
+      res.status(200).json({ success: true, plan: user.plan });
+    } else {
+      res.status(200).json({ success: true, plan: null });
+    }
+  } catch (e) {
+    res.status(400).json({ success: false, message: e.message });
+  }
+};

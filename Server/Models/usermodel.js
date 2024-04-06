@@ -57,6 +57,14 @@ const userSchema = new mongoose.Schema({
     type: "string",
     default: null,
   },
+  plan: {
+    type: "string",
+    default: null,
+  },
+  planpending: {
+    type: "boolean",
+    default: false,
+  },
 });
 
 module.exports = mongoose.model("users", userSchema);

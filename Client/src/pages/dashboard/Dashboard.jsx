@@ -14,6 +14,7 @@ import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import Users from "./Userspage";
 import Products from "./Products";
 import { useNavigate } from "react-router-dom";
+import Pending from "./Pending";
 
 const Dashboard = () => {
   const [showdropdown, setShowDropdown] = useState(false);
@@ -83,7 +84,13 @@ const Dashboard = () => {
                 </a>
               </li>
 
-              <li className="dashboardbuttons dashboardbutton5">
+              <li
+                className="dashboardbuttons dashboardbutton5"
+                onClick={() => {
+                  setPage("pending");
+                  setShowSidebar(false);
+                }}
+              >
                 <a>
                   <TaskAltIcon />
                   Pending
@@ -201,6 +208,10 @@ const Dashboard = () => {
                     <p>Pending </p>
                     <h1>29</h1>
                   </div>
+                  <div className="dashboardcontainer container5">
+                    <p>Profit</p>
+                    <h1>29</h1>
+                  </div>
                 </div>
                 <div className="charts">
                   <div className="chart1">
@@ -293,6 +304,14 @@ const Dashboard = () => {
             ) : page === "products" ? (
               <>
                 <Products
+                  show={() => {
+                    setShowSidebar(true);
+                  }}
+                />
+              </>
+            ) : page === "pending" ? (
+              <>
+                <Pending
                   show={() => {
                     setShowSidebar(true);
                   }}

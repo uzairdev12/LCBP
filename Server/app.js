@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const authRoute = require("./Routes/authroute");
 const gigRoute = require("./Routes/gigroute");
+const planRoute = require("./Routes/planRoutes");
+const requestroute = require("./Routes/requestroute");
 require("dotenv").config();
 
 const app = express();
@@ -26,6 +28,8 @@ mongoose
 
 app.use("/api/auth", authRoute);
 app.use("/api/gig", gigRoute);
+app.use("/api/plan", planRoute);
+app.use("/api/request", requestroute);
 
 app.listen(5000, () => {
   console.log("Server is running on port 5000");

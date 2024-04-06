@@ -15,6 +15,8 @@ import Editgig from "./pages/Editgig";
 import BasicEarning from "./pages/BasicEarning";
 import AdminPass from "./pages/Adminpass";
 import Dashboard from "./pages/dashboard/Dashboard";
+import BuyPlan from "./pages/BuyPlan";
+import UserDashboard from "./pages/UserDashboard";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +74,14 @@ const router = createBrowserRouter([
       {
         path: "/basicEarning",
         element: <BasicEarning />,
+      },
+      {
+        path: "/buyPlan/:planid",
+        element: <BuyPlan />,
+      },
+      {
+        path: "/userdashboard",
+        element: <UserDashboard />,
       },
 
       {

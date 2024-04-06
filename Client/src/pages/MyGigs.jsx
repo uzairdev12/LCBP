@@ -62,7 +62,7 @@ const MyGigs = () => {
   };
   return (
     <div className="lcfreelancers">
-      <div className="Back" onClick={() => navigate("/")}>
+      <div className="Back" onClick={() => navigate(-1)}>
         <ArrowBackIcon />
       </div>
       <h1 className="lcfreelancersheading">Your GIGs</h1>
