@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import "./dashboard.css";
-import logo from "./logo.png";
+import logo from "../../images/logo.png";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import InventoryIcon from "@mui/icons-material/Inventory";
@@ -13,12 +13,14 @@ import "chartkick/chart.js";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import Users from "./Userspage";
 import Products from "./Products";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [showdropdown, setShowDropdown] = useState(false);
   const [selected, setSelected] = useState("Today");
   const [showSidebar, setShowSidebar] = useState(false);
   const [page, setPage] = useState("stats");
+  const navigate = useNavigate();
   const scrollableDivRef = useRef(null);
 
   const scrollToTop = () => {
@@ -87,7 +89,12 @@ const Dashboard = () => {
                   Pending
                 </a>
               </li>
-              <li className="dashboardbuttons dashboardbutton6">
+              <li
+                className="dashboardbuttons dashboardbutton6"
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
                 <a>
                   <LogoutIcon /> Logout
                 </a>
@@ -115,7 +122,7 @@ const Dashboard = () => {
                   }}
                 />
                 <h1 className="dash">Dashboard</h1>
-                <div className="dashboarddropdown">
+                {/* <div className="dashboarddropdown">
                   <div
                     className="selected"
                     onClick={() => {
@@ -172,7 +179,7 @@ const Dashboard = () => {
                       This year
                     </p>
                   </div>
-                </div>
+                </div> */}
                 <div className="dashboardboxes">
                   <div className="dashboardcontainer container1">
                     <p>Users</p>

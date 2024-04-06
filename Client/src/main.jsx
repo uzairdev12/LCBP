@@ -11,7 +11,7 @@ import Freelancers from "./pages/Freelancers";
 import MyGigs from "./pages/MyGigs";
 import Addgig from "./pages/Addgig";
 import GigDetails from "./pages/GigDetails";
-import Editgig from "./pages/editgig";
+import Editgig from "./pages/Editgig";
 import BasicEarning from "./pages/BasicEarning";
 import AdminPass from "./pages/Adminpass";
 import Dashboard from "./pages/dashboard/Dashboard";

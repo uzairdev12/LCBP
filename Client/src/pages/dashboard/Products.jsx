@@ -8,11 +8,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import AddIcon from "@mui/icons-material/Add";
-import Pricing from "../Pricing";
 
 const Products = ({ show }) => {
   const [showdropdown, setShowDropdown] = useState(false);
-  const [selected, setSelected] = useState("None");
 
   return (
     <div>
@@ -36,19 +34,64 @@ const Products = ({ show }) => {
       </h1>
       <div className="sort">
         <div className="dashboarddropdown" style={{ zIndex: "10" }}>
-          <div className="selected">
+          <div
+            className="selected"
+            onClick={() => {
+              setShowDropdown((prev) => !prev);
+            }}
+          >
             <p>
-              Add new <AddIcon style={{ marginLeft: "5px" }} />
+              Add new{" "}
+              <AddIcon
+                style={
+                  showdropdown
+                    ? { marginLeft: "5px", rotate: "45deg" }
+                    : { marginLeft: "5px" }
+                }
+              />
             </p>
           </div>
         </div>
       </div>
-      {/* <div className="UserDetailsProducts" style={{ marginTop: "10px" }}>
+      <div
+        className="addplan"
+        style={showdropdown ? { display: "block" } : { display: "none" }}
+      >
+        <h1>Add a new plan</h1>
+        <input placeholder="Plan name" type="text" className="addplaninput" />
+        <input
+          placeholder="Plan price"
+          type="number"
+          className="addplaninput"
+        />
+        <input
+          placeholder="1st chain reffer"
+          type="text"
+          className="addplaninput"
+        />
+        <input
+          placeholder="2nd chain reffer"
+          type="test"
+          className="addplaninput"
+        />
+        <input
+          placeholder="3rd chain reffer"
+          type="text"
+          className="addplaninput"
+        />
+        <input
+          placeholder="4th chain reffer"
+          type="text"
+          className="addplaninput"
+        />
+        <input
+          placeholder="5th chain reffer"
+          type="text"
+          className="addplaninput"
+        />
+      </div>
+      <div className="UserDetailsProducts" style={{ marginTop: "10px" }}>
         <>
-          <div className="addProduct">
-            <p>Add new product</p>
-            <AddIcon />
-          </div>
           {[1, 2, 3, 4, 5, 6, 7].map((e, index) => {
             return (
               <div
@@ -56,25 +99,20 @@ const Products = ({ show }) => {
                 style={{ cursor: "pointer" }}
                 key={index}
               >
-                <div className="product-img">
-                  <img className="img-fluid w-100" src={img1} alt="" />
-                </div>
-                <div className="product-btm">
-                  <a className="d-block">
-                    <h4>Minimalistic headphones for gaming</h4>
-                  </a>
-                  <div className="mt-3">
-                    <span className="mr-4">$19.00</span>
-                    <p className="cat">Electronic</p>
-                  </div>
+                <div className="content">
+                  <h1>Basic</h1>
+                  <h1>Rs 5000</h1>
+                  <hr />
+                  <p>1st chain : 40%</p>
+                  <p>2nd chain : 30%</p>
+                  <p>3rd chain : 30%</p>
+                  <p>4th chain : 10%</p>
+                  <p>5th chain : 5%</p>
                 </div>
               </div>
             );
           })}
         </>
-      </div> */}
-      <div className="pricingDiv">
-        <Pricing />
       </div>
     </div>
   );

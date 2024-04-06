@@ -23,7 +23,21 @@
 .usersname {
   width: 30% !important;
 }
-
+.text {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.text button {
+  padding: 10px 30px;
+  margin: 20px 0;
+  background-color: rgb(255, 32, 32);
+  border: none;
+  outline: none;
+  border-radius: 3px;
+}
 .email,
 .useremail {
   width: 40% !important;

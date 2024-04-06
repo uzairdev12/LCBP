@@ -22,15 +22,59 @@
   width: max-content;
   font-size: 17px;
 }
-
+.single-product {
+  background-color: rgb(196, 196, 196);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+}
+.single-product::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 300px;
+  width: 300px;
+  background-color: rgb(171, 224, 181);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  filter: blur(10px);
+}
+.single-product::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 300px;
+  width: 300px;
+  background-color: rgb(174, 208, 209);
+  border-radius: 50%;
+  transform: translate(50%, 50%);
+  filter: blur(10px);
+}
+.addplan {
+  margin: 20px 0;
+}
+.addplaninput {
+  outline: none;
+  border: none;
+  background-color: rgb(173, 173, 173);
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+}
 .single-product {
   border-radius: 10px;
   overflow: hidden;
-  aspect-ratio: 9 / 16;
 }
 .single-product * {
-  margin: 0;
+  margin: 10px 0;
   padding: 0;
+  z-index: 2;
 }
 .pricingDiv {
   margin: 20px 0;
