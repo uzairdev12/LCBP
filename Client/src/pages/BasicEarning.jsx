@@ -22,6 +22,7 @@ const BasicEarning = () => {
 
         body: JSON.stringify({
           id: localStorage.getItem("AUTHUSERUNIQUEID"),
+          userid: localStorage.getItem("AUTHUSERID"),
         }),
       });
       let response = await res.json();
@@ -65,16 +66,18 @@ const BasicEarning = () => {
       </div>
       <div className="plansWrapper">
         {loading ? (
-          <TailSpin
-            visible={true}
-            height="50"
-            width="50"
-            color="#0000"
-            ariaLabel="tail-spin-loading"
-            radius="1"
-            wrapperStyle={{}}
-            wrapperClass=""
-          />
+          <div className="loaderwrapper">
+            <TailSpin
+              visible={true}
+              height="50"
+              width="50"
+              color="#000000"
+              ariaLabel="tail-spin-loading"
+              radius="1"
+              wrapperStyle={{}}
+              wrapperClass=""
+            />
+          </div>
         ) : (
           <>
             <h1 className="plansHeading">Plans</h1>

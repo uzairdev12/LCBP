@@ -22,9 +22,7 @@ const Products = ({ show }) => {
     fourthChain: "",
     fifthChain: "",
     boxlimit: "",
-    boxprice1: "",
-    boxprice2: "",
-    boxprice3: "",
+    boxprice: "",
     boxcooltime: "",
   });
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -63,20 +61,21 @@ const Products = ({ show }) => {
   useEffect(() => {
     load();
   }, [reload]);
+  function isValidNumber(inputString) {
+    return /^\d+$/.test(inputString);
+  }
 
   const addPlan = async () => {
     if (
       data.name === "" ||
-      data.price === "" ||
-      data.firstChain === "" ||
-      data.secondChain === "" ||
-      data.thirdChain === "" ||
-      data.fourthChain === "" ||
-      data.fifthChain === "" ||
+      !data.price > 0 ||
+      !data.firstChain > 0 ||
+      !data.secondChain > 0 ||
+      !data.thirdChain > 0 ||
+      !data.fourthChain > 0 ||
+      !data.fifthChain > 0 ||
       !data.boxlimit > 0 ||
-      !data.boxprice1 > 0 ||
-      !data.boxprice2 > 0 ||
-      !data.boxprice3 > 0 ||
+      !data.boxprice > 0 ||
       !data.boxcooltime > 0 ||
       !data.amountpkr > 0
     ) {
@@ -171,35 +170,35 @@ const Products = ({ show }) => {
 
         <input
           placeholder="Price in pkr"
-          type="text"
+          type="number"
           className="addplaninput"
           value={data.amountpkr}
           onChange={(e) => setData({ ...data, amountpkr: e.target.value })}
         />
         <input
           placeholder="1st chain reffer"
-          type="text"
+          type="number"
           value={data.firstChain}
           onChange={(e) => setData({ ...data, firstChain: e.target.value })}
           className="addplaninput"
         />
         <input
           placeholder="2nd chain reffer"
-          type="test"
+          type="number"
           className="addplaninput"
           value={data.secondChain}
           onChange={(e) => setData({ ...data, secondChain: e.target.value })}
         />
         <input
           placeholder="3rd chain reffer"
-          type="text"
+          type="number"
           className="addplaninput"
           value={data.thirdChain}
           onChange={(e) => setData({ ...data, thirdChain: e.target.value })}
         />
         <input
           placeholder="4th chain reffer"
-          type="text"
+          type="number"
           className="addplaninput"
           value={data.fourthChain}
           onChange={(e) => setData({ ...data, fourthChain: e.target.value })}
@@ -207,7 +206,7 @@ const Products = ({ show }) => {
 
         <input
           placeholder="5th chain reffer"
-          type="text"
+          type="number"
           className="addplaninput"
           value={data.fifthChain}
           onChange={(e) => setData({ ...data, fifthChain: e.target.value })}
@@ -222,35 +221,20 @@ const Products = ({ show }) => {
 
         <input
           placeholder="Box cool time"
-          type="text"
+          type="number"
           className="addplaninput"
           value={data.boxcooltime}
           onChange={(e) => setData({ ...data, boxcooltime: e.target.value })}
         />
 
         <input
-          placeholder="Box price 1"
-          type="text"
+          placeholder="Box prize"
+          type="number"
           className="addplaninput"
-          value={data.boxprice1}
-          onChange={(e) => setData({ ...data, boxprice1: e.target.value })}
+          value={data.boxprice}
+          onChange={(e) => setData({ ...data, boxprice: e.target.value })}
         />
 
-        <input
-          placeholder="Box Price 2"
-          type="text"
-          className="addplaninput"
-          value={data.boxprice2}
-          onChange={(e) => setData({ ...data, boxprice2: e.target.value })}
-        />
-
-        <input
-          placeholder="Box Price 3"
-          type="text"
-          className="addplaninput"
-          value={data.boxprice3}
-          onChange={(e) => setData({ ...data, boxprice3: e.target.value })}
-        />
         <button className="addplaninput" onClick={addPlan}>
           {loading ? "Adding..." : "Add"}
         </button>

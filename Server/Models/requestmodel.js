@@ -23,6 +23,10 @@ const requestSchema = new mongoose.Schema({
     type: "string",
     required: [true, "Id is required."],
   },
+  planid: {
+    type: "string",
+    required: [true, "Id is required."],
+  },
   method: {
     type: "string",
     required: [true, "Method is required."],

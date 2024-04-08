@@ -16,6 +16,41 @@ const userSchema = new mongoose.Schema({
     default:
       "https://i.pinimg.com/736x/0d/64/98/0d64989794b1a4c9d89bff571d3d5842.jpg",
   },
+  earnedbyreffers: {
+    type: "number",
+    default: 0,
+  },
+  earnedbyspinandbox: {
+    type: "number",
+    default: 0,
+  },
+  lastOpenedSpin: {
+    type: "date",
+  },
+  todayOpened: {
+    type: "number",
+    default: 0,
+  },
+  limit: {
+    type: "number",
+  },
+  lastOpenedBox: {
+    type: "date",
+  },
+  prize: {
+    type: "number",
+  },
+  cooltime: {
+    type: "number",
+  },
+  alltimeearned: {
+    type: "number",
+    default: 0,
+  },
+  withdrawn: {
+    type: "number",
+    default: 0,
+  },
   email: {
     type: "string",
     unique: [true, "This email is already in use."],

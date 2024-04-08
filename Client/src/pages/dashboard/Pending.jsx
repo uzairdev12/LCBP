@@ -62,6 +62,29 @@ const Pending = ({ show }) => {
       setLoading(false);
     }
   };
+
+  const approve = async (userid, requstid, planid) => {
+    try {
+      if (!window.confirm("Are you sure you want to approve this request?")) {
+        return;
+      }
+      const res = await fetch(`${apiUrl}/api/request/approve`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userid, requstid, planid }),
+      });
+      const result = await res.json();
+      if (!result.success) {
+        toast.error(result.message || "Unexpected error on API Endpoint");
+        return;
+      }
+      load();
+    } catch (e) {
+      toast.error(e.message || "An unexpected error occured");
+    }
+  };
   const reject = async (id, userid) => {
     try {
       if (!window.confirm("Are you sure you want to reject this request?")) {
@@ -94,7 +117,7 @@ const Pending = ({ show }) => {
 
   return (
     <div>
-      <>
+      <div className="PendingPage">
         <MenuOpenIcon
           className="DashboardMenuIcon"
           style={{
@@ -110,12 +133,19 @@ const Pending = ({ show }) => {
             show();
           }}
         />
-        <h1 className="usersheading">Pending Plans</h1>
+        <h1
+          className="usersheading"
+          onClick={() => {
+            console.log(data);
+          }}
+        >
+          Pending Plans
+        </h1>
         <div className="plansDiv">
           {loading ? (
-            <h1>LOading...</h1>
-          ) : (
-            data?.map((e, i) => (
+            <h1>Loading...</h1>
+          ) : data.length > 0 ? (
+            data.map((e, i) => (
               <div className="plan" key={i}>
                 <p>
                   <span>Username :</span> {e.usersname}
@@ -133,6 +163,9 @@ const Pending = ({ show }) => {
                   <span>Account Number :</span> {e.accountnum}
                 </p>
                 <p>
+                  <span>Transaction ID :</span> {e.transactionid}
+                </p>
+                <p>
                   <span>Date :</span> {formatDate(e.date)}
                 </p>
                 <p
@@ -143,13 +176,21 @@ const Pending = ({ show }) => {
                 >
                   Proof of payment
                 </p>
-                <button>Approve</button>
-                <button onClick={() => reject(e._id, e.usersid)}>Reject</button>
+                <div className="buttons">
+                  <button onClick={() => approve(e.usersid, e._id, e.planid)}>
+                    Approve
+                  </button>
+                  <button onClick={() => reject(e._id, e.usersid)}>
+                    Reject
+                  </button>
+                </div>
               </div>
             ))
+          ) : (
+            <p>No Pending requests</p>
           )}
         </div>
-      </>
+      </div>
     </div>
   );
 };

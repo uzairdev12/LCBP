@@ -10,40 +10,32 @@ const planSchema = new mongoose.Schema({
     required: [true, "Price is required."],
   },
   firstChain: {
-    type: "string",
+    type: "number",
     required: [true, "First chain is required."],
   },
   secondChain: {
-    type: "string",
+    type: "number",
     required: [true, "Second chain is required."],
   },
   thirdChain: {
-    type: "string",
+    type: "number",
     required: [true, "Third chain is required."],
   },
   fourthChain: {
-    type: "string",
+    type: "number",
     required: [true, "Fourth chain is required."],
   },
   fifthChain: {
-    type: "string",
+    type: "number",
     required: [true, "Fifth chain is required."],
   },
   boxlimit: {
     type: "number",
     required: [true, "Box limit is required."],
   },
-  boxprice1: {
+  boxprice: {
     type: "number",
     required: [true, "Box price 1 is required."],
-  },
-  boxprice2: {
-    type: "number",
-    required: [true, "Box price 2 is required."],
-  },
-  boxprice3: {
-    type: "number",
-    required: [true, "Box price 3 is required."],
   },
   boxcooltime: {
     type: "number",
@@ -52,10 +44,6 @@ const planSchema = new mongoose.Schema({
   amountpkr: {
     type: "number",
     required: [true, "Amount in PKR is required."],
-  },
-  proof: {
-    type: "string",
-    required: [true, "Proof is required."],
   },
 });
 

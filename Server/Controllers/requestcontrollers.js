@@ -1,5 +1,7 @@
+const planmodel = require("../Models/planmodel");
 const requestmodel = require("../Models/requestmodel");
-const userModel = require("../Models/usermodel");
+const transactionsmodel = require("../Models/transactionsmodel");
+const usermodel = require("../Models/usermodel");
 
 module.exports.addreq = async (req, res) => {
   try {
@@ -50,10 +52,11 @@ module.exports.addreq = async (req, res) => {
       proof,
       pending: true,
       accountnum,
+      planid,
       method,
       transactionid,
     });
-    const user = await userModel.findById(usersid);
+    const user = await usermodel.findById(usersid);
     if (!user) {
       res.status(400).json({ success: false, message: "User not found" });
     }
@@ -72,7 +75,11 @@ module.exports.addreq = async (req, res) => {
 
 module.exports.getrequests = async (req, res) => {
   try {
-    let requests = await requestmodel.find({ pending: true }).lean().exec();
+    let requests = await requestmodel
+      .find({ pending: true })
+      .sort({ _id: -1 })
+      .lean()
+      .exec();
     if (!requests) {
       throw new Error("Requests not found");
     }
@@ -97,7 +104,7 @@ module.exports.deleteRequest = async (req, res) => {
         .json({ success: false, message: "Invalid request" });
     }
     await requestmodel.deleteOne({ _id: id }).lean().exec();
-    await userModel
+    await usermodel
       .findOneAndUpdate(
         { _id: req.body.userid },
         { $set: { planpending: false, plan: null } },
@@ -108,6 +115,83 @@ module.exports.deleteRequest = async (req, res) => {
     return res.status(200).json({ success: true });
   } catch (e) {
     console.error(`Error deleting request:`, e);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
+  }
+};
+
+module.exports.approveRequest = async (req, res) => {
+  try {
+    const { userid, requstid, planid } = req.body;
+
+    const updatedRequest = await requestmodel
+      .findByIdAndUpdate(
+        requstid,
+        { $set: { pending: false, accepted: true } },
+        { new: true }
+      )
+      .lean()
+      .exec();
+
+    if (!updatedRequest) {
+      throw new Error("Request not found");
+    }
+
+    const plan = await planmodel.findById(planid);
+    if (!plan) {
+      throw new Error("Plan not found");
+    }
+
+    const {
+      amountpkr,
+      firstChain,
+      secondChain,
+      thirdChain,
+      fourthChain,
+      fifthChain,
+    } = plan;
+    const user = await usermodel.findByIdAndUpdate(
+      userid,
+      {
+        $set: {
+          planpending: false,
+          prize: plan.boxprice,
+          cooltime: plan.boxcooltime,
+          limit: plan.boxlimit,
+        },
+      },
+      { new: true }
+    );
+
+    const updateUserBalance = async (username, chainMultiplier) => {
+      const user1 = await usermodel.findOne({ username });
+      if (user1 && user1.plan) {
+        const amountToAdd = (amountpkr * chainMultiplier) / 100;
+        user1.balance = (user1.balance || 0) + amountToAdd;
+        user1.earnedbyreffers = (user1.earnedbyreffers || 0) + amountToAdd;
+        user1.alltimeearned = (user1.alltimeearned || 0) + amountToAdd;
+        transactionsmodel.create({
+          type: "reffer",
+          amount: amountToAdd,
+          from: user.username,
+          to: user1.username,
+        });
+        await user1.save();
+      }
+    };
+
+    await Promise.all([
+      updateUserBalance(user.reffer, firstChain),
+      updateUserBalance(user.chaintwo, secondChain),
+      updateUserBalance(user.chainthree, thirdChain),
+      updateUserBalance(user.chainfour, fourthChain),
+      updateUserBalance(user.chainfive, fifthChain),
+    ]);
+
+    return res.status(200).json({ success: true, data: user });
+  } catch (e) {
+    console.error(`Error approving request:`, e);
     return res
       .status(500)
       .json({ success: false, message: "Internal server error" });

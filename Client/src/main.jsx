@@ -17,6 +17,8 @@ import AdminPass from "./pages/Adminpass";
 import Dashboard from "./pages/dashboard/Dashboard";
 import BuyPlan from "./pages/BuyPlan";
 import UserDashboard from "./pages/UserDashboard";
+import EditUser from "./pages/EditUser";
+import UpdateValues from "./pages/UpdateValues";
 
 const router = createBrowserRouter([
   {
@@ -82,8 +84,28 @@ const router = createBrowserRouter([
       {
         path: "/userdashboard",
         element: <UserDashboard />,
+        children: [
+          {
+            path: "/userdashboard/:inner",
+            element: <UserDashboard />,
+          },
+        ],
+      },
+      {
+        path: "/edituserprofileinfo",
+        element: <EditUser />,
+        children: [
+          {
+            path: "/edituserprofileinfo/:id",
+            element: <EditUser />,
+          },
+        ],
       },
 
+      {
+        path: "/updatestaticvalues",
+        element: <UpdateValues />,
+      },
       {
         path: "/lcbpadminssecretdashboard",
         element: <AdminPass />,

@@ -1,14 +1,61 @@
 import React, { useEffect, useState } from "react";
 import "./users.css";
+import { toast } from "sonner";
 import pfp from "./pfp.jpg";
 
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import img1 from "./img1.jpg";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Users = ({ show, scroll }) => {
-  const [details, setDetails] = useState(false);
+  const [details, setDetails] = useState({});
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const navigate = useNavigate();
+
+  const load = async () => {
+    try {
+      setLoading(true);
+      let res = await fetch(`${apiUrl}/api/auth/load`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          skip: data.length,
+        }),
+      });
+
+      let result = await res?.json();
+
+      if (!res.ok || res.success === false) {
+        toast.error(result.message);
+        setLoading(false);
+        return;
+      }
+
+      if (!result.data && data.length === 0) {
+        toast.error("No users found");
+        setLoading(false);
+        return;
+      } else if (result.data.length === 0 && data.length !== 0) {
+        toast.success("No more users found");
+        setLoading(false);
+        return;
+      }
+      setData((prev) => [...prev, ...result.data]);
+      setLoading(false);
+    } catch (e) {
+      toast.error("An unexpected error occured");
+    }
+  };
+
+  useEffect(() => {
+    load();
+  }, []);
 
   return (
     <div>
@@ -27,19 +74,56 @@ const Users = ({ show, scroll }) => {
             }}
           />
           <div className="userDetailsImage">
-            <img src={pfp} />
+            <img
+              src={
+                details.imageurl ||
+                "https://i.pinimg.com/736x/0d/64/98/0d64989794b1a4c9d89bff571d3d5842.jpg"
+              }
+            />
           </div>
           <div className="text">
-            <h1 className="userDetailsHeading">Uzair Manan</h1>
-            <p className="userDetailsEmail">uzairmanan3@gmail.som</p>
-            <h2 className="orderedHeading">Plan : Basic</h2>
-            <h2 className="orderedHeading">referrals : 15</h2>
-            <h2 className="orderedHeading">2nd chain : 15</h2>
-            <h2 className="orderedHeading">3rd chain : 15</h2>
-            <h2 className="orderedHeading">4th chain : 15</h2>
-            <h2 className="orderedHeading">5th chain : 15</h2>
-            <h2 className="orderedHeading">6th chain : 15</h2>
-            <button className="deleteButton">Delete</button>
+            <h1 className="userDetailsHeading">Name : {details.name || "-"}</h1>
+            <p className="userDetailsEmail">Email : {details.email || "-"}</p>
+            <p className="userDetailsEmail">
+              Username : {details.username || "-"}
+            </p>
+            <p className="userDetailsEmail">Phone : {details.phone || "-"}</p>
+            <p className="userDetailsEmail">
+              Balance : {details.balance || "-"}
+            </p>
+            <p className="userDetailsEmail">
+              All time earned : {details.alltimeearned || "-"}
+            </p>
+            <p className="userDetailsEmail">
+              Withdrawn : {details.withdrawn || "-"}
+            </p>
+            <p className="userDetailsEmail">
+              Earned by Reffers : {details.earnedbyreffers || "-"}
+            </p>
+            <p className="userDetailsEmail">Reffer : {details.reffer || "-"}</p>
+            <p className="userDetailsEmail">
+              Chain Two : {details.chaintwo || "-"}
+            </p>
+            <p className="userDetailsEmail">
+              Chain Three : {details.chainthree || "-"}
+            </p>
+            <p className="userDetailsEmail">
+              Chain Four : {details.chainfour || "-"}
+            </p>
+            <p className="userDetailsEmail">
+              Chain Five : {details.chainfive || "-"}
+            </p>
+            <div className="userdetailbuttons">
+              <button
+                className="userdetailbutton"
+                onClick={() => {
+                  navigate(`/edituserprofileinfo/${details._id}`);
+                }}
+              >
+                Edit
+              </button>
+              <button className="userdetailbutton">Delete</button>
+            </div>
           </div>
         </>
       ) : (
@@ -63,33 +147,47 @@ const Users = ({ show, scroll }) => {
           <div className="headings">
             <h3 className="image">Image</h3>
             <h3 className="name">Name</h3>
-            <h3 className="email">Email</h3>
-            <h3 className="ordered">Plan</h3>
+            <h3 className="email">Username</h3>
+            <h3 className="ordered">Email</h3>
           </div>
-          {[1, 2, 3, 4, 5, 6].map((e, index) => {
+          {data?.map((e, index) => {
             return (
               <div
                 className="usercard"
                 onClick={() => {
-                  setDetails(true);
+                  setDetails(e);
                   scroll();
                 }}
                 title="Click to see more"
                 key={index}
               >
                 <div className="userimage">
-                  <img src={pfp} />
+                  <img
+                    src={
+                      e.imageurl ||
+                      "https://i.pinimg.com/736x/0d/64/98/0d64989794b1a4c9d89bff571d3d5842.jpg"
+                    }
+                  />
                 </div>
-                <p className="usersname">Uzair Manan</p>
+                <p className="usersname">{e.name}</p>
                 <p className="useremail" style={{ color: "rgb(90, 90, 90)" }}>
-                  uzairmanan3@gmail.com
+                  {e.username}
                 </p>
                 <p className="ordered" style={{ color: "rgb(90, 90, 90)" }}>
-                  prosperity
+                  {e.email}
                 </p>
               </div>
             );
           })}
+          {!loading && data.length !== 0 && (
+            <button
+              className="loadmore"
+              onClick={load}
+              style={{ margin: "30px auto" }}
+            >
+              Load More
+            </button>
+          )}
         </>
       )}
     </div>

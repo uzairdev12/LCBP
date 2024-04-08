@@ -15,6 +15,8 @@ import Users from "./Userspage";
 import Products from "./Products";
 import { useNavigate } from "react-router-dom";
 import Pending from "./Pending";
+import Withdwalreq from "./Withdwalreq";
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 
 const Dashboard = () => {
   const [showdropdown, setShowDropdown] = useState(false);
@@ -94,6 +96,18 @@ const Dashboard = () => {
                 <a>
                   <TaskAltIcon />
                   Pending
+                </a>
+              </li>
+              <li
+                className="dashboardbuttons dashboardbutton7"
+                onClick={() => {
+                  setPage("withdraw");
+                  setShowSidebar(false);
+                }}
+              >
+                <a>
+                  <CurrencyExchangeIcon />
+                  Withdraws
                 </a>
               </li>
               <li
@@ -312,6 +326,14 @@ const Dashboard = () => {
             ) : page === "pending" ? (
               <>
                 <Pending
+                  show={() => {
+                    setShowSidebar(true);
+                  }}
+                />
+              </>
+            ) : page === "withdraw" ? (
+              <>
+                <Withdwalreq
                   show={() => {
                     setShowSidebar(true);
                   }}

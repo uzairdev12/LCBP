@@ -181,14 +181,15 @@ const BuyPlan = () => {
             <h3>
               Price: ${plan.price} ({plan.amountpkr}pkr)
             </h3>
-            <h3>Box Timeout : {plan.boxcooltime}m</h3>
+            <h3>Box Cooltime : {plan.boxcooltime}m</h3>
             <h3>Box Limit : {plan.boxlimit}/day</h3>
-            <h3>
-              Box Prices : {plan.boxprice1}pkr, {plan.boxprice2}pkr,{" "}
-              {plan.boxprice3}pkr
-            </h3>
+            <h3>Box Prize : {plan.boxprice} pkr</h3>
           </div>
         )}
+        <p className="payp">
+          Send Rs : <span>{plan.amountpkr}</span>pkr to either of these accounts
+          tu buy the plan.
+        </p>
         <h1 className="easypaisa easypaisa1">
           <span>EasyPaisa</span> : <br></br> 03104998317 | Rashid Rashid
         </h1>

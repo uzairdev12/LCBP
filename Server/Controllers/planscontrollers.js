@@ -1,4 +1,5 @@
 const planmodel = require("../Models/planmodel");
+const usermodel = require("../Models/usermodel");
 
 module.exports.addplan = (req, res) => {
   try {
@@ -11,9 +12,7 @@ module.exports.addplan = (req, res) => {
       fourthChain,
       fifthChain,
       boxlimit,
-      boxprice1,
-      boxprice2,
-      boxprice3,
+      boxprice,
       boxcooltime,
       amountpkr,
     } = req.body;
@@ -27,9 +26,7 @@ module.exports.addplan = (req, res) => {
       !fourthChain ||
       !fifthChain ||
       !boxlimit ||
-      !boxprice1 ||
-      !boxprice2 ||
-      !boxprice3 ||
+      !boxprice ||
       !boxcooltime ||
       !amountpkr
     ) {
@@ -45,9 +42,7 @@ module.exports.addplan = (req, res) => {
       fourthChain,
       fifthChain,
       boxlimit,
-      boxprice1,
-      boxprice2,
-      boxprice3,
+      boxprice,
       boxcooltime,
       amountpkr: newpkr,
     });
@@ -71,13 +66,87 @@ module.exports.getplans = async (req, res) => {
 
 module.exports.getPlanDetails = async (req, res) => {
   try {
-    const { planid } = req.body;
+    const { planid, userid } = req.body;
     const plan = await planmodel.findById(planid);
     if (!plan) {
+      usermodel.findByIdAndUpdate(
+        userid,
+        { $set: { planpending: false, plan: null } },
+        { new: true }
+      );
       throw new Error("Plan not found");
     }
     res.status(200).json({ success: true, plan });
   } catch (e) {
     res.status(400).json({ success: false, message: e.message });
+  }
+};
+module.exports.getUsersPlan = async (req, res) => {
+  try {
+    const { userid } = req.body;
+    const user = await usermodel.findById(userid);
+    if (!user) {
+      res.status(200).json({ success: false, message: "User not found" });
+      return;
+    }
+    if (user.planpending) {
+      res.status(200).json({ success: true, planpending: true });
+      return;
+    }
+    const plan = await planmodel.findById(user.plan);
+    if (!plan) {
+      res.status(200).json({ success: true, plan: null });
+      return;
+    }
+    res.status(200).json({ success: true, plan, user });
+  } catch (e) {
+    res.status(400).json({ success: false, message: e.message });
+  }
+};
+
+module.exports.userplans = async (req, res) => {
+  try {
+    const { id: usersid } = req.body;
+    const user = await usermodel.findById(usersid, {
+      name: 1,
+      email: 1,
+      phone: 1,
+      password: 1,
+      plan: 1,
+      balance: 1,
+    });
+    const plans = await planmodel.find({});
+    res.status(200).json({ success: true, plans, user });
+  } catch (e) {
+    res.status(400).json({ success: false, message: e.message });
+  }
+};
+
+module.exports.updatevalue = async (req, res) => {
+  try {
+    const pkrValue = parseFloat(req.body.pkrvalue);
+    if (isNaN(pkrValue)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid pkrvalue format. Please provide a number.",
+      });
+    }
+    const plans = await planmodel.find({});
+    plans.forEach(async (plan) => {
+      plan.amountpkr = plan.price * pkrValue;
+      await plan.save();
+    });
+
+    await usermodel.updateMany(
+      { todayOpened: { $gt: 0 } },
+      { $set: { todayOpened: 0 } }
+    );
+
+    res.status(200).json({ success: true, plans });
+  } catch (e) {
+    res.status(400).json({
+      success: false,
+      message: e.message,
+    });
   }
 };

@@ -46,10 +46,8 @@ const UpdateProfile = () => {
       toast.error("Invalid Email");
       return;
     }
-    if (!selectedImage) {
-      toast.error("No image selected.");
-      return;
-    } else if (
+    if (
+      selectedImage &&
       selectedImage.type !== "image/jpeg" &&
       selectedImage.type !== "image/png" &&
       selectedImage.type !== "image/jpg"
@@ -107,7 +105,7 @@ const UpdateProfile = () => {
 
         localStorage.setItem("LCBPNAME", result.user.name);
         localStorage.setItem("LCBPEMAIL", result.user.email);
-        localStorage.setItem("LCBPPHONE", result.user.number);
+        localStorage.setItem("LCBPPHONE", result.user.phone);
         localStorage.setItem("LCBPIMAGEURL", result.user.imageurl);
         localStorage.setItem("LCBPPASSWORD", result.user.password);
 
@@ -135,12 +133,13 @@ const UpdateProfile = () => {
           console.error({ result, response });
           return;
         }
+        console.log(result);
 
         toast.success(result.message);
 
         localStorage.setItem("LCBPNAME", result.user.name);
         localStorage.setItem("LCBPEMAIL", result.user.email);
-        localStorage.setItem("LCBPPHONE", result.user.number);
+        localStorage.setItem("LCBPPHONE", result.user.phone);
         localStorage.setItem("LCBPPASSWORD", result.user.password);
 
         navigate("/profile");
