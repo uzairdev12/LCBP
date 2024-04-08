@@ -59,7 +59,7 @@ const Users = ({ show, scroll }) => {
 
   return (
     <div>
-      {details ? (
+      {details.length > 0 ? (
         <>
           <ArrowBackIcon
             style={{
