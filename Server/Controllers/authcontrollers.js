@@ -271,6 +271,7 @@ module.exports.getPlanDetails = async (req, res) => {
         return res.status(200).json({ success: true, plan: null });
       }
     } else {
+      return res.status(200).json({ success: true, plan: null });
     }
   } catch (e) {
     res.status(400).json({ success: false, message: e.message });

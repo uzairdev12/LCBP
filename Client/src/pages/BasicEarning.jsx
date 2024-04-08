@@ -22,7 +22,6 @@ const BasicEarning = () => {
 
         body: JSON.stringify({
           id: localStorage.getItem("AUTHUSERUNIQUEID"),
-          userid: localStorage.getItem("AUTHUSERID"),
         }),
       });
       let response = await res.json();
