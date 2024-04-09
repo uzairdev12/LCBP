@@ -58,10 +58,14 @@ module.exports.signup = async (req, res, next) => {
     if (reffer) {
       const refferUser = await userModel.findOne({ username: reffer });
       if (!refferUser) {
-        return res.status(400).json({
-          success: false,
-          message: "Invalid reffer",
+        const user = await userModel.create({
+          username,
+          password,
+          phone,
+          name,
+          email,
         });
+        res.status(200).json({ success: true, user });
       } else {
         const chaintwouser = await userModel.findOne({
           username: refferUser.reffer,
@@ -149,7 +153,6 @@ module.exports.signup = async (req, res, next) => {
         password,
         phone,
         name,
-        reffer,
         email,
       });
       res.status(200).json({ success: true, user });
