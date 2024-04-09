@@ -117,7 +117,7 @@ const Withdwalreq = ({ show }) => {
             console.log(data);
           }}
         >
-          Pending Plans
+          Pending Withdrawals
         </h1>
         <div className="plansDiv">
           {loading ? (
