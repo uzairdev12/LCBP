@@ -18,6 +18,23 @@
   justify-content: center;
   gap: 10px;
 }
+.searchdiv {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+.searchdiv input,
+.searchdiv button {
+  border: none;
+  outline: none;
+  padding: 10px;
+  background-color: rgb(189, 188, 188);
+  border-radius: 5px;
+  color: black;
+}
 .userdetailbutton {
   padding: 10px 30px;
   background-color: rgb(19, 19, 19) !important;

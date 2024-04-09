@@ -10,6 +10,7 @@ const {
   openBox,
   openSpin,
   updateUserall,
+  search,
 } = require("../Controllers/authcontrollers");
 const { getstats } = require("../Controllers/gigcontroller");
 const router = express.Router();
@@ -25,5 +26,6 @@ router.post("/openbox", openBox);
 router.post("/openspin", openSpin);
 router.post("/updateall", updateUserall);
 router.get("/getstats", getstats);
+router.post("/search", search);
 
 module.exports = router;

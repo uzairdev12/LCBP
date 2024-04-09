@@ -12,8 +12,10 @@ import { useNavigate } from "react-router-dom";
 const Users = ({ show, scroll }) => {
   const [details, setDetails] = useState({});
   const [data, setData] = useState([]);
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const apiUrl = import.meta.env.VITE_API_URL;
+  const [searchLoading, setSearchLoading] = useState(false);
   const navigate = useNavigate();
 
   const load = async () => {
@@ -56,6 +58,39 @@ const Users = ({ show, scroll }) => {
   useEffect(() => {
     load();
   }, []);
+
+  const searchuser = async () => {
+    try {
+      setSearchLoading(true);
+      const respose = await fetch(`${apiUrl}/api/auth/search`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: search,
+        }),
+      });
+      const result = await respose.json();
+      if (!result.success) {
+        toast.error(result.message);
+        setSearchLoading(false);
+        return;
+      } else {
+        if (!result.user) {
+          toast.error("No user found");
+          setSearchLoading(false);
+          return;
+        } else {
+          setDetails(result.user);
+          setSearchLoading(false);
+        }
+      }
+    } catch (e) {
+      toast.error("An unexpected error occured");
+      setSearchLoading(false);
+    }
+  };
 
   return (
     <div>
@@ -150,6 +185,33 @@ const Users = ({ show, scroll }) => {
               show();
             }}
           />
+          <div className="searchdiv">
+            <input
+              type="text"
+              placeholder="Username"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            {searchLoading ? (
+              <button
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                Locding...
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  searchuser();
+                }}
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                Search
+              </button>
+            )}
+          </div>
           <h1 className="usersheading">Users</h1>
           <div className="headings">
             <h3 className="image">Image</h3>

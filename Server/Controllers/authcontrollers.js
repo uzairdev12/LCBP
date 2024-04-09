@@ -437,3 +437,17 @@ module.exports.updateUserall = async (req, res) => {
     return res.status(400).json({ success: false, message: e.message });
   }
 };
+module.exports.search = async (req, res) => {
+  try {
+    const { username } = req.body;
+    const user = await userModel.findOne({ username: `@${username}` });
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+    res.status(200).json({ success: true, user });
+  } catch (e) {
+    res.status(400).json({ success: false, message: e.message });
+  }
+};
