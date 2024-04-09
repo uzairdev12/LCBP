@@ -17,6 +17,15 @@ const RightPage = ({ user, transactions, planpending, plan, formatDate }) => {
 
     return formattedDate;
   }
+  function formatNumber(num) {
+    // Convert the number to a string with at most 2 decimal places
+    let formattedNum = num.toFixed(2);
+
+    // Remove trailing zeros
+    formattedNum = formattedNum.replace(/\.?0*$/, "");
+
+    return formattedNum;
+  }
   return (
     <div className="mainrightpage">
       <div
@@ -37,35 +46,37 @@ const RightPage = ({ user, transactions, planpending, plan, formatDate }) => {
         <h1>
           Your Balance :{" "}
           <span style={{ fontSize: "35px", fontWeight: "bold" }}>
-            {user?.balance?.toFixed(3) || 0}
+            {user.balance ? formatNumber(user.balance || 0) : 0}
           </span>{" "}
           pkr
         </h1>
         <h1>
           All time earnings :{" "}
           <span style={{ fontSize: "35px", fontWeight: "bold" }}>
-            {user?.alltimeearned?.toFixed(3) || 0}
+            {user.alltimeearned ? formatNumber(user.alltimeearned || 0) : 0}
           </span>{" "}
           pkr
         </h1>
         <h1>
           Amount withdrawn :{" "}
           <span style={{ fontSize: "35px", fontWeight: "bold" }}>
-            {user?.withdrawn?.toFixed(3) || 0}
+            {user.withdrawn ? formatNumber(user.withdrawn || 0) : 0}
           </span>{" "}
           pkr
         </h1>
         <h1>
           Earned through reffers :{" "}
           <span style={{ fontSize: "35px", fontWeight: "bold" }}>
-            {user?.earnedbyreffers?.toFixed(3) || 0}
+            {user.earnedbyreffers ? formatNumber(user.earnedbyreffers || 0) : 0}
           </span>{" "}
           pkr
         </h1>
         <h1>
           Earned through Box and spin :{" "}
           <span style={{ fontSize: "35px", fontWeight: "bold" }}>
-            {user?.earnedbyspinandbox?.toFixed(3) || 0}
+            {user.earnedbyspinandbox
+              ? formatNumber(user.earnedbyspinandbox || 0)
+              : 0}
           </span>{" "}
           pkr
         </h1>

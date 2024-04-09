@@ -11,6 +11,10 @@ const Box = ({ user }) => {
 
   const open = async () => {
     try {
+      if (!user._id) {
+        toast.error("Your plan is pending at the moment");
+        return;
+      }
       setLoading(true);
       let res = await fetch(`${apiUrl}/api/auth/openbox`, {
         method: "POST",

@@ -129,7 +129,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 20%;
+  align-items: center;
+  min-width: max-content;
 }
 .dashboardcontainer:first-of-type {
   margin-left: 0;
@@ -254,6 +255,32 @@
 .container5 h1 {
   width: calc(max-content+10px);
   background: linear-gradient(to right, #f953c6, #b91d73);
+  background-clip: text;
+  color: transparent;
+}
+.container6 p {
+  width: max-content;
+  background: linear-gradient(to right, #0f9b0f, #000000);
+  background-clip: text;
+  color: transparent;
+}
+
+.container6 h1 {
+  width: calc(max-content+10px);
+  background: linear-gradient(to right, #0f9b0f, #000000);
+  background-clip: text;
+  color: transparent;
+}
+.container7 p {
+  width: max-content;
+  background: linear-gradient(to right, #cb356b, #bd3f32);
+  background-clip: text;
+  color: transparent;
+}
+
+.container7 h1 {
+  width: calc(max-content+10px);
+  background: linear-gradient(to right, #cb356b, #bd3f32);
   background-clip: text;
   color: transparent;
 }

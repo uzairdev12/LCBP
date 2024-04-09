@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./dashboard.css";
 import logo from "../../images/logo.png";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
@@ -17,19 +17,59 @@ import { useNavigate } from "react-router-dom";
 import Pending from "./Pending";
 import Withdwalreq from "./Withdwalreq";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
+import { toast } from "sonner";
 
 const Dashboard = () => {
   const [showdropdown, setShowDropdown] = useState(false);
   const [selected, setSelected] = useState("Today");
   const [showSidebar, setShowSidebar] = useState(false);
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [page, setPage] = useState("stats");
   const navigate = useNavigate();
+  const [stats, setStats] = useState({});
   const scrollableDivRef = useRef(null);
+  const [loading, setLoading] = useState(false);
 
   const scrollToTop = () => {
     scrollableDivRef.current?.scrollTo({ top: 0 });
   };
+  const loadStats = async () => {
+    setLoading(true);
+    const response = await fetch(`${apiUrl}/api/auth/getstats`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const res = await response?.json();
+    if (!res.success) {
+      console.error(res);
+      toast.error(res.message || "An unexpected error occured");
+      setLoading(false);
+      return;
+    }
+    setStats(res.stats);
+    console.log(res.stats);
+    setLoading(false);
+    try {
+    } catch (e) {
+      toast.error("An unexpected error occured");
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
+    loadStats();
+  }, []);
+  function formatNumber(num) {
+    // Convert the number to a string with at most 2 decimal places
+    let formattedNum = num.toFixed(2);
+
+    // Remove trailing zeros
+    formattedNum = formattedNum.replace(/\.?0*$/, "");
+
+    return formattedNum;
+  }
   return (
     <>
       <div className="dashboard">
@@ -204,27 +244,37 @@ const Dashboard = () => {
                 <div className="dashboardboxes">
                   <div className="dashboardcontainer container1">
                     <p>Users</p>
-                    <h1>1579</h1>
+                    <h1>{stats.users ? formatNumber(stats.users) : 0}</h1>
                   </div>
                   <div className="dashboardcontainer container2">
                     <p>Plans</p>
-                    <h1>26</h1>
+                    <h1>{stats.plans ? formatNumber(stats.plans) : 0}</h1>
                   </div>
                   <div className="dashboardcontainer container3">
                     <p>Gigs</p>
-                    <h1>08</h1>
+                    <h1>{stats.gigs ? formatNumber(stats.gigs) : 0}</h1>
                   </div>
                   <div className="dashboardcontainer container4">
                     <p>Plans sold</p>
-                    <h1>07</h1>
+                    <h1>
+                      {stats.plansSold ? formatNumber(stats.plansSold) : 0}
+                    </h1>
                   </div>
                   <div className="dashboardcontainer container5">
-                    <p>Pending </p>
-                    <h1>29</h1>
+                    <p>Pending</p>
+                    <h1>
+                      {stats.plansPending
+                        ? formatNumber(stats.plansPending)
+                        : 0}
+                    </h1>
                   </div>
-                  <div className="dashboardcontainer container5">
+                  <div className="dashboardcontainer container6">
                     <p>Profit</p>
-                    <h1>29</h1>
+                    <h1>{stats.profit ? formatNumber(stats.profit) : 0}</h1>
+                  </div>
+                  <div className="dashboardcontainer container7">
+                    <p>Paid</p>
+                    <h1>{stats.paid ? formatNumber(stats.paid) : 0}</h1>
                   </div>
                 </div>
                 <div className="charts">

@@ -47,6 +47,16 @@ const requestSchema = new mongoose.Schema({
     type: "boolean",
     required: [true, "Pending is required."],
   },
+  profit: {
+    type: "number",
+    required: false,
+    default: 0,
+  },
+  paid: {
+    type: "number",
+    required: false,
+    default: 0,
+  },
   transactionid: {
     type: "string",
     required: [true, "Transaction id is required."],

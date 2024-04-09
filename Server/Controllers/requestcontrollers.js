@@ -59,6 +59,7 @@ module.exports.addreq = async (req, res) => {
     const user = await usermodel.findById(usersid);
     if (!user) {
       res.status(400).json({ success: false, message: "User not found" });
+      return;
     }
     user.plan = planid;
     user.planpending = true;
@@ -70,6 +71,7 @@ module.exports.addreq = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Internal server error" });
+    return;
   }
 };
 
@@ -125,18 +127,8 @@ module.exports.approveRequest = async (req, res) => {
   try {
     const { userid, requstid, planid } = req.body;
 
-    const updatedRequest = await requestmodel
-      .findByIdAndUpdate(
-        requstid,
-        { $set: { pending: false, accepted: true } },
-        { new: true }
-      )
-      .lean()
-      .exec();
-
-    if (!updatedRequest) {
-      throw new Error("Request not found");
-    }
+    let profit = 0;
+    let paid = 0;
 
     const plan = await planmodel.findById(planid);
     if (!plan) {
@@ -151,6 +143,9 @@ module.exports.approveRequest = async (req, res) => {
       fourthChain,
       fifthChain,
     } = plan;
+
+    profit = amountpkr;
+
     const user = await usermodel.findByIdAndUpdate(
       userid,
       {
@@ -168,6 +163,8 @@ module.exports.approveRequest = async (req, res) => {
       const user1 = await usermodel.findOne({ username });
       if (user1 && user1.plan) {
         const amountToAdd = (amountpkr * chainMultiplier) / 100;
+        profit -= amountToAdd;
+        paid += amountToAdd;
         user1.balance = (user1.balance || 0) + amountToAdd;
         user1.earnedbyreffers = (user1.earnedbyreffers || 0) + amountToAdd;
         user1.alltimeearned = (user1.alltimeearned || 0) + amountToAdd;
@@ -188,6 +185,18 @@ module.exports.approveRequest = async (req, res) => {
       updateUserBalance(user.chainfour, fourthChain),
       updateUserBalance(user.chainfive, fifthChain),
     ]);
+    const updatedRequest = await requestmodel
+      .findByIdAndUpdate(
+        requstid,
+        { $set: { pending: false, accepted: true, profit, paid } },
+        { new: true }
+      )
+      .lean()
+      .exec();
+
+    if (!updatedRequest) {
+      throw new Error("Request not found");
+    }
 
     return res.status(200).json({ success: true, data: user });
   } catch (e) {

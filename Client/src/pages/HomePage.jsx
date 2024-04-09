@@ -155,7 +155,7 @@ function HomePage() {
             <div className="col-md-7 content-box hero-content">
               <span>Unlimited opportunities</span>
               <h1>
-                LCB Learn and Earn <b> With LCBP's Digital contributions </b>
+                LCBP Learn and Earn <b> With LCBP's Digital contributions </b>
               </h1>
               <p>Learn and Earn online with LCBP's easy-to-use platform.</p>
               {userid ? (

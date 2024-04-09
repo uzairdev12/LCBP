@@ -59,7 +59,7 @@ const Users = ({ show, scroll }) => {
 
   return (
     <div>
-      {details.length > 0 ? (
+      {details._id ? (
         <>
           <ArrowBackIcon
             style={{
@@ -122,7 +122,14 @@ const Users = ({ show, scroll }) => {
               >
                 Edit
               </button>
-              <button className="userdetailbutton">Delete</button>
+              <button
+                className="userdetailbutton"
+                onClick={() => {
+                  toast.success("Feature coming soon");
+                }}
+              >
+                Delete
+              </button>
             </div>
           </div>
         </>

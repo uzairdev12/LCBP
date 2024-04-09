@@ -21,7 +21,6 @@ const Login = () => {
     password: "",
     confirmPassword: "",
     reffer: "@",
-    balance: "",
   });
 
   let { id } = useParams();
@@ -95,7 +94,6 @@ const Login = () => {
         data.number &&
         data.password &&
         data.confirmPassword &&
-        data.balance &&
         data.reffer
       ) {
         if (data.password === data.confirmPassword) {
@@ -104,9 +102,6 @@ const Login = () => {
             return;
           } else if (!isValidNumber(data.number)) {
             toast.error(`Phone number can only contain numbers`);
-            return;
-          } else if (!isValidNumber(data.balance)) {
-            toast.error("Balance can only contain numbers");
             return;
           } else if (data.number.length < 11) {
             toast.error("Phone number must be 11 digits");
@@ -128,8 +123,7 @@ const Login = () => {
               username: `@${data.username}`,
               phone: data.number,
               password: data.password,
-              reffer: data.reffer,
-              balance: data.balance,
+              reffer: id || data.reffer,
             }),
           });
 
@@ -227,13 +221,6 @@ const Login = () => {
               value={data.reffer}
               onChange={(e) => setData({ ...data, reffer: e.target.value })}
             />
-            <input
-              type="text"
-              className="inputNumber"
-              placeholder="Balance"
-              value={data.balance}
-              onChange={(e) => setData({ ...data, balance: e.target.value })}
-            />
             <button
               onClick={(e) => {
                 e.preventDefault();
@@ -317,15 +304,6 @@ const Login = () => {
                   value={data.reffer}
                   onChange={(e) => setData({ ...data, reffer: e.target.value })}
                 />
-                <input
-                  type="text"
-                  className="inputNumber"
-                  placeholder="Balance"
-                  value={data.balance}
-                  onChange={(e) =>
-                    setData({ ...data, balance: e.target.value })
-                  }
-                />{" "}
               </>
             ) : (
               <>

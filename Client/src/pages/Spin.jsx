@@ -10,6 +10,10 @@ const Spin = ({ user }) => {
   const [loading, setLoading] = useState(false);
   const getspinvalue = async () => {
     try {
+      if (!user._id) {
+        toast.error("Your plan is pending at the moment");
+        return;
+      }
       setLoading(true);
       let res = await fetch(`${apiUrl}/api/auth/openspin`, {
         method: "POST",

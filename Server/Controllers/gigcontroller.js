@@ -1,4 +1,7 @@
 const gigModel = require("../Models/gigmodel");
+const planmodel = require("../Models/planmodel");
+const requestmodel = require("../Models/requestmodel");
+const transactionsmodel = require("../Models/transactionsmodel");
 const usermodel = require("../Models/usermodel");
 
 const validateInput = (body) => {
@@ -160,6 +163,51 @@ module.exports.deletegig = async (req, res) => {
     return res.status(200).json({ success: true });
   } catch (e) {
     console.error(`Error deleting gig:`, e);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
+  }
+};
+module.exports.getstats = async (req, res) => {
+  try {
+    const stats = {
+      users: await usermodel.countDocuments(),
+      gigs: await gigModel.countDocuments(),
+      plans: await planmodel.countDocuments(),
+      plansSold: await requestmodel.countDocuments({
+        accepted: true,
+      }),
+      plansPending: await requestmodel.countDocuments({ accepted: false }),
+      profit: (
+        await requestmodel.find({}, { profit: 1, _id: 0 }).lean().exec()
+      ).reduce((acc, cur) => acc + (cur.profit || 0), 0),
+
+      paid: (
+        await requestmodel.find({}, { paid: 1, _id: 0 }).lean().exec()
+      ).reduce((acc, cur) => acc + (cur.paid || 0), 0),
+    };
+
+    // count up the amount value in all the transactions of type "type: "withdraw""
+
+    const morepaid = await transactionsmodel
+      .aggregate([
+        { $match: { type: "withdraw" } }, // Filter documents with type "withdraw"
+        { $group: { _id: null, totalAmount: { $sum: "$amount" } } }, // Calculate the sum of amounts
+      ])
+      .exec()
+      .then((results) => {
+        if (results.length > 0) {
+          return results[0].totalAmount; // Extract the totalAmount from the result
+        } else {
+          return 0; // If no results found, return 0 or handle it as per your requirement
+        }
+      });
+
+    stats.paid += morepaid;
+
+    return res.status(200).json({ success: true, stats });
+  } catch (e) {
+    console.error(`Error getting stats:`, e);
     return res
       .status(500)
       .json({ success: false, message: "Internal server error" });

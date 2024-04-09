@@ -21,9 +21,7 @@ module.exports.login = async (req, res, next) => {
 
 module.exports.signup = async (req, res, next) => {
   try {
-    const { name, username, email, phone, password, reffer, balance } =
-      req.body;
-    console.log(balance);
+    const { name, username, email, phone, password, reffer } = req.body;
 
     if (!name || !email || !phone || !password) {
       return res.status(400).json({
@@ -76,7 +74,6 @@ module.exports.signup = async (req, res, next) => {
             name,
             reffer,
             email,
-            balance,
           });
           res.status(201).json({ success: true, user });
         } else {
@@ -92,7 +89,6 @@ module.exports.signup = async (req, res, next) => {
               reffer,
               chaintwo: chaintwouser.username,
               email,
-              balance,
             });
             res.status(201).json({ success: true, user });
           } else {
@@ -109,7 +105,6 @@ module.exports.signup = async (req, res, next) => {
                 chaintwo: chaintwouser.username,
                 chainthree: chainthreeuser.username,
                 email,
-                balance,
               });
               res.status(201).json({ success: true, user });
             } else {
@@ -127,7 +122,6 @@ module.exports.signup = async (req, res, next) => {
                   chainthree: chainthreeuser.username,
                   chainfour: chainfouruser.username,
                   email,
-                  balance,
                 });
                 res.status(201).json({ success: true, user });
               } else {
@@ -142,7 +136,6 @@ module.exports.signup = async (req, res, next) => {
                   chainfour: chainfouruser.username,
                   chainfive: chainfiveuser.username,
                   email,
-                  balance,
                 });
                 res.status(201).json({ success: true, user });
               }
@@ -158,7 +151,6 @@ module.exports.signup = async (req, res, next) => {
         name,
         reffer,
         email,
-        balance,
       });
       res.status(200).json({ success: true, user });
     }
