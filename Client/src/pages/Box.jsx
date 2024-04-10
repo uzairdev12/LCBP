@@ -80,7 +80,13 @@ const Box = ({ user }) => {
       {loading ? (
         <button className="open">Loading...</button>
       ) : (
-        <button className="open" onClick={open}>
+        // onClick={open}
+        <button
+          className="open"
+          onClick={() => {
+            toast.error("Spin is not available at the moment.");
+          }}
+        >
           Open
         </button>
       )}

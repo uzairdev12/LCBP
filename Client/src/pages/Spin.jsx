@@ -55,7 +55,13 @@ const Spin = ({ user }) => {
       {loading ? (
         <button id="spin">Wait</button>
       ) : (
-        <button id="spin" onClick={getspinvalue}>
+        // onClick={getspinvalue}
+        <button
+          id="spin"
+          onClick={() => {
+            toast.error("Spin is not available at the moment.");
+          }}
+        >
           Spin
         </button>
       )}
@@ -80,14 +86,7 @@ const Spin = ({ user }) => {
         <div class="five">0.05</div>
         <div class="six">0.1</div>
         <div class="seven">0.15</div>
-        <div
-          class="eight"
-          onClick={() => {
-            console.log(spin);
-          }}
-        >
-          0
-        </div>
+        <div class="eight">0</div>
       </div>
     </div>
   );
