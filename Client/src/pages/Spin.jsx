@@ -55,13 +55,7 @@ const Spin = ({ user }) => {
       {loading ? (
         <button id="spin">Wait</button>
       ) : (
-        // onClick={getspinvalue}
-        <button
-          id="spin"
-          onClick={() => {
-            getspinvalue();
-          }}
-        >
+        <button id="spin" onClick={getspinvalue}>
           Spin
         </button>
       )}
