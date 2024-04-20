@@ -58,7 +58,7 @@ const Spin = ({ user }) => {
         
         <button
           id="spin"
-          onClick={getspinvalue}
+          onClick={()=>{toast.error("Spin is unavailable.")}}
         >
           Spin
         </button>
