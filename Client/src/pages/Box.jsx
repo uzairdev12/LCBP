@@ -84,7 +84,7 @@ const Box = ({ user }) => {
         <button
           className="open"
           onClick={() => {
-            toast.error("Spin is not available at the moment.");
+            toast.error("Box is not available at the moment.");
           }}
         >
           Open

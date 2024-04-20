@@ -6,6 +6,8 @@ const {
   getUsersPlan,
   userplans,
   updatevalue,
+  updatePlan,
+  deletePlan,
 } = require("../Controllers/planscontrollers");
 
 const router = express.Router();
@@ -15,6 +17,8 @@ router.get("/plans", getplans);
 router.post("/details", getPlanDetails);
 router.post("/userplan", getUsersPlan);
 router.post("/userplans", userplans);
+router.post("/updateplan", updatePlan);
+router.post("/deleteplan", deletePlan);
 
 router.post("/updatevalue", updatevalue);
 

@@ -14,7 +14,6 @@ module.exports.withdraw = async (req, res, next) => {
       username,
     } = req.body;
 
-    console.log(req.body);
     if (
       !userid ||
       !balance ||
@@ -27,6 +26,17 @@ module.exports.withdraw = async (req, res, next) => {
       res.status(400).json({ success: false, message: "Invalid request" });
       return;
     }
+    //deduct aount from user
+    const user = await usermodel.findById(userid);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    if (user.balance < amount) {
+      res.status(400).json({ success: false, message: "Insufficient Balance" });
+      return;
+    }
+    user.balance = user.balance - amount;
+    await user.save();
     const withdraw = await withdrawmodel.create({
       userid,
       userbalance: balance,
@@ -73,22 +83,16 @@ module.exports.accept = async (req, res) => {
     }
 
     const withdraw = await withdrawmodel.findById(id);
+    const user = await usermodel.findById(withdraw.userid);
+    user.withdrawn += withdraw.amount;
     if (!withdraw) {
       throw new Error("Withdrawal request not found");
     }
-    const user = await usermodel.findById(withdraw.userid);
 
     if (!user) {
       throw new Error("User not found");
     }
-    if (user.balance < withdraw.amount) {
-      withdrawmodel.findByIdAndDelete(id);
-      res
-        .status(200)
-        .json({ success: true, message: "Withdrawal request accepted" });
-    }
-    user.balance = user.balance - withdraw.amount;
-    user.withdrawn = (user.withdrawn || 0) + withdraw.amount;
+
     withdraw.status = "accepted";
 
     await user.save();
@@ -111,11 +115,15 @@ module.exports.accept = async (req, res) => {
 module.exports.reject = async (req, res) => {
   try {
     const { id } = req.body;
-    console.log(id);
     if (!id) {
       res.status(400).json({ success: false, message: "Invalid request" });
       return;
     }
+    const withdraw = await withdrawmodel.findById(id);
+    const user = await usermodel.findById(withdraw.userid);
+    user.balance += withdraw.amount;
+
+    await user.save();
     await withdrawmodel.findByIdAndDelete(id);
     res
       .status(200)

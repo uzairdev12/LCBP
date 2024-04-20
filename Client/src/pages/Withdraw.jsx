@@ -22,6 +22,10 @@ const Withdraw = ({ user }) => {
         toast.error("Insufficient Balance");
         return;
       }
+      if ((data.amount > 1, 393)) {
+        toast.error("You can only withdraw upto 5$ (1,393 pkr)");
+        return;
+      }
 
       let response = await fetch(`${apiUrl}/api/withdraws/add`, {
         method: "POST",

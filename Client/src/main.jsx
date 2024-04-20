@@ -19,6 +19,7 @@ import BuyPlan from "./pages/BuyPlan";
 import UserDashboard from "./pages/UserDashboard";
 import EditUser from "./pages/EditUser";
 import UpdateValues from "./pages/UpdateValues";
+import EditPlan from "./pages/EditPlan";
 
 const router = createBrowserRouter([
   {
@@ -105,6 +106,16 @@ const router = createBrowserRouter([
       {
         path: "/updatestaticvalues",
         element: <UpdateValues />,
+      },
+      {
+        path: "/editplan",
+        element: <EditPlan />,
+        children: [
+          {
+            path: "/editplan/:id",
+            element: <EditPlan />,
+          },
+        ],
       },
       {
         path: "/lcbpadminssecretdashboard",

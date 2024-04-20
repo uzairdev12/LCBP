@@ -16,6 +16,15 @@
   align-items: center;
   gap: 10px;
 }
+.content button {
+  padding: 5px 10px;
+  margin: 10px 5px;
+  background-color: black;
+  color: white;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+}
 .sortText {
   margin: 0;
   padding: 0;

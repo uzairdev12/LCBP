@@ -9,6 +9,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import AddIcon from "@mui/icons-material/Add";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const Products = ({ show }) => {
   const [showdropdown, setShowDropdown] = useState(false);
@@ -30,6 +31,31 @@ const Products = ({ show }) => {
   const [plans, setPlans] = useState([]);
   const [plansloading, setPlansLoading] = useState(false);
   const [reload, setReload] = useState(false);
+  const navigate = useNavigate();
+
+  const DeletePlan = async (id) => {
+    try {
+      // confirm first
+      if (!window.confirm("Are you sure you want to delete this plan?")) return;
+      const response = await fetch(`${apiUrl}/api/plan/deleteplan`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+      const result = await response.json();
+      if (!result.success) {
+        throw new Error(result.message);
+      }
+      toast.success("Plan deleted successfully");
+      setReload(!reload);
+    } catch (e) {
+      console.log(e);
+      toast.error(e.message);
+      return;
+    }
+  };
 
   const load = async () => {
     try {
@@ -260,6 +286,14 @@ const Products = ({ show }) => {
                     <p>3rd chain : {e.thirdChain}%</p>
                     <p>4th chain : {e.fourthChain}%</p>
                     <p>5th chain : {e.fifthChain}%</p>
+                    <button
+                      onClick={() => {
+                        navigate(`/editplan/${e._id}`);
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button onClick={() => DeletePlan(e._id)}>Delete</button>
                   </div>
                 </div>
               );

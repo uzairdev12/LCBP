@@ -322,6 +322,7 @@ module.exports.openBox = async (req, res) => {
     user.todayOpened++;
     user.balance = (user.balance || 0) + prize;
     user.earnedbyspinandbox = (user.earnedbyspinandbox || 0) + prize;
+    user.alltimeearned = (user.alltimeearned || 0) + prize;
     await user.save();
 
     res.status(200).json({
@@ -365,10 +366,9 @@ module.exports.openSpin = async (req, res) => {
     const prizes = [0.05, 0.1, 0.15];
     const prize = prizes[Math.floor(Math.random() * prizes.length)];
     user.lastOpenedSpin = new Date(now);
-    console.log(user.earnedbyspinandbox, prize);
     user.earnedbyspinandbox = (user.earnedbyspinandbox || 0) + prize;
-    console.log(user.earnedbyspinandbox);
     user.balance = (user.balance || 0) + prize;
+    user.alltimeearned = (user.alltimeearned || 0) + prize;
 
     await user.save();
     res.status(200).json({

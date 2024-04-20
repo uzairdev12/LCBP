@@ -150,3 +150,32 @@ module.exports.updatevalue = async (req, res) => {
     });
   }
 };
+
+module.exports.updatePlan = async (req, res) => {
+  try {
+    const { planid: id } = req.body;
+    const plan = await planmodel.findById(id);
+    if (!plan) {
+      throw new Error("Plan not found");
+    }
+    const updatedPlan = await planmodel.findByIdAndUpdate(id, req.body.plan, {
+      new: true,
+    });
+    res.status(200).json({ success: true, plan: updatedPlan });
+  } catch (e) {
+    res.status(400).json({ success: false, message: e.message });
+  }
+};
+module.exports.deletePlan = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const plan = await planmodel.findById(id);
+    if (!plan) {
+      throw new Error("Plan not found");
+    }
+    await planmodel.findByIdAndDelete(id);
+    res.status(200).json({ success: true });
+  } catch (e) {
+    res.status(400).json({ success: false, message: e.message });
+  }
+};
