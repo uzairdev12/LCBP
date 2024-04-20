@@ -83,7 +83,7 @@ const Box = ({ user }) => {
         
         <button
           className="open"
-          onClick={()=>{toast.error("Box in unavailable")}}
+          onClick={open}
         >
           Open
         </button>
