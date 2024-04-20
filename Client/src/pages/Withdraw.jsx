@@ -22,8 +22,8 @@ const Withdraw = ({ user }) => {
         toast.error("Insufficient Balance");
         return;
       }
-      if ((data.amount > 1, 393)) {
-        toast.error("You can only withdraw upto 5$ (1,393 pkr)");
+      if ((data.amount < 1393)) {
+        toast.error("Minimum withdraw amount is 5$ (1,393 pkr)");
         return;
       }
 
