@@ -294,7 +294,16 @@ module.exports.openBox = async (req, res) => {
         .json({ success: false, message: "User not found" });
     }
 
-    const { cooltime, lastOpenedBox, prize, todayOpened, limit } = user;
+    const plan = await planmodel.findById(user.plan);
+
+    if (!plan) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Plan not found" });
+    }
+
+    const { boxcooltime: cooltime, boxlimit: limit, boxprice: prize } = plan;
+    const { lastOpenedBox, todayOpened } = user;
 
     const now = new Date();
 

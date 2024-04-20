@@ -5,6 +5,7 @@ import { toast } from "sonner";
 const Withdwalreq = ({ show }) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [withdrawalPending, setWithdrawalPending] = useState("");
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const load = async () => {
@@ -53,6 +54,7 @@ const Withdwalreq = ({ show }) => {
   }
   const accept = async (id) => {
     try {
+      setWithdrawalPending(id);
       const result = await fetch(`${apiUrl}/api/withdraws/accept`, {
         method: "POST",
         headers: {
@@ -65,11 +67,14 @@ const Withdwalreq = ({ show }) => {
       const res = await result?.json();
       if (!res.success) {
         toast.error(res.message || "An unexpected error occured");
+        setWithdrawalPending("");
       }
       toast.success("Withdrawal request accepted successfully");
+      setWithdrawalPending("");
       load();
     } catch (e) {
       toast.error(e.message || "An unexpected error occured");
+      setWithdrawalPending("");
     }
   };
   const reject = async (id) => {
@@ -135,6 +140,12 @@ const Withdwalreq = ({ show }) => {
                   <span>Withdraw amount :</span> {e.amount} pkr
                 </p>
                 <p>
+                  <span>Withdraw fees :</span> {e.amount * 0.1} pkr
+                </p>
+                <p>
+                  <span>Amount to send :</span> {e.amount - e.amount * 0.1} pkr
+                </p>
+                <p>
                   <span>Account Platform :</span> {e.AccountPlatform}
                 </p>
                 <p>
@@ -147,13 +158,18 @@ const Withdwalreq = ({ show }) => {
                   <span>Date :</span> {formatDate(e.date)}
                 </p>
                 <div className="buttons">
-                  <button
-                    onClick={() => {
-                      accept(e._id);
-                    }}
-                  >
-                    Approve
-                  </button>
+                  {withdrawalPending !== e._id ? (
+                    <button
+                      onClick={() => {
+                        accept(e._id);
+                      }}
+                    >
+                      Approve
+                    </button>
+                  ) : (
+                    <button>Wait...</button>
+                  )}
+
                   <button
                     onClick={() => {
                       reject(e._id);

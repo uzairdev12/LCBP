@@ -9,21 +9,26 @@ const Withdraw = ({ user }) => {
     accountnum: "",
     amount: "",
   });
+  const [loading, setLoading] = useState(false);
   function isValidNumber(inputString) {
     return /^\d+$/.test(inputString);
   }
   const withdrawamount = async () => {
     try {
+      setLoading(true);
       if (!isValidNumber(data.amount)) {
         toast.error("Amount can only contain numbers");
+        setLoading(false);
         return;
       }
       if (user.balance && data.amount > user.balance) {
         toast.error("Insufficient Balance");
+        setLoading(false);
         return;
       }
-      if ((data.amount > 1, 393)) {
-        toast.error("You can only withdraw upto 5$ (1,393 pkr)");
+      if (data.amount < 555) {
+        toast.error("Minimum withdraw amount is 2$ (555 pkr)");
+        setLoading(false);
         return;
       }
 
@@ -42,12 +47,15 @@ const Withdraw = ({ user }) => {
       const res = await response?.json();
       if (!res.success) {
         toast.error(res.message || "An unexpected error occured");
+        setLoading(false);
         return;
       }
 
       toast.success(res.message);
+      setLoading(false);
     } catch (e) {
       toast.error("An unexpected error occured");
+      setLoading(false);
     }
   };
 
@@ -56,6 +64,7 @@ const Withdraw = ({ user }) => {
       <div className="withdrawCard">
         <h1>Withdraw : </h1>
         <p>Account Balance : {user.balance || 0} pkr</p>
+        <p>Withdraw fees 10% : {data.amount * 0.1 || 0} pkr</p>
         <input
           placeholder="Enter Amount"
           value={data.amount}
@@ -78,7 +87,11 @@ const Withdraw = ({ user }) => {
             setData({ ...data, AccountPlatform: e.target.value })
           }
         />
-        <button onClick={withdrawamount}>Withdraw</button>
+        {loading ? (
+          <button>Loading...</button>
+        ) : (
+          <button onClick={withdrawamount}>Withdraw</button>
+        )}
       </div>
     </div>
   );

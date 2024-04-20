@@ -59,7 +59,7 @@ const Spin = ({ user }) => {
         <button
           id="spin"
           onClick={() => {
-            toast.error("Spin is not available at the moment.");
+            getspinvalue();
           }}
         >
           Spin
