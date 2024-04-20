@@ -182,9 +182,7 @@ module.exports.getstats = async (req, res) => {
         await requestmodel.find({}, { profit: 1, _id: 0 }).lean().exec()
       ).reduce((acc, cur) => acc + (cur.profit || 0), 0),
 
-      paid: (
-        await requestmodel.find({}, { paid: 1, _id: 0 }).lean().exec()
-      ).reduce((acc, cur) => acc + (cur.paid || 0), 0),
+      paid: 0,
     };
 
     // count up the amount value in all the transactions of type "type: "withdraw""
@@ -203,7 +201,7 @@ module.exports.getstats = async (req, res) => {
         }
       });
 
-    stats.paid += morepaid;
+    stats.paid = morepaid;
 
     return res.status(200).json({ success: true, stats });
   } catch (e) {
