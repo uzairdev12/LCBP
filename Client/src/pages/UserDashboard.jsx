@@ -34,7 +34,7 @@ const UserDashboard = () => {
         }),
       });
 
-      const res = await response?.json();
+      const res = await response.json();
       if (!res.success) {
         toast.error(res.message || "An unexpected error occured");
         return;
@@ -48,7 +48,7 @@ const UserDashboard = () => {
       } else {
         setPlanpending(false);
         setUser(res.user);
-        console.log(user);
+        console.log(res.user);
         setPlan(res.plan);
       }
     } catch (e) {

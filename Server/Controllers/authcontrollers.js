@@ -311,6 +311,7 @@ module.exports.openBox = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "Daily limit reached. Please come back tomorrow.",
+        remaining: 0,
       });
     }
 
@@ -324,6 +325,7 @@ module.exports.openBox = async (req, res) => {
         success: true,
         timeRemaining: true,
         RemainingTime: remainingTime,
+        remaining: plan.boxlimit - user.todayOpened,
       });
     }
 
@@ -337,6 +339,7 @@ module.exports.openBox = async (req, res) => {
     res.status(200).json({
       success: true,
       message: `You won ${prize} pkr from box.`,
+      remaining: plan.boxlimit - user.todayOpened,
       prize,
     });
   } catch (e) {

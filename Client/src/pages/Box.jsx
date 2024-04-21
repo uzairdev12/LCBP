@@ -70,6 +70,7 @@ const Box = ({ user }) => {
 
   return (
     <div className="boxPage">
+      <h2>{user.limit - user.todayOpened} boxes left</h2>
       <img className="boxImage" src={box} alt="box" />
       {timeState ? (
         <p className="message">

@@ -98,6 +98,7 @@ module.exports.getUsersPlan = async (req, res) => {
       res.status(200).json({ success: true, plan: null });
       return;
     }
+    user.limit = plan.boxlimit;
     res.status(200).json({ success: true, plan, user });
   } catch (e) {
     res.status(400).json({ success: false, message: e.message });
