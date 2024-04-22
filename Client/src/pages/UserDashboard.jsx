@@ -23,7 +23,6 @@ const UserDashboard = () => {
   const innerPage = useParams().inner;
   const fetchdata = async () => {
     try {
-      console.log("fetching");
       const response = await fetch(`${apiUrl}/api/plan/userplan`, {
         method: "POST",
         headers: {
@@ -37,6 +36,11 @@ const UserDashboard = () => {
       const res = await response.json();
       if (!res.success) {
         toast.error(res.message || "An unexpected error occured");
+        return;
+      }
+      if (res.banned) {
+        localStorage.clear();
+        navigate("/login");
         return;
       }
       if (res.planpending) {

@@ -47,6 +47,11 @@ const Login = () => {
         });
 
         let result = await res.json();
+        if (result.banned) {
+          toast.error("Your account has been permanently banned.");
+          setLoading(false);
+          return;
+        }
 
         if (!res.ok || res.success === false) {
           toast.error(result.message);

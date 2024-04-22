@@ -39,7 +39,10 @@ module.exports.addgig = async (req, res) => {
     if (validationError) {
       return res.status(400).json({ success: false, message: validationError });
     }
-
+    const user = await usermodel.findById(req.body.byid);
+    if (user.banned) {
+      return res.status(200).json({ success: true, banned: true });
+    }
     const newGig = await gigModel.create(req.body);
 
     res.status(200).json({

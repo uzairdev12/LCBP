@@ -35,12 +35,21 @@ const BasicEarning = () => {
           console.log(response);
         } else {
           const response = await fetch(`${apiUrl}/api/plan/plans`, {
-            method: "GET",
+            method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
+
+            body: JSON.stringify({
+              id: localStorage.getItem("AUTHUSERUNIQUEID"),
+            }),
           });
           const result = await response.json();
+          if (result.banned) {
+            localStorage.clear();
+            navigate("/login");
+            return;
+          }
           if (!result || !result.success) {
             const errorMessage = result?.message || "Unknown error";
             throw new Error(errorMessage);

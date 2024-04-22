@@ -13,7 +13,7 @@ const {
 const router = express.Router();
 
 router.post("/addplan", addplan);
-router.get("/plans", getplans);
+router.post("/plans", getplans);
 router.post("/details", getPlanDetails);
 router.post("/userplan", getUsersPlan);
 router.post("/userplans", userplans);

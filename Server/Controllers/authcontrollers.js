@@ -4,6 +4,9 @@ module.exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await userModel.findOne({ email });
+    if (user.banned) {
+      return res.status(200).json({ success: true, banned: true });
+    }
 
     if (!user) {
       throw new Error("Invalid email or password");
@@ -454,14 +457,52 @@ module.exports.updateUserall = async (req, res) => {
 };
 module.exports.search = async (req, res) => {
   try {
-    const { username } = req.body;
-    const user = await userModel.findOne({ username: `@${username}` });
+    const { username, email, phone } = req.body;
+    if (username) {
+      const user = await userModel.findOne({ username: `@${username}` });
+      if (!user) {
+        return res
+          .status(404)
+          .json({ success: false, message: "User not found" });
+      }
+      res.status(200).json({ success: true, user });
+    }
+    if (email) {
+      const user = await userModel.findOne({ email });
+      if (!user) {
+        return res
+          .status(404)
+          .json({ success: false, message: "User not found" });
+      }
+      res.status(200).json({ success: true, user });
+    }
+    if (phone) {
+      const user = await userModel.findOne({ phone });
+      if (!user) {
+        return res
+          .status(404)
+          .json({ success: false, message: "User not found" });
+      }
+      res.status(200).json({ success: true, user });
+    }
+  } catch (e) {
+    res.status(400).json({ success: false, message: e.message });
+  }
+};
+module.exports.deleteUser = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const user = await userModel.findById(id);
     if (!user) {
       return res
         .status(404)
         .json({ success: false, message: "User not found" });
     }
-    res.status(200).json({ success: true, user });
+    user.banned = true;
+    await user.save();
+    res
+      .status(200)
+      .json({ success: true, message: "User deleted successfully" });
   } catch (e) {
     res.status(400).json({ success: false, message: e.message });
   }

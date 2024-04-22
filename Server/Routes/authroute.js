@@ -11,6 +11,7 @@ const {
   openSpin,
   updateUserall,
   search,
+  deleteUser,
 } = require("../Controllers/authcontrollers");
 const { getstats } = require("../Controllers/gigcontroller");
 const router = express.Router();
@@ -27,5 +28,6 @@ router.post("/openspin", openSpin);
 router.post("/updateall", updateUserall);
 router.get("/getstats", getstats);
 router.post("/search", search);
+router.post("/deleteuser", deleteUser);
 
 module.exports = router;

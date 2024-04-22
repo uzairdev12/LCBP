@@ -57,6 +57,14 @@ module.exports.addplan = (req, res) => {
 
 module.exports.getplans = async (req, res) => {
   try {
+    const { id, admin } = req.body;
+    if (!admin) {
+      const user = await usermodel.findById(id);
+      if (user.banned) {
+        return res.status(200).json({ success: true, banned: true });
+      }
+    }
+
     const plans = await planmodel.find();
     res.status(200).json({ success: true, plans });
   } catch (e) {
@@ -87,6 +95,10 @@ module.exports.getUsersPlan = async (req, res) => {
     const user = await usermodel.findById(userid);
     if (!user) {
       res.status(200).json({ success: false, message: "User not found" });
+      return;
+    }
+    if (user.banned) {
+      res.status(200).json({ success: true, banned: true });
       return;
     }
     if (user.planpending) {

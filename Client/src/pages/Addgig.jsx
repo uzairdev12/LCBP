@@ -170,8 +170,13 @@ const Addgig = () => {
       });
 
       let result = await res.json();
+      if (result.banned) {
+        localStorage.clear();
+        navigate("/login");
+        return;
+      }
 
-      if (!res.ok || res.success === false) {
+      if (!result.ok || result.success === false) {
         toast.error(result.message);
         setLoading(false);
         return;

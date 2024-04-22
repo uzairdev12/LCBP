@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./users.css";
 import { toast } from "sonner";
-import pfp from "./pfp.jpg";
-
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import img1 from "./img1.jpg";
-import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const Users = ({ show, scroll }) => {
@@ -58,32 +54,108 @@ const Users = ({ show, scroll }) => {
   useEffect(() => {
     load();
   }, []);
-
-  const searchuser = async () => {
+  const deleteUser = async (id) => {
     try {
-      setSearchLoading(true);
-      const respose = await fetch(`${apiUrl}/api/auth/search`, {
+      const result = await fetch(`${apiUrl}/api/auth/deleteuser`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: search,
+          id,
         }),
       });
-      const result = await respose.json();
-      if (!result.success) {
-        toast.error(result.message);
-        setSearchLoading(false);
+      const res = await result.json();
+      if (!res.success) {
+        toast.error(res.message || "An unexpected error occured");
         return;
-      } else {
-        if (!result.user) {
-          toast.error("No user found");
+      }
+      toast.success("User deleted successfully");
+      setDetails({});
+    } catch (e) {
+      toast.error(e.message || "An unexpected error occured");
+    }
+  };
+
+  const searchuser = async (params) => {
+    try {
+      setSearchLoading(true);
+      if (params.username) {
+        const respose = await fetch(`${apiUrl}/api/auth/search`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: search,
+          }),
+        });
+        const result = await respose.json();
+        if (!result.success) {
+          toast.error(result.message);
           setSearchLoading(false);
           return;
         } else {
-          setDetails(result.user);
+          if (!result.user) {
+            toast.error("No user found");
+            setSearchLoading(false);
+            return;
+          } else {
+            setDetails(result.user);
+            setSearchLoading(false);
+          }
+        }
+      }
+      if (params.email) {
+        const respose = await fetch(`${apiUrl}/api/auth/search`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: search,
+          }),
+        });
+        const result = await respose.json();
+        if (!result.success) {
+          toast.error(result.message);
           setSearchLoading(false);
+          return;
+        } else {
+          if (!result.user) {
+            toast.error("No user found");
+            setSearchLoading(false);
+            return;
+          } else {
+            setDetails(result.user);
+            setSearchLoading(false);
+          }
+        }
+      }
+      if (params.phone) {
+        const respose = await fetch(`${apiUrl}/api/auth/search`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            phone: search,
+          }),
+        });
+        const result = await respose.json();
+        if (!result.success) {
+          toast.error(result.message);
+          setSearchLoading(false);
+          return;
+        } else {
+          if (!result.user) {
+            toast.error("No user found");
+            setSearchLoading(false);
+            return;
+          } else {
+            setDetails(result.user);
+            setSearchLoading(false);
+          }
         }
       }
     } catch (e) {
@@ -160,7 +232,7 @@ const Users = ({ show, scroll }) => {
               <button
                 className="userdetailbutton"
                 onClick={() => {
-                  toast.success("Feature coming soon");
+                  deleteUser(details._id);
                 }}
               >
                 Delete
@@ -197,12 +269,66 @@ const Users = ({ show, scroll }) => {
                   cursor: "pointer",
                 }}
               >
-                Locding...
+                Loading...
               </button>
             ) : (
               <button
                 onClick={() => {
-                  searchuser();
+                  searchuser({ username: true });
+                }}
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                Search
+              </button>
+            )}
+          </div>
+          <div className="searchdiv">
+            <input
+              type="text"
+              placeholder="Email"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            {searchLoading ? (
+              <button
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                Loading...
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  searchuser({ email: true });
+                }}
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                Search
+              </button>
+            )}
+          </div>
+          <div className="searchdiv">
+            <input
+              type="text"
+              placeholder="Phone"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            {searchLoading ? (
+              <button
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                Loading...
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  searchuser({ phone: true });
                 }}
                 style={{
                   cursor: "pointer",
@@ -220,7 +346,9 @@ const Users = ({ show, scroll }) => {
             <h3 className="ordered">Email</h3>
           </div>
           {data?.map((e, index) => {
-            return (
+            return e.banned ? (
+              <></>
+            ) : (
               <div
                 className="usercard"
                 onClick={() => {
