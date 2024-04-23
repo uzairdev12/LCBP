@@ -118,7 +118,9 @@ const Editgig = () => {
           return;
         }
 
-        toast.success("gig Added successfully");
+        toast.success("gig Edited successfully");
+
+        navigate("/mygigs");
       } else {
         let res = await fetch(`${apiUrl}/api/gig/editgig`, {
           method: "POST",

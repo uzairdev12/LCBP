@@ -1,3 +1,4 @@
+const gigmodel = require("../Models/gigmodel");
 const planmodel = require("../Models/planmodel");
 const usermodel = require("../Models/usermodel");
 
@@ -32,6 +33,7 @@ module.exports.addplan = (req, res) => {
     ) {
       throw new Error("All fields are required.");
     }
+
     const newpkr = Number(amountpkr.split(".")[0]);
     const newPlan = new planmodel({
       name,
@@ -75,6 +77,9 @@ module.exports.getplans = async (req, res) => {
 module.exports.getPlanDetails = async (req, res) => {
   try {
     const { planid, userid } = req.body;
+
+    // find all gigs with the title "Your online quran teacher and quran tutor" and delete them
+
     const plan = await planmodel.findById(planid);
     if (!plan) {
       usermodel.findByIdAndUpdate(

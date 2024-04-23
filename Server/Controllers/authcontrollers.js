@@ -4,12 +4,12 @@ module.exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await userModel.findOne({ email });
-    if (user.banned) {
-      return res.status(200).json({ success: true, banned: true });
-    }
 
     if (!user) {
       throw new Error("Invalid email or password");
+    }
+    if (user.banned) {
+      return res.status(200).json({ success: true, banned: true });
     }
 
     if (password !== user.password) {

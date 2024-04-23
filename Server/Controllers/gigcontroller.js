@@ -35,10 +35,14 @@ const validateInput = (body) => {
 
 module.exports.addgig = async (req, res) => {
   try {
+    console.log(req.body);
     const validationError = validateInput(req.body);
     if (validationError) {
-      return res.status(400).json({ success: false, message: validationError });
+      return res
+        .status(400)
+        .json({ success: false, banned: false, message: validationError });
     }
+
     const user = await usermodel.findById(req.body.byid);
     if (user.banned) {
       return res.status(200).json({ success: true, banned: true });
@@ -51,7 +55,11 @@ module.exports.addgig = async (req, res) => {
     });
   } catch (e) {
     console.error("Error adding gig:", e);
-    res.status(500).json({ success: false, message: "Internal server error." });
+    res.status(500).json({
+      success: false,
+      banned: false,
+      message: "Internal server error.",
+    });
   }
 };
 
