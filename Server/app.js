@@ -10,14 +10,15 @@ const withdrawroute = require("./Routes/withdrawroute");
 require("dotenv").config();
 
 const app = express();
+
+app.use(express.json());
+
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
     credentials: true,
   })
 );
-
-app.use(express.json());
 
 mongoose
   .connect(process.env.DATABASE_URL)
