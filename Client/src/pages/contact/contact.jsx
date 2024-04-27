@@ -13,7 +13,7 @@ const contact = () => {
       <div
         className="container"
         style={{
-          margin: "50px 0 0 0",
+          margin: "100px 0 0 0",
         }}
       >
         <div className="row justify-content-center">
