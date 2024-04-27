@@ -111,6 +111,16 @@ function HomePage() {
                   <i className="icon ion-ios-arrow-forward icon-mobile"></i>
                 </a>
               </li>
+              <li className="nav-item nav-custom-link">
+                <a
+                  className="nav-link"
+                  onClick={() => navigate("/contact")}
+                  style={{ cursor: "pointer" }}
+                >
+                  Contact
+                  <i className="icon ion-ios-arrow-forward icon-mobile"></i>
+                </a>
+              </li>
 
               {userid ? (
                 <li

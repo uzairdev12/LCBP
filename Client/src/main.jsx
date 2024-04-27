@@ -20,6 +20,7 @@ import UserDashboard from "./pages/UserDashboard";
 import EditUser from "./pages/EditUser";
 import UpdateValues from "./pages/UpdateValues";
 import EditPlan from "./pages/EditPlan";
+import Contact from "./pages/contact/contact";
 
 const router = createBrowserRouter([
   {
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
       {
         path: "/buyPlan/:planid",
         element: <BuyPlan />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
       },
       {
         path: "/userdashboard",
