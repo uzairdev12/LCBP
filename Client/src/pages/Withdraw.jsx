@@ -26,8 +26,8 @@ const Withdraw = ({ user }) => {
         setLoading(false);
         return;
       }
-      if (data.amount < 550) {
-        toast.error("Minimum withdraw amount is 5$ (550 pkr)");
+      if (data.amount < 1395) {
+        toast.error("Minimum withdraw amount is 5$ (1395 pkr)");
         return;
       }
 
