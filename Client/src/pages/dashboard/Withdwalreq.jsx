@@ -142,7 +142,12 @@ const Withdwalreq = ({ show }) => {
                 <p>
                   <span>Withdraw fees :</span> {e.amount * 0.1} pkr
                 </p>
-                <p>
+                <p
+                  style={{
+                    color: "green",
+                    fontSize: "2rem",
+                  }}
+                >
                   <span>Amount to send :</span> {e.amount - e.amount * 0.1} pkr
                 </p>
                 <p>
