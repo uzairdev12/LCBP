@@ -258,9 +258,13 @@ const BuyPlan = () => {
           />
           <h1>+</h1>
         </div>
-        <button className="submitbutton" onClick={submitrequest}>
-          Submit
-        </button>
+        {loading ? (
+          <button className="submitbutton">Loading...</button>
+        ) : (
+          <button className="submitbutton" onClick={submitrequest}>
+            Submit
+          </button>
+        )}
       </div>
     </div>
   );
