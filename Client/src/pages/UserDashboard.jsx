@@ -172,6 +172,20 @@ const UserDashboard = () => {
             >
               Spin
             </p>
+            {user && !planpending ? (
+              <p
+                onClick={() => {
+                  window.open(
+                    "https://chat.whatsapp.com/KuWjjEzHccz4OvNCPgdVO1",
+                    "_blank"
+                  );
+                }}
+              >
+                Join Whatsapp Group
+              </p>
+            ) : (
+              <></>
+            )}
           </div>
         ) : (
           <div className="links desktop">
@@ -217,6 +231,20 @@ const UserDashboard = () => {
             >
               Spin
             </p>
+            {!planpending && user ? (
+              <p
+                onClick={() => {
+                  window.open(
+                    "https://chat.whatsapp.com/KuWjjEzHccz4OvNCPgdVO1",
+                    "_blank"
+                  );
+                }}
+              >
+                Join Whatsapp Group
+              </p>
+            ) : (
+              <></>
+            )}
           </div>
         )}
       </div>
