@@ -417,7 +417,17 @@ function formatTime(seconds) {
 
 module.exports.updateUserall = async (req, res) => {
   try {
-    const { id, name, email, phone, password, plan, balance } = req.body;
+    const {
+      id,
+      name,
+      email,
+      phone,
+      password,
+      plan,
+      balance,
+      changeplanner,
+      planner,
+    } = req.body;
 
     const user = await userModel.findById(id);
     if (!user) {
@@ -430,7 +440,11 @@ module.exports.updateUserall = async (req, res) => {
     email ? (user.email = email) : null;
     phone ? (user.phone = phone) : null;
     password ? (user.password = password) : null;
-    balance ? (user.balance = balance) : null;
+
+    if (balance) {
+      user.balance = balance;
+      user.alltimeearned = balance;
+    }
 
     if (plan && plan !== user.plan) {
       const planobj = await planmodel.findById(plan);
@@ -444,6 +458,53 @@ module.exports.updateUserall = async (req, res) => {
       user.prize = planobj.boxprice;
       user.cooltime = planobj.boxcooltime;
       user.limit = planobj.boxlimit;
+    }
+    if (changeplanner && planner) {
+      const planneruser = await userModel.findOne({ username: planner });
+      if (planneruser) {
+        user.reffer = planneruser.username;
+        user.chaintwo = planneruser.reffer;
+        user.chainthree = planneruser.chaintwo;
+        user.chainfour = planneruser.chainthree;
+        user.chainfive = planneruser.chainfour;
+        const ChaintwoUsers = await userModel.find({ reffer: user.username });
+        for (let i = 0; i < ChaintwoUsers.length; i++) {
+          ChaintwoUsers[i].chaintwo = planneruser.username;
+          ChaintwoUsers[i].chainthree = planneruser.reffer;
+          ChaintwoUsers[i].chainfour = planneruser.chaintwo;
+          ChaintwoUsers[i].chainfive = planneruser.chainthree;
+          await ChaintwoUsers[i].save();
+        }
+        const ChainthreeUsers = await userModel.find({
+          chaintwo: user.username,
+        });
+        for (let i = 0; i < ChainthreeUsers.length; i++) {
+          ChainthreeUsers[i].chainthree = planneruser.username;
+          ChainthreeUsers[i].chainfour = planneruser.reffer;
+          ChainthreeUsers[i].chainfive = planneruser.chaintwo;
+          await ChainthreeUsers[i].save();
+        }
+        const ChainfourUsers = await userModel.find({
+          chainthree: user.username,
+        });
+        for (let i = 0; i < ChainfourUsers.length; i++) {
+          ChainfourUsers[i].chainfour = planneruser.username;
+          ChainfourUsers[i].chainfive = planneruser.reffer;
+          await ChainfourUsers[i].save();
+        }
+        const ChainfiveUsers = await userModel.find({
+          username: planneruser.username,
+        });
+        for (let i = 0; i < ChainfiveUsers.length; i++) {
+          ChainfiveUsers[i].chainfive = user.username;
+          await ChainfiveUsers[i].save();
+        }
+      } else {
+        return res.status(200).json({
+          success: false,
+          message: "Planner does not exist, invalid planner username.",
+        });
+      }
     }
 
     await user.save();

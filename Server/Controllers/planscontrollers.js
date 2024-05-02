@@ -125,14 +125,7 @@ module.exports.getUsersPlan = async (req, res) => {
 module.exports.userplans = async (req, res) => {
   try {
     const { id: usersid } = req.body;
-    const user = await usermodel.findById(usersid, {
-      name: 1,
-      email: 1,
-      phone: 1,
-      password: 1,
-      plan: 1,
-      balance: 1,
-    });
+    const user = await usermodel.findById(usersid);
     const plans = await planmodel.find({});
     res.status(200).json({ success: true, plans, user });
   } catch (e) {

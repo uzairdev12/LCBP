@@ -10,6 +10,7 @@ const EditUser = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [planner, setPlanner] = useState("");
 
   const [data, setData] = useState({
     name: "",
@@ -19,6 +20,7 @@ const EditUser = () => {
     plan: "",
     balance: 0,
     _id: "",
+    reffer: "",
   });
   function isValidNumber(inputString) {
     return /^\d+$/.test(inputString);
@@ -51,37 +53,70 @@ const EditUser = () => {
     }
 
     try {
-      setLoading(true);
-      console.log(data);
-      const response = await fetch(`${apiUrl}/api/auth/updateall`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: data._id,
-          name: data.name,
-          email: data.email,
-          phone: data.phone,
-          password: data.password,
-          plan: data.plan,
-          balance: data.balance,
-        }),
-      });
+      if (data.reffer === planner) {
+        const response = await fetch(`${apiUrl}/api/auth/updateall`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            changeplanner: false,
+            id: data._id,
+            name: data.name,
+            email: data.email,
+            phone: data.phone,
+            password: data.password,
+            plan: data.plan,
+            balance: data.balance,
+          }),
+        });
 
-      const result = await response.json();
-      console.log(result);
+        const result = await response.json();
+        console.log(result);
 
-      if (!response.ok || !result || result.success === false) {
-        toast.error(result?.message || "Could not update profile");
-        console.error({ result, response });
-        setLoading(false);
-        return;
+        if (!response.ok || !result || result.success === false) {
+          toast.error(result?.message || "Could not update profile");
+          console.error({ result, response });
+          setLoading(false);
+          return;
+        }
+
+        toast.success(result.message);
+
+        navigate("/lcbpadminssecretdashboard");
+      } else {
+        const response = await fetch(`${apiUrl}/api/auth/updateall`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            changeplanner: true,
+            planner: data.reffer,
+            id: data._id,
+            name: data.name,
+            email: data.email,
+            phone: data.phone,
+            password: data.password,
+            plan: data.plan,
+            balance: data.balance,
+          }),
+        });
+
+        const result = await response.json();
+        console.log(result);
+
+        if (!response.ok || !result || result.success === false) {
+          toast.error(result?.message || "Could not update profile");
+          console.error({ result, response });
+          setLoading(false);
+          return;
+        }
+
+        toast.success(result.message);
+
+        navigate("/lcbpadminssecretdashboard");
       }
-
-      toast.success(result.message);
-
-      navigate("/lcbpadminssecretdashboard");
     } catch (error) {
       toast.error(error?.message || "Could not update profile");
       console.error({ error });
@@ -109,6 +144,7 @@ const EditUser = () => {
         setLoading(false);
         return;
       } else {
+        console.log(response);
         setPlans(response.plans);
         setData({
           ...data,
@@ -118,7 +154,9 @@ const EditUser = () => {
           plan: response.user.plan,
           balance: response.user.balance,
           _id: response.user._id,
+          reffer: response.user.reffer,
         });
+        setPlanner(response.user.reffer);
         setLoading(false);
         return;
       }
@@ -196,6 +234,17 @@ const EditUser = () => {
             type="text"
             onChange={(e) => setData({ ...data, balance: e.target.value })}
             value={data?.balance}
+          />
+          <label className="updateProfileLabel" htmlFor="reffer">
+            Change Planner
+          </label>
+          <input
+            id="reffer"
+            className="updateProfileInput"
+            placeholder="Planner"
+            type="text"
+            onChange={(e) => setData({ ...data, reffer: e.target.value })}
+            value={data?.reffer}
           />
           <label className="updateProfileLabel" htmlFor="plan">
             Change Plan

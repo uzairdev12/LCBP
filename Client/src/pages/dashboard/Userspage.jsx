@@ -345,7 +345,7 @@ const Users = ({ show, scroll }) => {
             <h3 className="email">Username</h3>
             <h3 className="ordered">Email</h3>
           </div>
-          {data?.map((e, index) => {
+          {data?.map((e) => {
             return e.banned ? (
               <></>
             ) : (
@@ -356,7 +356,7 @@ const Users = ({ show, scroll }) => {
                   scroll();
                 }}
                 title="Click to see more"
-                key={index}
+                key={e._id}
               >
                 <div className="userimage">
                   <img
