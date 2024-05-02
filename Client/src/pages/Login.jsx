@@ -256,7 +256,7 @@ const Login = () => {
             <span>
               {active2
                 ? "Create an LCBP Account"
-                : "Enter your username and password"}
+                : "Enter your email and password"}
             </span>
             {active2 ? (
               <>
