@@ -40,10 +40,6 @@ const EditUser = () => {
     if (!isValidNumber(data.phone)) {
       toast.error(`Phone number can only contain numbers`);
       return;
-    }
-    if (data.balance && !isValidNumber(data.balance)) {
-      toast.error(`Balance number can only contain numbers`);
-      return;
     } else if (data.phone.length < 11) {
       toast.error("Phone number must be 11 digits");
       return;
@@ -231,7 +227,7 @@ const EditUser = () => {
             id="balance"
             className="updateProfileInput"
             placeholder="Balance"
-            type="text"
+            type="number"
             onChange={(e) => setData({ ...data, balance: e.target.value })}
             value={data?.balance}
           />
