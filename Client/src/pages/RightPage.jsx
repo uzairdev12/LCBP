@@ -49,7 +49,7 @@ const RightPage = ({ user, transactions, planpending, plan, formatDate }) => {
             fontWeight: "bold",
           }}
         >
-          <span style={{ fontSize: "40px" }}>Your Balance</span> :{" "}
+          Your Balance :{" "}
           <span
             style={{ fontSize: "40px", fontWeight: "bold", color: "black" }}
           >
