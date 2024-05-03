@@ -40,6 +40,10 @@ const userSchema = new mongoose.Schema({
   prize: {
     type: "number",
   },
+  teamearning: {
+    type: "number",
+    default: 0,
+  },
   banned: {
     type: "boolean",
     default: false,

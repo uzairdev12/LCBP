@@ -43,35 +43,74 @@ const RightPage = ({ user, transactions, planpending, plan, formatDate }) => {
         )}
       </div>
       <div className="dashbardinfo">
-        <h1>
-          Your Balance :{" "}
-          <span style={{ fontSize: "35px", fontWeight: "bold" }}>
+        <h1
+          style={{
+            color: "black !important",
+            fontWeight: "bold",
+          }}
+        >
+          <span style={{ fontSize: "40px" }}>Your Balance</span> :{" "}
+          <span
+            style={{ fontSize: "40px", fontWeight: "bold", color: "black" }}
+          >
             {user.balance ? formatNumber(user.balance || 0) : 0}
           </span>{" "}
           pkr
         </h1>
-        <h1>
+        <h1
+          style={{
+            color: "black !important",
+            fontWeight: "normal",
+          }}
+        >
           All time earnings :{" "}
           <span style={{ fontSize: "35px", fontWeight: "bold" }}>
             {user.alltimeearned ? formatNumber(user.alltimeearned || 0) : 0}
           </span>{" "}
           pkr
         </h1>
-        <h1>
+        <h1
+          style={{
+            color: "black !important",
+            fontWeight: "normal",
+          }}
+        >
           Amount withdrawn :{" "}
           <span style={{ fontSize: "35px", fontWeight: "bold" }}>
             {user.withdrawn ? formatNumber(user.withdrawn || 0) : 0}
           </span>{" "}
           pkr
         </h1>
-        <h1>
+        <h1
+          style={{
+            color: "black !important",
+            fontWeight: "normal",
+          }}
+        >
           Earned through reffers :{" "}
           <span style={{ fontSize: "35px", fontWeight: "bold" }}>
             {user.earnedbyreffers ? formatNumber(user.earnedbyreffers || 0) : 0}
           </span>{" "}
           pkr
         </h1>
-        <h1>
+        <h1
+          style={{
+            color: "black !important",
+            fontWeight: "normal",
+          }}
+        >
+          Team earnings :{" "}
+          <span style={{ fontSize: "35px", fontWeight: "bold" }}>
+            {user.teamearning ? formatNumber(user.teamearning || 0) : 0}
+          </span>{" "}
+          pkr
+        </h1>
+        <h1
+          style={{
+            color: "black !important",
+            fontWeight: "normal",
+          }}
+        >
           Earned through Box and spin :{" "}
           <span style={{ fontSize: "35px", fontWeight: "bold" }}>
             {user.earnedbyspinandbox

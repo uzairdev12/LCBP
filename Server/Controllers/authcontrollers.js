@@ -331,6 +331,23 @@ module.exports.openBox = async (req, res) => {
         remaining: plan.boxlimit - user.todayOpened,
       });
     }
+    const updateUserBalance = async (username, amount) => {
+      const user1 = await userModel.findOne({ username });
+      if (user1 && user1.plan) {
+        user1.balance = (user1.balance || 0) + amount;
+        user1.teamearning = (user1.teamearning || 0) + amount;
+        user1.alltimeearned = (user1.alltimeearned || 0) + amount;
+        await user1.save();
+      }
+    };
+
+    await Promise.all([
+      updateUserBalance(user.reffer, prize * 0.02),
+      updateUserBalance(user.chaintwo, prize * 0.01),
+      updateUserBalance(user.chainthree, prize * 0.01),
+      updateUserBalance(user.chainfour, prize * 0.01),
+      updateUserBalance(user.chainfive, prize * 0.01),
+    ]);
 
     user.lastOpenedBox = new Date(now);
     user.todayOpened++;
