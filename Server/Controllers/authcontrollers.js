@@ -342,11 +342,11 @@ module.exports.openBox = async (req, res) => {
     };
 
     await Promise.all([
-      updateUserBalance(user.reffer, prize * 0.02),
+      updateUserBalance(user.reffer, prize * 0.01),
       updateUserBalance(user.chaintwo, prize * 0.01),
-      updateUserBalance(user.chainthree, prize * 0.01),
-      updateUserBalance(user.chainfour, prize * 0.01),
-      updateUserBalance(user.chainfive, prize * 0.01),
+      updateUserBalance(user.chainthree, prize * 0.005),
+      updateUserBalance(user.chainfour, prize * 0.005),
+      updateUserBalance(user.chainfive, prize * 0.005),
     ]);
 
     user.lastOpenedBox = new Date(now);
