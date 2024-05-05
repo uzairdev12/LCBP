@@ -4,10 +4,9 @@ import logo from "../../images/logo.png";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import InventoryIcon from "@mui/icons-material/Inventory";
-import CategoryIcon from "@mui/icons-material/Category";
+import ChatIcon from "@mui/icons-material/Chat";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import LogoutIcon from "@mui/icons-material/Logout";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { LineChart } from "react-chartkick";
 import "chartkick/chart.js";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
@@ -148,6 +147,17 @@ const Dashboard = () => {
                 <a>
                   <CurrencyExchangeIcon />
                   Withdraws
+                </a>
+              </li>
+              <li
+                className="dashboardbuttons dashboardbutton8"
+                onClick={() => {
+                  navigate("/lcbpadminssecretchatspage");
+                }}
+              >
+                <a>
+                  <ChatIcon />
+                  Chats
                 </a>
               </li>
               <li

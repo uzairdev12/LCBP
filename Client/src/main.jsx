@@ -21,6 +21,9 @@ import EditUser from "./pages/EditUser";
 import UpdateValues from "./pages/UpdateValues";
 import EditPlan from "./pages/EditPlan";
 import Contact from "./pages/contact/contact";
+import Help from "./pages/Help";
+import Chatspage from "./pages/Chatspage";
+import Reply from "./pages/reply";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +49,20 @@ const router = createBrowserRouter([
         path: "/profile",
         element: <Profile />,
         children: [],
+      },
+      {
+        path: "/lcbpadminssecretchatspage",
+        element: <Chatspage />,
+        children: [],
+      },
+      {
+        path: "/helpuser/:id",
+        element: <Reply />,
+        children: [],
+      },
+      {
+        path: "/help",
+        element: <Help />,
       },
       {
         path: "/referrals",

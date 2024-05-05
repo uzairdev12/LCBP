@@ -84,6 +84,9 @@
 .dashboardbutton7 > a > * {
   color: #00a2ff;
 }
+.dashboardbutton8 > a > * {
+  color: #00b150;
+}
 .dashboardmaincontainer {
   width: 80vw;
   margin: 0;

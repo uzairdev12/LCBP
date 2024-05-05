@@ -1,0 +1,128 @@
+.helpPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+}
+.helpPage h1 {
+  margin-top: 80px;
+}
+.inputDiv {
+  position: fixed;
+  bottom: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  max-width: 500px;
+}
+.messages {
+  width: 100vw;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 60px;
+}
+.message {
+  width: 100vw;
+  padding: 5px 15px;
+  margin: 0 !important;
+}
+.text {
+  width: max-content;
+  max-width: 400px;
+  font-size: 19px !important;
+  font-weight: 400 !important;
+  background-color: rgb(190, 176, 255);
+  border-radius: 0 10px 10px 10px;
+  padding: 10px;
+}
+.inputDiv input {
+  width: 80%;
+  padding: 10px;
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid grey;
+  color: black;
+}
+
+.inputDiv button {
+  width: 18%;
+  padding: 6px;
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid grey;
+  color: black;
+  cursor: pointer;
+}
+.user {
+  display: flex;
+  justify-content: right !important;
+}
+.user .text {
+  border-radius: 10px 0 10px 10px !important;
+  background-color: rgb(219, 176, 255);
+}
+.askidpage {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.askIDbox {
+  padding: 20px;
+  width: max-content;
+  max-width: 90vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(204, 204, 204);
+  flex-direction: column;
+  border-radius: 10px;
+}
+.askIDbox input {
+  width: 80%;
+  padding: 10px;
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid grey;
+  color: black;
+  min-width: 200px;
+  margin: 20px 0 5px 0px;
+  background-color: rgb(233, 233, 233);
+}
+.askIDbox button {
+  background-color: rgb(233, 233, 233);
+  padding: 6px;
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid grey;
+  color: black;
+  cursor: pointer;
+  margin: 5px 0 20px 0;
+}
+.askIDbox span,
+.link {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+  margin: 0;
+  padding: 0;
+}
+.issuesolved {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+@media (max-width: 500px) {
+  .inputDiv {
+    padding: 0 5px;
+  }
+  .text {
+    max-width: 80vw;
+    font-size: 16px !important;
+  }
+}
