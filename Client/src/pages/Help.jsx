@@ -61,6 +61,7 @@ const Help = () => {
       console.log(result);
       if (!res.ok) {
         toast.error(result.message || "internal server error");
+        navigate("/");
         setLoading(false);
         return;
       }
@@ -71,6 +72,7 @@ const Help = () => {
     } catch (e) {
       toast.error(e.message || "internal server error");
       setLoading(false);
+      navigate("/");
     }
   };
   let InitiateChat = async () => {

@@ -53,13 +53,13 @@ const Reply = () => {
       let result = await res.json();
       if (!res.ok) {
         toast.error(result.message || "internal server error");
-        navigate("/");
+        navigate("/lcbpadminssecretchatspage");
         return;
       }
       setMessages([...result.chat.messages]);
     } catch (e) {
       toast.error(e.message || "internal server error");
-      navigate("/");
+      navigate("/lcbpadminssecretchatspage");
     }
   };
 
@@ -128,7 +128,7 @@ const Reply = () => {
             Yes
           </span>
         </p>
-        <div className="Back" onClick={() => navigate("/")}>
+        <div className="Back" onClick={() => navigate(-1)}>
           {" "}
           <ArrowBackIcon />
         </div>
