@@ -24,6 +24,10 @@ import Contact from "./pages/contact/contact";
 import Help from "./pages/Help";
 import Chatspage from "./pages/Chatspage";
 import Reply from "./pages/reply";
+import Classes from "./pages/Classes";
+import ManageClasses from "./pages/ManageClasses";
+import ManageClass from "./pages/ManageClass";
+import CutFine from "./pages/CutFine";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +55,15 @@ const router = createBrowserRouter([
         children: [],
       },
       {
+        path: "/manageClasses",
+        element: <ManageClasses />,
+        children: [],
+      },
+      {
+        path: "/manageClass/:id",
+        element: <ManageClass />,
+      },
+      {
         path: "/lcbpadminssecretchatspage",
         element: <Chatspage />,
         children: [],
@@ -69,6 +82,10 @@ const router = createBrowserRouter([
         element: <Referrals />,
       },
       {
+        path: "/cutfines",
+        element: <CutFine />,
+      },
+      {
         path: "/updateprofile",
         element: <UpdateProfile />,
       },
@@ -79,6 +96,10 @@ const router = createBrowserRouter([
       {
         path: "/mygigs",
         element: <MyGigs />,
+      },
+      {
+        path: "/classes",
+        element: <Classes />,
       },
       {
         path: "/addgig",

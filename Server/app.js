@@ -8,6 +8,7 @@ const requestroute = require("./Routes/requestroute");
 const transactionsroute = require("./Routes/transactionsroute");
 const withdrawroute = require("./Routes/withdrawroute");
 const chatroute = require("./Routes/chatroute");
+const classroute = require("./Routes/Classesroute");
 require("dotenv").config();
 
 const app = express();
@@ -37,6 +38,7 @@ app.use("/api/request", requestroute);
 app.use("/api/transactions", transactionsroute);
 app.use("/api/withdraws", withdrawroute);
 app.use("/api/chat", chatroute);
+app.use("/api/class", classroute);
 
 app.listen(5000, () => {
   console.log("Server is running on port 5000");

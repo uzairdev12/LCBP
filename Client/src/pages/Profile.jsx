@@ -67,11 +67,11 @@ const Profile = () => {
         <div
           className="profileoption"
           onClick={() => {
-            window.open("https://lcbp-community.vercel.app", "_blank");
+            navigate("/classes");
           }}
         >
           <SchoolIcon />
-          <h1>Learn Skills</h1>
+          <h1>Join Classes</h1>
         </div>
       </div>
     </div>

@@ -1,0 +1,78 @@
+.classpage {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
+  min-height: 100vh;
+  text-align: center;
+  padding-top: 60px;
+}
+.classLink {
+  padding: 20px;
+  background-color: rgba(128, 0, 128, 0.151);
+  border-radius: 10px;
+  max-width: 90vw;
+  text-align: center;
+  cursor: pointer;
+}
+.addClass {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  background-color: rgb(173, 173, 173);
+  padding: 20px;
+  border-radius: 10px;
+  padding-top: 80px;
+}
+.addClass input,
+.addClass button {
+  background-color: rgb(218, 218, 218);
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  padding: 10px;
+}
+.endClass {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.red {
+  background-color: rgba(255, 0, 0, 0.192) !important;
+}
+table {
+  width: 90vw;
+  text-align: center;
+}
+td,
+th {
+  padding: 10px 5px;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+.adduser {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.adduser input,
+.adduser button {
+  background-color: rgb(218, 218, 218);
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  padding: 10px;
+}
+.fine {
+  background-color: rgba(255, 0, 0, 0.144);
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
