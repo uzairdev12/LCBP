@@ -61,7 +61,7 @@ const Classesb = () => {
   }, []);
   return (
     <div className="classpage">
-      <div className="Back" onClick={() => navigate("/")}>
+      <div className="Back" onClick={() => navigate(-1)}>
         {" "}
         <ArrowBackIcon />
       </div>

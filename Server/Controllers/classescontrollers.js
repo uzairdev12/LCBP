@@ -82,8 +82,23 @@ module.exports.finestudents = async (req, res) => {
     const allStudents = await usermodel.find({});
     for (const student of allStudents) {
       if (!students.some((s) => s.username === student.username)) {
-        const updatedBalance = student.balance - student.balance * 0.05;
-        student.balance = updatedBalance;
+        if (
+          student.plan ||
+          student.planpending !== true ||
+          student.banned !== true
+        ) {
+          if (user.balance !== 0) {
+            if (user.balance > 0) {
+              const updatedBalance = student.balance - student.balance * 0.05;
+              student.balance = updatedBalance;
+            } else {
+              const updatedBalance = student.balance + student.balance * 0.05;
+              student.balance = updatedBalance;
+            }
+          } else {
+            student.balance = -50;
+          }
+        }
       }
       student.classJoined = "none";
       console.log(student.balance);

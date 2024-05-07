@@ -73,7 +73,7 @@ const Classes = () => {
         classes.map((item) => {
           return (
             <h5
-              className="classLink"
+              className={item.live ? "classLink live" : "classLink"}
               onClick={() => {
                 if (item.live) {
                   joinclass(item.name, item.link);

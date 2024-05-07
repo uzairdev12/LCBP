@@ -5,6 +5,7 @@ import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import ChatIcon from "@mui/icons-material/Chat";
+import ClassIcon from "@mui/icons-material/Class";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { LineChart } from "react-chartkick";
@@ -157,6 +158,17 @@ const Dashboard = () => {
               >
                 <a>
                   <ChatIcon />
+                  Chats
+                </a>
+              </li>
+              <li
+                className="dashboardbuttons dashboardbutton9"
+                onClick={() => {
+                  navigate("/manageclasses");
+                }}
+              >
+                <a>
+                  <ClassIcon />
                   Chats
                 </a>
               </li>

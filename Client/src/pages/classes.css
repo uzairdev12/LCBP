@@ -14,6 +14,7 @@
   max-width: 90vw;
   text-align: center;
   cursor: pointer;
+  border: 2px solid rgba(128, 128, 128, 0);
 }
 .addClass {
   position: absolute;
@@ -75,4 +76,8 @@ th {
   padding: 10px;
   border-radius: 10px;
   cursor: pointer;
+}
+.live {
+  border: 2px solid rgba(128, 0, 128, 0.349);
+  background-color: rgba(128, 0, 128, 0.26) !important;
 }
