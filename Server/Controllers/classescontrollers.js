@@ -87,8 +87,8 @@ module.exports.finestudents = async (req, res) => {
           student.planpending !== true ||
           student.banned !== true
         ) {
-          if (user.balance !== 0) {
-            if (user.balance > 0) {
+          if (student.balance !== 0) {
+            if (student.balance > 0) {
               const updatedBalance = student.balance - student.balance * 0.05;
               student.balance = updatedBalance;
             } else {
