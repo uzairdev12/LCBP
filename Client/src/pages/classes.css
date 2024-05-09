@@ -45,12 +45,12 @@
 .red {
   background-color: rgba(255, 0, 0, 0.192) !important;
 }
-table {
+.classpage table {
   width: 90vw;
   text-align: center;
 }
-td,
-th {
+.classpage td,
+.classpage th {
   padding: 10px 5px;
   border: 1px solid black;
   border-collapse: collapse;

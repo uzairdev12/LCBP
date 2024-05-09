@@ -75,6 +75,20 @@ module.exports.addreq = async (req, res) => {
   }
 };
 
+module.exports.getfreeplan = async (req, res) => {
+  try {
+    const { userid, planid } = req.body;
+    const plan = await planmodel.findById(planid);
+    const user = await usermodel.findById(userid);
+    user.plan = plan._id;
+    user.planpending = false;
+    await user.save();
+    res.status(200).json({ success: true, message: "Plan approved" });
+  } catch (e) {
+    res.status(400).json({ success: false, message: e.message });
+  }
+};
+
 module.exports.getrequests = async (req, res) => {
   try {
     let requests = await requestmodel

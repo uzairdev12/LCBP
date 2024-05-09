@@ -366,6 +366,7 @@ module.exports.openBox = async (req, res) => {
     res.status(400).json({ success: false, message: e.message });
   }
 };
+
 module.exports.openSpin = async (req, res) => {
   try {
     const { userid } = req.body;

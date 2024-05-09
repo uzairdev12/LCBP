@@ -23,6 +23,7 @@
 .boxPage {
   height: 100vh;
   width: 90%;
+  max-width: 90%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,6 +39,9 @@
 .message {
   margin-top: 20px;
   font-size: 20px;
+  width: max-content !important;
+  margin: auto;
+  text-align: center;
 }
 .message span {
   font-size: 25px;

@@ -67,6 +67,32 @@ const BasicEarning = () => {
   useEffect(() => {
     getData();
   }, []);
+  const buyfreeplan = async (id) => {
+    try {
+      setLoading(true);
+      let res = await fetch(`${apiUrl}/api/request/freeplan`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userid: localStorage.getItem("AUTHUSERUNIQUEID"),
+          planid: id,
+        }),
+      });
+      let response = await res.json();
+      if (!response.success) {
+        toast.error(response.message);
+        setLoading(false);
+      } else {
+        toast.success("Plan purchased successfully");
+        navigate("/userdashboard");
+        setLoading(false);
+      }
+    } catch (e) {
+      toast.error(e.message);
+    }
+  };
   return (
     <div className="BasicEarning">
       <div className="Back" onClick={() => navigate(-1)}>
@@ -107,7 +133,13 @@ const BasicEarning = () => {
                     <p>5th chain : {e.fifthChain}%</p>
                     <button
                       className="buyButton"
-                      onClick={() => navigate(`/buyPlan/${e._id}`)}
+                      onClick={() => {
+                        if (e._id === "663cd56b1dd7cbf8accae981") {
+                          buyfreeplan(e._id);
+                        } else {
+                          navigate(`/buyPlan/${e._id}`);
+                        }
+                      }}
                     >
                       Buy Now !
                     </button>

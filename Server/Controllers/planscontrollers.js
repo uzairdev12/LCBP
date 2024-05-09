@@ -66,8 +66,7 @@ module.exports.getplans = async (req, res) => {
         return res.status(200).json({ success: true, banned: true });
       }
     }
-
-    const plans = await planmodel.find();
+    const plans = await planmodel.find().sort({ price: 1 });
     res.status(200).json({ success: true, plans });
   } catch (e) {
     res.status(500).json({ success: false, message: e.message });
@@ -77,8 +76,6 @@ module.exports.getplans = async (req, res) => {
 module.exports.getPlanDetails = async (req, res) => {
   try {
     const { planid, userid } = req.body;
-
-    // find all gigs with the title "Your online quran teacher and quran tutor" and delete them
 
     const plan = await planmodel.findById(planid);
     if (!plan) {
