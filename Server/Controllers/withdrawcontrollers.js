@@ -60,7 +60,6 @@ module.exports.getwithdrawals = async (req, res) => {
   try {
     const withdrawals = await withdrawmodel
       .find({ status: "pending" })
-      .sort({ _id: -1 })
       .lean()
       .exec();
     if (!withdrawals) {

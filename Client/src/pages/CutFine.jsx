@@ -22,6 +22,7 @@ const CutFine = () => {
 
       const data = await result.json();
       setStudents(data);
+      console.log(data);
       setLoading(false);
     } catch (e) {
       navigate("/");
