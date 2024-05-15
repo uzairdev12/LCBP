@@ -176,7 +176,7 @@ const UserDashboard = () => {
               <p
                 onClick={() => {
                   window.open(
-                    "https://chat.whatsapp.com/KuWjjEzHccz4OvNCPgdVO1",
+                    "https://chat.whatsapp.com/BYxufkXcY4O2vhigVqTmsz",
                     "_blank"
                   );
                 }}
@@ -235,7 +235,7 @@ const UserDashboard = () => {
               <p
                 onClick={() => {
                   window.open(
-                    "https://chat.whatsapp.com/KuWjjEzHccz4OvNCPgdVO1",
+                    "https://chat.whatsapp.com/BYxufkXcY4O2vhigVqTmsz",
                     "_blank"
                   );
                 }}
