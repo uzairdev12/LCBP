@@ -89,10 +89,10 @@ module.exports.finestudents = async (req, res) => {
         ) {
           if (student.balance !== 0) {
             if (student.balance > 0) {
-              const updatedBalance = student.balance - student.balance * 0.1;
+              const updatedBalance = student.balance - student.balance * 0.2;
               student.balance = updatedBalance;
             } else {
-              const updatedBalance = student.balance + student.balance * 0.1;
+              const updatedBalance = student.balance + student.balance * 0.2;
               student.balance = updatedBalance;
             }
           } else {

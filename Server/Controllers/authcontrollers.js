@@ -1,5 +1,6 @@
 const userModel = require("../Models/usermodel");
 const planmodel = require("../Models/planmodel");
+const usermodel = require("../Models/usermodel");
 module.exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -164,7 +165,48 @@ module.exports.signup = async (req, res, next) => {
     res.status(400).json({ success: false, message: err.message });
   }
 };
+module.exports.getBlocked = async (req, res, next) => {
+  try {
+    const users = await usermodel.find(
+      { blocked: true },
+      {
+        username: 1,
+      }
+    );
 
+    if (users.length === 0) {
+      throw new Error("Users not found");
+    }
+
+    // Send the users in the response
+    res.status(200).json({ success: true, users });
+  } catch (e) {
+    console.log(e);
+    res.status(400).json({ success: false, message: e.message });
+  }
+};
+
+module.exports.changebanned = async (req, res, next) => {
+  try {
+    const { selected } = req.body;
+
+    if (!selected) {
+      throw new Error("Selected not found");
+    }
+
+    await userModel.updateMany(
+      { username: { $in: selected } },
+      { blocked: false }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Users' blocked status updated successfully",
+    });
+  } catch (e) {
+    res.status(400).json({ success: false, message: e.message });
+  }
+};
 module.exports.getDetails = async (req, res, next) => {
   try {
     let { userID } = req.body;

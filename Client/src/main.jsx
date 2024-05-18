@@ -7,6 +7,7 @@ import HomePage from "./pages/HomePage";
 import Profile from "./pages/Profile";
 import Referrals from "./pages/Referrals";
 import UpdateProfile from "./pages/EditProfile";
+import ChangeBanned from "./pages/ChangeBanned";
 import Freelancers from "./pages/Freelancers";
 import MyGigs from "./pages/MyGigs";
 import Addgig from "./pages/Addgig";
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
       {
         path: "/help",
         element: <Help />,
+      },
+      {
+        path: "/changebanned",
+        element: <ChangeBanned />,
       },
       {
         path: "/referrals",

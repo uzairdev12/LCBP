@@ -108,6 +108,10 @@ const userSchema = new mongoose.Schema({
     type: "string",
     default: null,
   },
+  blocked: {
+    type: "boolean",
+    default: false,
+  },
   planpending: {
     type: "boolean",
     default: false,
