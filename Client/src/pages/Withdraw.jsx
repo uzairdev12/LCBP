@@ -64,6 +64,7 @@ const Withdraw = ({ user }) => {
         <h1>Withdraw : </h1>
         <p>Account Balance : {user.balance || 0} pkr</p>
         <p>Withdraw fees 10% : {data.amount * 0.1 || 0} pkr</p>
+        <p>Maximum time for withdrawal is 48 hours.</p>
         <input
           placeholder="Enter Amount"
           value={data.amount}
