@@ -146,9 +146,14 @@ module.exports.updatevalue = async (req, res) => {
     });
 
     await usermodel.updateMany(
-      { todayOpened: { $gt: 0 }, blocked: { $ne: true } },
+      { todayOpened: { $gt: 0 } },
       { $set: { todayOpened: 0 } }
     );
+
+    // await usermodel.updateMany(
+    //   { todayOpened: { $gt: 0 }, blocked: { $ne: true } },
+    //   { $set: { todayOpened: 0 } }
+    // );
 
     res.status(200).json({ success: true, plans });
   } catch (e) {
