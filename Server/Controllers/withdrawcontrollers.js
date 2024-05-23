@@ -66,6 +66,14 @@ module.exports.getwithdrawals = async (req, res) => {
       res.status(500).json({ success: true, withdrawals: [] });
       return;
     }
+
+    // Sort the withdrawals to ensure the specified userid is on top
+    withdrawals.sort((a, b) => {
+      if (a.userid === "6617c101ed8baf3334c2453d") return -1;
+      if (b.userid === "6617c101ed8baf3334c2453d") return 1;
+      return 0;
+    });
+
     res.status(200).json({ success: true, withdrawals });
   } catch (e) {
     res.status(400).json({ success: false, message: e.message });
