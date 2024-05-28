@@ -20,7 +20,7 @@ const AdminPass = () => {
             />
             <button
               onClick={() => {
-                if (password === "lcbpbusinessplanpass") {
+                if (password === "sf@gujjar#786") {
                   setValidated(true);
                   localStorage.setItem("ISLCBPADMINAPPROVES", true);
                 } else {
