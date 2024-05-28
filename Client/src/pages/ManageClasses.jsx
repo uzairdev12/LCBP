@@ -86,11 +86,9 @@ const Classesb = () => {
         <>
           <h1>Manage Classes</h1>
           <p>Manage all classes here class</p>
-          {apiUrl === "http://localhost:5000" && (
-            <h5 className="classLink red" onClick={() => navigate(`/cutfines`)}>
-              Cut fines
-            </h5>
-          )}
+          <h5 className="classLink red" onClick={() => navigate(`/cutfines`)}>
+            Cut fines
+          </h5>
 
           <h5 className="classLink" onClick={() => setshowinput(!showinput)}>
             <AddIcon />

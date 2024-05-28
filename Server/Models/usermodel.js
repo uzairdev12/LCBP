@@ -116,6 +116,14 @@ const userSchema = new mongoose.Schema({
     type: "boolean",
     default: false,
   },
+  withdrawpending: {
+    type: "boolean",
+    default: false,
+  },
+  withdrawmessage: {
+    type: "string",
+    default: null,
+  },
 });
 
 module.exports = mongoose.model("users", userSchema);

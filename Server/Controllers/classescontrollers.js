@@ -69,82 +69,41 @@ module.exports.getstudents = async (req, res) => {
   try {
     const students = await usermodel.find(
       { classJoined: { $exists: true, $ne: "none" } },
-      { username: 1, classJoined: 1, _id: 0 } // Include only username and classJoined, exclude _id
+      { username: 1, classJoined: 1, _id: 0 }
     );
     res.status(200).json(students);
   } catch (err) {
     res.status(500).json(err);
   }
 };
+
 module.exports.finestudents = async (req, res) => {
   try {
     const { students } = req.body;
 
-    // const studentUsernames = students.map((s) => s.username);
-    // const filter = {
-    //   username: { $nin: studentUsernames },
-    //   $or: [
-    //     { plan: { $exists: true } },
-    //     { planpending: { $ne: true } },
-    //     { banned: { $ne: true } },
-    //   ],
-    // };
+    const studentUsernames = students.map((s) => s.username);
+    const filter = {
+      username: { $nin: studentUsernames },
+      $or: [
+        { plan: { $exists: true } },
+        { planpending: { $ne: true } },
+        { banned: { $ne: true } },
+      ],
+    };
 
-    // const update = [
-    //   {
-    //     $set: {
-    //       classJoined: "none",
-    //       balance: {
-    //         $cond: {
-    //           if: { $gt: ["$balance", 0] },
-    //           then: {
-    //             $subtract: ["$balance", { $multiply: ["$balance", 0.25] }],
-    //           },
-    //           else: {
-    //             $cond: {
-    //               if: { $lt: ["$balance", 0] },
-    //               then: {
-    //                 $add: ["$balance", { $multiply: ["$balance", 0.25] }],
-    //               },
-    //               else: -50,
-    //             },
-    //           },
-    //         },
-    //       },
-    //     },
-    //   },
-    // ];
+    await usermodel.updateMany({}, { $set: { classJoined: "none" } });
 
-    // await usermodel.updateMany(filter, update);
+    const update = {
+      $mul: { balance: 0.75 },
+    };
 
-    const allStudents = await usermodel.find({});
-    for (const student of allStudents) {
-      if (!students.some((s) => s.username === student.username)) {
-        if (
-          student.plan ||
-          student.planpending !== true ||
-          student.banned !== true
-        ) {
-          if (student.balance !== 0) {
-            if (student.balance > 0) {
-              const updatedBalance = student.balance - student.balance * 0.25;
-              student.balance = updatedBalance;
-            } else {
-              const updatedBalance = student.balance + student.balance * 0.25;
-              student.balance = updatedBalance;
-            }
-          } else {
-            student.balance = -50;
-          }
-        }
-      }
-      student.classJoined = "none";
-      console.log(student.balance);
-      await student.save();
-    }
-    res
-      .status(200)
-      .json({ success: true, message: "Students updated successfully." });
+    const result = await usermodel.updateMany(filter, update);
+
+    res.status(200).json({
+      success: true,
+      message: "Students updated successfully.",
+      result,
+    });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }

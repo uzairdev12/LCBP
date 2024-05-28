@@ -36,6 +36,8 @@ module.exports.withdraw = async (req, res, next) => {
       return;
     }
     user.balance = user.balance - amount;
+    user.withdrawpending = true;
+    user.withdrawmessage = null;
     await user.save();
     const withdraw = await withdrawmodel.create({
       userid,
@@ -69,8 +71,8 @@ module.exports.getwithdrawals = async (req, res) => {
 
     // Sort the withdrawals to ensure the specified userid is on top
     withdrawals.sort((a, b) => {
-      if (a.userid === "6617c101ed8baf3334c2453d") return -1;
-      if (b.userid === "6617c101ed8baf3334c2453d") return 1;
+      if (a.userid === "661809c2a405eb3de3251536") return -1;
+      if (b.userid === "661809c2a405eb3de3251536") return 1;
       return 0;
     });
 
@@ -92,6 +94,9 @@ module.exports.accept = async (req, res) => {
     const withdraw = await withdrawmodel.findById(id);
     const user = await usermodel.findById(withdraw.userid);
     user.withdrawn += withdraw.amount;
+    user.withdrawpending = false;
+    user.withdrawmessage =
+      "Your previous Withdrawal was Accepted, You may add a new one.";
     if (!withdraw) {
       throw new Error("Withdrawal request not found");
     }
@@ -129,6 +134,9 @@ module.exports.reject = async (req, res) => {
     const withdraw = await withdrawmodel.findById(id);
     const user = await usermodel.findById(withdraw.userid);
     user.balance += withdraw.amount;
+    user.withdrawpending = false;
+    user.withdrawmessage =
+      "Your previous Withdrawal was Rejected, You may add a new one.";
 
     await user.save();
     await withdrawmodel.findByIdAndDelete(id);

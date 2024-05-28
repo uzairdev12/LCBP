@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const Withdraw = ({ user }) => {
+  const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
   const [data, setData] = useState({
     AccountPlatform: "",
@@ -18,6 +20,11 @@ const Withdraw = ({ user }) => {
       setLoading(true);
       if (!isValidNumber(data.amount)) {
         toast.error("Amount can only contain numbers");
+        setLoading(false);
+        return;
+      }
+      if (user.withdrawpending) {
+        toast.error("Please wait for your previous withdrawal to be processed");
         setLoading(false);
         return;
       }
@@ -52,6 +59,7 @@ const Withdraw = ({ user }) => {
 
       toast.success(res.message);
       setLoading(false);
+      navigate("/");
     } catch (e) {
       toast.error("An unexpected error occured");
       setLoading(false);
@@ -87,6 +95,15 @@ const Withdraw = ({ user }) => {
             setData({ ...data, AccountPlatform: e.target.value })
           }
         />
+        {user.withdrawpending && (
+          <p style={{ color: "red" }}>
+            You have a pending withdrawal, please try again later.
+          </p>
+        )}
+        {user.withdrawmessage && (
+          <p style={{ color: "green" }}>{user.withdrawmessage}</p>
+        )}
+
         {loading ? (
           <button>Loading...</button>
         ) : (
