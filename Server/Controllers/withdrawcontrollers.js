@@ -60,6 +60,28 @@ module.exports.withdraw = async (req, res, next) => {
 
 module.exports.getwithdrawals = async (req, res) => {
   try {
+    const pendingWithdrawals = await withdrawmodel.find({ status: "pending" });
+
+    const now = new Date();
+
+    for (const withdrawal of pendingWithdrawals) {
+      const withdrawalDate = new Date(withdrawal.date);
+      const diffInHours = (now - withdrawalDate) / (1000 * 60 * 60);
+
+      if (diffInHours >= 72) {
+        const user = await usermodel.findById(withdrawal.userid);
+
+        if (user) {
+          user.balance += withdrawal.amount;
+          user.withdrawpending = false;
+          user.withdrawmessage =
+            "Your previous Withdrawal was Rejected due to some system errors, You may add a new one.";
+
+          await user.save();
+          await withdrawmodel.findByIdAndDelete(withdrawal._id);
+        }
+      }
+    }
     const withdrawals = await withdrawmodel
       .find({ status: "pending" })
       .lean()
@@ -75,7 +97,6 @@ module.exports.getwithdrawals = async (req, res) => {
       if (b.userid === "661809c2a405eb3de3251536") return 1;
       return 0;
     });
-
     res.status(200).json({ success: true, withdrawals });
   } catch (e) {
     res.status(400).json({ success: false, message: e.message });
