@@ -94,7 +94,7 @@ module.exports.finestudents = async (req, res) => {
     await usermodel.updateMany({}, { $set: { classJoined: "none" } });
 
     const update = {
-      $mul: { balance: 0.75 },
+      $mul: { balance: 0.5 },
     };
 
     const result = await usermodel.updateMany(filter, update);
