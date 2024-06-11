@@ -140,7 +140,7 @@ const Withdwalreq = ({ show }) => {
                   <span>Withdraw amount :</span> {e.amount} pkr
                 </p>
                 <p>
-                  <span>Withdraw fees :</span> {e.amount * 0.15} pkr
+                  <span>Withdraw fees :</span> {e.amount * 0.1} pkr
                 </p>
                 <p
                   style={{
@@ -148,7 +148,7 @@ const Withdwalreq = ({ show }) => {
                     fontSize: "2rem",
                   }}
                 >
-                  <span>Amount to send :</span> {e.amount - e.amount * 0.15} pkr
+                  <span>Amount to send :</span> {e.amount - e.amount * 0.1} pkr
                 </p>
                 <p>
                   <span>Account Platform :</span> {e.AccountPlatform}
