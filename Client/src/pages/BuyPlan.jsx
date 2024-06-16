@@ -194,10 +194,10 @@ const BuyPlan = () => {
           tu buy the plan.
         </p>
         <h1 className="easypaisa easypaisa1">
-          <span>EasyPaisa</span> : <br></br> 03104998317 | Rashid Rashid
+          <span>EasyPaisa</span> : <br></br> 03142069476 | Rimsha Sattar
         </h1>
         <h1 className="easypaisa easypaisa2">
-          <span>Jazzcash</span> : <br></br> 03440487738 | Hadeeqa T zahra
+          <span>Jazzcash</span> : <br></br> 03142069476 | Rimsha Sattar
         </h1>
         <div className="radios">
           <div className="radiodivs">
