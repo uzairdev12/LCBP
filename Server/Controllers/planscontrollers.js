@@ -96,25 +96,9 @@ module.exports.getUsersPlan = async (req, res) => {
   try {
     const { userid } = req.body;
     const user = await usermodel.findById(userid);
-    const pendingWithdrawal = await withdrawmodel.findOne({
-      userid: userid,
-      status: "pending",
-    });
-    if (pendingWithdrawal) {
-      const now = new Date();
-      const withdrawalDate = new Date(pendingWithdrawal.date);
-      const diffInHours = (now - withdrawalDate) / (1000 * 60 * 60);
+    
 
-      if (diffInHours >= 72) {
-        user.balance += pendingWithdrawal.amount;
-        user.withdrawpending = false;
-        user.withdrawmessage =
-          "Your previous Withdrawal was Rejected due to some system errors, You may add a new one.";
-
-        await user.save();
-        await withdrawmodel.findByIdAndDelete(pendingWithdrawal._id);
-      }
-    }
+      
 
     if (!user) {
       res.status(200).json({ success: false, message: "User not found" });
