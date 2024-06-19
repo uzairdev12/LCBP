@@ -71,17 +71,7 @@ module.exports.getwithdrawals = async (req, res) => {
       if (diffInHours >= 72) {
         const user = await usermodel.findById(withdrawal.userid);
 
-        if (user) {
-          user.balance += withdrawal.amount;
-          user.withdrawpending = false;
-          user.withdrawmessage =
-            "Your previous Withdrawal was Rejected due to some system errors, You may add a new one.";
-
-          await user.save();
-          await withdrawmodel.findByIdAndDelete(withdrawal._id);
-        }
-      }
-    }
+        
     const withdrawals = await withdrawmodel
       .find({ status: "pending" })
       .lean()
