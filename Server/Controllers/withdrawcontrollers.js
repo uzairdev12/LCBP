@@ -60,16 +60,7 @@ module.exports.withdraw = async (req, res, next) => {
 
 module.exports.getwithdrawals = async (req, res) => {
   try {
-    const pendingWithdrawals = await withdrawmodel.find({ status: "pending" });
-
-    const now = new Date();
-
-    for (const withdrawal of pendingWithdrawals) {
-      const withdrawalDate = new Date(withdrawal.date);
-      const diffInHours = (now - withdrawalDate) / (1000 * 60 * 60);
-
-      if (diffInHours >= 72) {
-        const user = await usermodel.findById(withdrawal.userid);
+    
 
         
     const withdrawals = await withdrawmodel
