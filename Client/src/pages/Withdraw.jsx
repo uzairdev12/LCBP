@@ -33,8 +33,11 @@ const Withdraw = ({ user }) => {
         setLoading(false);
         return;
       }
-      if (data.amount < 1395) {
-        toast.error("Minimum withdraw amount is 5$ (1395 pkr)");
+      if (data.amount < 800) {
+        toast.error("Minimum withdraw amount is 800pkr");
+        return;
+      }if (data.amount > 3000) {
+        toast.error("Maximum withdraw amount is 3000pkr");
         return;
       }
 
@@ -71,8 +74,8 @@ const Withdraw = ({ user }) => {
       <div className="withdrawCard">
         <h1>Withdraw : </h1>
         <p>Account Balance : {user.balance || 0} pkr</p>
-        <p>Withdraw fees 10% : {data.amount * 0.1 || 0} pkr</p>
-        <p>Maximum time for withdrawal is 72 hours.</p>
+        <p>Withdraw fees : {data.amount * 0.1|| 0} pkr</p>
+        <p>Withdrawals might take some time.</p>
         <input
           placeholder="Enter Amount"
           value={data.amount}

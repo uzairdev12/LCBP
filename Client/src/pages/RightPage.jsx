@@ -57,18 +57,7 @@ const RightPage = ({ user, transactions, planpending, plan, formatDate }) => {
           </span>{" "}
           pkr
         </h1>
-        <h1
-          style={{
-            color: "black !important",
-            fontWeight: "normal",
-          }}
-        >
-          All time earnings :{" "}
-          <span style={{ fontSize: "35px", fontWeight: "bold" }}>
-            {user.alltimeearned ? formatNumber(user.alltimeearned || 0) : 0}
-          </span>{" "}
-          pkr
-        </h1>
+        
         <h1
           style={{
             color: "black !important",
