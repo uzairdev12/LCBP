@@ -120,6 +120,10 @@ const userSchema = new mongoose.Schema({
     type: "boolean",
     default: false,
   },
+  planDate: {
+    type: "date",
+    default: null,
+  },
   withdrawmessage: {
     type: "string",
     default: null,

@@ -77,8 +77,11 @@ const Products = ({ show }) => {
         const errorMessage = result?.message || "Unknown error";
         throw new Error(errorMessage);
       }
-      setPlans(result.plans);
-      console.log(result.plans);
+
+      const filteredPlans = result.plans.filter(
+        (plan) => plan._id !== "662327127cc61c15f06b4f83"
+      );
+      setPlans(filteredPlans);
       setPlansLoading(false);
     } catch (error) {
       console.error(error);
