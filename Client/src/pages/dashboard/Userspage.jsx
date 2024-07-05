@@ -11,8 +11,45 @@ const Users = ({ show, scroll }) => {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const apiUrl = import.meta.env.VITE_API_URL;
+  const [res, setRes] = useState({
+    referrs: 0,
+    chaintwo: 0,
+    chainthree: 0,
+    chainfour: 0,
+    chainfive: 0,
+  });
   const [searchLoading, setSearchLoading] = useState(false);
   const navigate = useNavigate();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (details.username) {
+          const res = await fetch(`${apiUrl}/api/auth/getReffers`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: details.username,
+            }),
+          });
+
+          const result = await res.json();
+          if (!res.ok || result.success === false) {
+            toast.error(result.message);
+            return;
+          } else {
+            console.log(result);
+            setRes(result);
+          }
+        }
+      } catch (e) {
+        toast.error(e.message);
+      }
+    };
+
+    fetchData();
+  }, [details]);
 
   const load = async () => {
     try {
@@ -220,6 +257,22 @@ const Users = ({ show, scroll }) => {
             <p className="userDetailsEmail">
               Chain Five : {details.chainfive || "-"}
             </p>
+            <p className="userDetailsEmail">
+              Direct reffers : {res.referrs || "-"}
+            </p>
+            <p className="userDetailsEmail">
+              Chain Two reffers : {res.chaintwo || "-"}
+            </p>
+            <p className="userDetailsEmail">
+              Chain Three reffers : {res.chainthree || "-"}
+            </p>
+            <p className="userDetailsEmail">
+              Chain Four reffers : {res.chainfour || "-"}
+            </p>
+            <p className="userDetailsEmail">
+              Chain Five reffers : {res.chainfive || "-"}
+            </p>
+
             <div className="userdetailbuttons">
               <button
                 className="userdetailbutton"
