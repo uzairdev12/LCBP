@@ -57,7 +57,10 @@ const BasicEarning = () => {
           const filteredPlans = result.plans.filter(
             (plan) => plan._id !== "662327127cc61c15f06b4f83"
           );
-          setPlans(filteredPlans);
+          const newfilteredPlans = result.plans.filter(
+            (plan) => plan.price !== 0
+          );
+          setPlans(newfilteredPlans);
           setLoading(false);
         }
       }
@@ -70,32 +73,32 @@ const BasicEarning = () => {
   useEffect(() => {
     getData();
   }, []);
-  const buyfreeplan = async (id) => {
-    try {
-      setLoading(true);
-      let res = await fetch(`${apiUrl}/api/request/freeplan`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userid: localStorage.getItem("AUTHUSERUNIQUEID"),
-          planid: id,
-        }),
-      });
-      let response = await res.json();
-      if (!response.success) {
-        toast.error(response.message);
-        setLoading(false);
-      } else {
-        toast.success("Plan purchased successfully");
-        navigate("/userdashboard");
-        setLoading(false);
-      }
-    } catch (e) {
-      toast.error(e.message);
-    }
-  };
+  // const buyfreeplan = async (id) => {
+  //   try {
+  //     setLoading(true);
+  //     let res = await fetch(`${apiUrl}/api/request/freeplan`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         userid: localStorage.getItem("AUTHUSERUNIQUEID"),
+  //         planid: id,
+  //       }),
+  //     });
+  //     let response = await res.json();
+  //     if (!response.success) {
+  //       toast.error(response.message);
+  //       setLoading(false);
+  //     } else {
+  //       toast.success("Plan purchased successfully");
+  //       navigate("/userdashboard");
+  //       setLoading(false);
+  //     }
+  //   } catch (e) {
+  //     toast.error(e.message);
+  //   }
+  // };
   return (
     <div className="BasicEarning">
       <div className="Back" onClick={() => navigate(-1)}>
