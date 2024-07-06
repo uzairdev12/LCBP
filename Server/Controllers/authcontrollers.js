@@ -223,24 +223,61 @@ module.exports.getDetails = async (req, res, next) => {
 };
 module.exports.getReffers = async (req, res, next) => {
   try {
-    let { username } = req.body;
+    let { username, admin } = req.body;
     if (!username) {
       throw new Error("Username not found");
     }
+    let refferCount;
+    let chaintwoCount;
+    let chainthreeCount;
+    let chainfourCount;
+    let chainfiveCount;
 
-    const refferCount = await userModel.countDocuments({ reffer: username });
-    const chaintwoCount = await userModel.countDocuments({
-      chaintwo: username,
-    });
-    const chainthreeCount = await userModel.countDocuments({
-      chainthree: username,
-    });
-    const chainfourCount = await userModel.countDocuments({
-      chainfour: username,
-    });
-    const chainfiveCount = await userModel.countDocuments({
-      chainfive: username,
-    });
+    if (!admin) {
+      refferCount = await userModel.countDocuments({ reffer: username });
+      chaintwoCount = await userModel.countDocuments({
+        chaintwo: username,
+      });
+      chainthreeCount = await userModel.countDocuments({
+        chainthree: username,
+      });
+      chainfourCount = await userModel.countDocuments({
+        chainfour: username,
+      });
+      chainfiveCount = await userModel.countDocuments({
+        chainfive: username,
+      });
+    } else {
+      refferCount = await userModel.countDocuments({
+        reffer: username,
+        plan: { $ne: null, $ne: "663cd56b1dd7cbf8accae981" },
+        planpending: false,
+      });
+
+      chaintwoCount = await userModel.countDocuments({
+        chaintwo: username,
+        plan: { $ne: null, $ne: "663cd56b1dd7cbf8accae981" },
+        planpending: false,
+      });
+
+      chainthreeCount = await userModel.countDocuments({
+        chainthree: username,
+        plan: { $ne: null, $ne: "663cd56b1dd7cbf8accae981" },
+        planpending: false,
+      });
+
+      chainfourCount = await userModel.countDocuments({
+        chainfour: username,
+        plan: { $ne: null, $ne: "663cd56b1dd7cbf8accae981" },
+        planpending: false,
+      });
+
+      chainfiveCount = await userModel.countDocuments({
+        chainfive: username,
+        plan: { $ne: null, $ne: "663cd56b1dd7cbf8accae981" },
+        planpending: false,
+      });
+    }
 
     res.status(200).json({
       success: true,

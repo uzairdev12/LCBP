@@ -57,7 +57,7 @@ const BasicEarning = () => {
           const filteredPlans = result.plans.filter(
             (plan) => plan._id !== "662327127cc61c15f06b4f83"
           );
-          const newfilteredPlans = result.plans.filter(
+          const newfilteredPlans = filteredPlans.filter(
             (plan) => plan.price !== 0
           );
           setPlans(newfilteredPlans);

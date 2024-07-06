@@ -31,6 +31,7 @@ const Users = ({ show, scroll }) => {
             },
             body: JSON.stringify({
               username: details.username,
+              admin: true,
             }),
           });
 
