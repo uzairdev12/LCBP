@@ -29,6 +29,8 @@ import Classes from "./pages/Classes";
 import ManageClasses from "./pages/ManageClasses";
 import ManageClass from "./pages/ManageClass";
 import CutFine from "./pages/CutFine";
+import About from "./pages/About";
+import EditAbout from "./pages/EditAbout";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +55,16 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+        children: [],
+      },
+      {
+        path: "/about",
+        element: <About />,
+        children: [],
+      },
+      {
+        path: "/editaboutvaluesandothertext",
+        element: <EditAbout />,
         children: [],
       },
       {

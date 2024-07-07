@@ -14,6 +14,9 @@ const {
   deleteUser,
   getBlocked,
   changebanned,
+  addvalue,
+  getvalues,
+  updatevalues,
 } = require("../Controllers/authcontrollers");
 const { getstats } = require("../Controllers/gigcontroller");
 const router = express.Router();
@@ -32,7 +35,8 @@ router.get("/getstats", getstats);
 router.post("/search", search);
 router.get("/getblocked", getBlocked);
 router.post("/changebanned", changebanned);
-
 router.post("/deleteuser", deleteUser);
+router.get("/getvalues", getvalues);
+router.post("/updatevalues", updatevalues);
 
 module.exports = router;

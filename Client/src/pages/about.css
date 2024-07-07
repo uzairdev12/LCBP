@@ -1,0 +1,127 @@
+.aboutPage,
+.EditAboutPage {
+  width: 100vw;
+  min-height: 100vh;
+  text-align: center;
+  padding: 50px 5vw;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.aboutPage > p {
+  margin: 20px 0 50px 0;
+  width: 100%;
+  text-align: center;
+}
+
+.aboutPage > h1:nth-child(1) {
+  background: #12c2e9; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #f64f59,
+    #c471ed,
+    #12c2e9
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #f64f59, #c471ed, #12c2e9);
+  background-clip: text;
+  color: transparent;
+  text-align: center;
+}
+.aboutPage > h1:nth-child(3) {
+  background: #ff0099; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #493240,
+    #ff0099
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #493240,
+    #ff0099
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  background-clip: text;
+  text-align: center;
+  color: transparent;
+}
+.aboutPage > h1:nth-child(5) {
+  background: #f953c6; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #b91d73,
+    #f953c6
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #b91d73,
+    #f953c6
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  background-clip: text;
+  text-align: center;
+  color: transparent;
+}
+.aboutPage > h1:nth-child(7) {
+  background: #c31432; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #240b36,
+    #c31432
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #240b36,
+    #c31432
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  background-clip: text;
+  text-align: center;
+  color: transparent;
+}
+.aboutPage > h1:nth-child(9) {
+  background: #f12711; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #f5af19,
+    #f12711
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #f5af19,
+    #f12711
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  background-clip: text;
+  color: transparent;
+  text-align: center;
+}
+.EditAboutPage > label {
+  font-size: 20px;
+  margin: 20px 0 5px 0;
+}
+.EditAboutPage > textarea {
+  font-size: 17px;
+  padding: 5px 15px;
+  background-color: rgba(0, 0, 0, 0.075);
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  max-height: 300px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.EditAboutPage > button {
+  font-size: 17px;
+  padding: 10px 30px;
+  background-color: rgba(0, 0, 0, 0.158);
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  max-height: 300px;
+  width: 100%;
+  max-width: 500px;
+  margin: 50px 0;
+}

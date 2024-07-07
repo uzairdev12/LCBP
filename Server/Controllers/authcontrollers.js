@@ -1,6 +1,7 @@
 const userModel = require("../Models/usermodel");
 const planmodel = require("../Models/planmodel");
 const usermodel = require("../Models/usermodel");
+const valuesmodel = require("../Models/valuesmodel");
 module.exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -662,6 +663,36 @@ module.exports.deleteUser = async (req, res) => {
       .status(200)
       .json({ success: true, message: "User deleted successfully" });
   } catch (e) {
+    res.status(400).json({ success: false, message: e.message });
+  }
+};
+module.exports.getvalues = async (req, res) => {
+  try {
+    const value = await valuesmodel.findById("66893f2d6a0e97be82e77c03");
+    res.status(200).json({ success: true, value });
+  } catch (e) {
+    res.status(400).json({ success: false, message: e.message });
+  }
+};
+
+module.exports.updatevalues = async (req, res) => {
+  try {
+    const { value } = req.body;
+    let { _id, ...rest } = value;
+    let valueupdate = await valuesmodel.updateOne(
+      { _id: "66893f2d6a0e97be82e77c03" },
+      { $set: { ...rest } }
+    );
+    if (!valueupdate) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Value not found" });
+    }
+    res
+      .status(200)
+      .json({ success: true, message: "Values updated successfully" });
+  } catch (e) {
+    console.log(e);
     res.status(400).json({ success: false, message: e.message });
   }
 };

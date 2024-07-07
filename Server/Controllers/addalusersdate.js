@@ -37,5 +37,4 @@ async function updateUserPlanDates() {
   }
 }
 
-// Call the function to update user plan dates
 updateUserPlanDates();

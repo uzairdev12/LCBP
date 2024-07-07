@@ -24,6 +24,15 @@ const BasicEarning = () => {
           id: localStorage.getItem("AUTHUSERUNIQUEID"),
         }),
       });
+      await fetch(`${apiUrl}/api/auth/addvalue`, {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({}),
+      });
       let response = await res.json();
       if (!response.success) {
         toast.error(response.message);
