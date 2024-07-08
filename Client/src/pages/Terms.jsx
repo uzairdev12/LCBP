@@ -3,12 +3,11 @@ import "./about.css";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-
 const About = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
   const [value, setValue] = useState({});
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const fetchData = async () => {
     try {
       const response = await fetch(`${apiUrl}/api/auth/getvalues`, {
@@ -43,12 +42,10 @@ const About = () => {
       <div className="aboutPage">
         {!loading ? (
           <>
-            <h1>{value.heading1}</h1>
-            <p>{value.text1}</p>
-            <h1>{value.heading2}</h1>
-            <p>{value.text2}</p>
-            <h1>{value.heading3}</h1>
-            <p>{value.text3}</p>
+            <h1>{value.heading4}</h1>
+            <p>{value.text4}</p>
+            <h1>{value.heading5}</h1>
+            <p>{value.text5}</p>
           </>
         ) : (
           <h1>Loading...</h1>

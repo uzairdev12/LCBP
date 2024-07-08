@@ -31,6 +31,7 @@ import ManageClass from "./pages/ManageClass";
 import CutFine from "./pages/CutFine";
 import About from "./pages/About";
 import EditAbout from "./pages/EditAbout";
+import Terms from "./pages/Terms";
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,11 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+        children: [],
+      },
+      {
+        path: "/termsandservices",
+        element: <Terms />,
         children: [],
       },
       {

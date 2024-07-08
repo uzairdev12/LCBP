@@ -3,6 +3,13 @@ const usermodel = require("../Models/usermodel");
 
 module.exports.createClass = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { name } = req.body;
     const newClass = new classesModel({ name });
     const saveClass = await newClass.save();
@@ -14,6 +21,13 @@ module.exports.createClass = async (req, res) => {
 
 module.exports.addlink = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { id, link } = req.body;
     const classes = await classesModel.findById(id);
     classes.link = link;
@@ -26,6 +40,13 @@ module.exports.addlink = async (req, res) => {
 };
 module.exports.deactivate = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { id } = req.body;
     const classes = await classesModel.findById(id);
     classes.live = false;
@@ -38,6 +59,13 @@ module.exports.deactivate = async (req, res) => {
 
 module.exports.getclasses = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const classes = await classesModel.find();
     res.status(200).json(classes);
   } catch (err) {
@@ -47,6 +75,13 @@ module.exports.getclasses = async (req, res) => {
 
 module.exports.getClass = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { id } = req.body;
     const classdetails = await classesModel.findById(id);
     res.status(200).json({ classdetails });
@@ -56,6 +91,13 @@ module.exports.getClass = async (req, res) => {
 };
 module.exports.joinclass = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { userid, classname } = req.body;
     const user = await usermodel.findById(userid);
     user.classJoined = classname;
@@ -67,6 +109,13 @@ module.exports.joinclass = async (req, res) => {
 };
 module.exports.getstudents = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const students = await usermodel.find(
       { classJoined: { $exists: true, $ne: "none" } },
       { username: 1, classJoined: 1, _id: 0 }
@@ -79,6 +128,13 @@ module.exports.getstudents = async (req, res) => {
 
 module.exports.finestudents = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { students } = req.body;
 
     const studentUsernames = students.map((s) => s.username);

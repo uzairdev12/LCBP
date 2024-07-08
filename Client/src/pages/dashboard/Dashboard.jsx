@@ -162,6 +162,17 @@ const Dashboard = () => {
                 </a>
               </li>
               <li
+                className="dashboardbuttons dashboardbutton8"
+                onClick={() => {
+                  navigate("/editaboutvaluesandothertext");
+                }}
+              >
+                <a>
+                  <ChatIcon />
+                  Values
+                </a>
+              </li>
+              <li
                 className="dashboardbuttons dashboardbutton9"
                 onClick={() => {
                   navigate("/manageclasses");

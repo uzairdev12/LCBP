@@ -1,6 +1,13 @@
 const chatModel = require("../Models/chatmodel");
 module.exports.createChat = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const newChat = await chatModel.create({
       messages: [
         {
@@ -17,6 +24,13 @@ module.exports.createChat = async (req, res) => {
 
 module.exports.addMessage = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { message, chatid, admin } = req.body;
     const chat = await chatModel.findById(chatid);
     if (admin) {
@@ -34,6 +48,13 @@ module.exports.addMessage = async (req, res) => {
 
 module.exports.getChat = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { id } = req.body;
     const chat = await chatModel.findById(id);
     if (!chat) {
@@ -47,6 +68,13 @@ module.exports.getChat = async (req, res) => {
 
 module.exports.getChats = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const chats = await chatModel.find().sort({ lastChanged: -1 });
 
     res.status(200).json({ success: true, chats });
@@ -57,6 +85,13 @@ module.exports.getChats = async (req, res) => {
 
 module.exports.deleteChat = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { id } = req.body;
     const chat = await chatModel.findByIdAndDelete(id);
     res.status(200).json({ success: true, chat });

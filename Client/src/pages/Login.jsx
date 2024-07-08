@@ -12,6 +12,7 @@ const Login = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [agreed, setAgreed] = useState(false);
 
   let [data, setData] = useState({
     name: "",
@@ -101,6 +102,10 @@ const Login = () => {
         data.confirmPassword &&
         data.reffer
       ) {
+        if (!agreed) {
+          toast.error("Please agree to the terms and conditions");
+          return;
+        }
         if (data.password === data.confirmPassword) {
           if (!isValidUsername(data.username)) {
             toast.error("Username can only contain letters and numbers");
@@ -226,6 +231,14 @@ const Login = () => {
               value={data.reffer}
               onChange={(e) => setData({ ...data, reffer: e.target.value })}
             />
+
+            <label htmlFor="agree"> I agree with terms and services : </label>
+            <input
+              type="checkbox"
+              id="agree"
+              checked={agreed}
+              onChange={() => setAgreed(!agreed)}
+            />
             <button
               onClick={(e) => {
                 e.preventDefault();
@@ -327,6 +340,22 @@ const Login = () => {
                   }
                 />
               </>
+            )}
+            {active2 ? (
+              <>
+                <label htmlFor="agree">
+                  {" "}
+                  I agree with terms and services :{" "}
+                </label>
+                <input
+                  type="checkbox"
+                  id="agree"
+                  checked={agreed}
+                  onChange={() => setAgreed(!agreed)}
+                />
+              </>
+            ) : (
+              <></>
             )}
 
             <button

@@ -35,6 +35,13 @@ const validateInput = (body) => {
 
 module.exports.addgig = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     console.log(req.body);
     const validationError = validateInput(req.body);
     if (validationError) {
@@ -65,6 +72,13 @@ module.exports.addgig = async (req, res) => {
 
 module.exports.loadChunks = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { skip } = req.body;
 
     const gigs = await gigModel
@@ -87,6 +101,13 @@ module.exports.loadChunks = async (req, res) => {
 
 module.exports.getusersgigs = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { id } = req.body;
     if (typeof id !== "string" || id.length === 0) {
       return res
@@ -114,6 +135,13 @@ module.exports.getusersgigs = async (req, res) => {
 };
 module.exports.getgigdetails = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { gigid } = req.body;
 
     if (typeof gigid !== "string" || gigid.length === 0) {
@@ -144,6 +172,13 @@ module.exports.getgigdetails = async (req, res) => {
 
 module.exports.editgig = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { id, data } = req.body;
 
     const gig = await gigModel.findById(id);
@@ -163,6 +198,13 @@ module.exports.editgig = async (req, res) => {
 };
 module.exports.deletegig = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { id } = req.body;
     if (!id) {
       return res
@@ -181,6 +223,13 @@ module.exports.deletegig = async (req, res) => {
 };
 module.exports.getstats = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const stats = {
       users: await usermodel.countDocuments(),
       gigs: await gigModel.countDocuments(),

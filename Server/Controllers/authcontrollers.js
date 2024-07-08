@@ -4,6 +4,13 @@ const usermodel = require("../Models/usermodel");
 const valuesmodel = require("../Models/valuesmodel");
 module.exports.login = async (req, res, next) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { email, password } = req.body;
     const user = await userModel.findOne({ email });
 
@@ -26,6 +33,13 @@ module.exports.login = async (req, res, next) => {
 
 module.exports.signup = async (req, res, next) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { name, username, email, phone, password, reffer } = req.body;
 
     if (!name || !email || !phone || !password) {
@@ -168,6 +182,13 @@ module.exports.signup = async (req, res, next) => {
 };
 module.exports.getBlocked = async (req, res, next) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const users = await usermodel.find(
       { blocked: true },
       {
@@ -189,6 +210,13 @@ module.exports.getBlocked = async (req, res, next) => {
 
 module.exports.changebanned = async (req, res, next) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { selected } = req.body;
 
     if (!selected) {
@@ -210,6 +238,13 @@ module.exports.changebanned = async (req, res, next) => {
 };
 module.exports.getDetails = async (req, res, next) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     let { userID } = req.body;
 
     const user = await userModel.findOne({ _id: userID });
@@ -224,6 +259,13 @@ module.exports.getDetails = async (req, res, next) => {
 };
 module.exports.getReffers = async (req, res, next) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     let { username, admin } = req.body;
     if (!username) {
       throw new Error("Username not found");
@@ -296,6 +338,13 @@ module.exports.updateProfile = async (req, res) => {
   const { id, name, email, number: phone, imageurl, password } = req.body;
 
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     let userToUpdate = await userModel.findById(id);
 
     if (!userToUpdate) {
@@ -330,6 +379,13 @@ module.exports.updateProfile = async (req, res) => {
 };
 module.exports.getPlanDetails = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { id } = req.body;
     const user = await userModel.findById(id);
 
@@ -357,8 +413,14 @@ module.exports.getPlanDetails = async (req, res) => {
 };
 module.exports.loadChunks = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { skip } = req.body;
-    console.log(skip);
 
     const users = await userModel.find({}).limit(20).skip(skip).lean().exec();
     res.status(200).json({ success: true, data: users });
@@ -368,6 +430,13 @@ module.exports.loadChunks = async (req, res) => {
 };
 module.exports.openBox = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { userid } = req.body;
     const user = await userModel.findById(userid);
 
@@ -449,6 +518,13 @@ module.exports.openBox = async (req, res) => {
 
 module.exports.openSpin = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { userid } = req.body;
     const user = await userModel.findById(userid);
 
@@ -515,6 +591,13 @@ function formatTime(seconds) {
 
 module.exports.updateUserall = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const {
       id,
       name,
@@ -616,6 +699,13 @@ module.exports.updateUserall = async (req, res) => {
 };
 module.exports.search = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { username, email, phone } = req.body;
     if (username) {
       const user = await userModel.findOne({ username: `@${username}` });
@@ -650,8 +740,15 @@ module.exports.search = async (req, res) => {
 };
 module.exports.deleteUser = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { id } = req.body;
-    const user = await userModel.findById(id);
+    let user = await userModel.findById(id);
     if (!user) {
       return res
         .status(404)
@@ -666,8 +763,40 @@ module.exports.deleteUser = async (req, res) => {
     res.status(400).json({ success: false, message: e.message });
   }
 };
+module.exports.unban = async (req, res) => {
+  try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
+    const { id } = req.body;
+    let user = await userModel.findById(id);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+    user.banned = false;
+    await user.save();
+    res
+      .status(200)
+      .json({ success: true, message: "User unbanned successfully" });
+  } catch (e) {
+    res.status(400).json({ success: false, message: e.message });
+  }
+};
 module.exports.getvalues = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const value = await valuesmodel.findById("66893f2d6a0e97be82e77c03");
     res.status(200).json({ success: true, value });
   } catch (e) {
@@ -677,6 +806,13 @@ module.exports.getvalues = async (req, res) => {
 
 module.exports.updatevalues = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { value } = req.body;
     let { _id, ...rest } = value;
     let valueupdate = await valuesmodel.updateOne(

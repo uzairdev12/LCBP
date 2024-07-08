@@ -3,8 +3,15 @@ const planmodel = require("../Models/planmodel");
 const usermodel = require("../Models/usermodel");
 const withdrawmodel = require("../Models/withdrawmodel");
 
-module.exports.addplan = (req, res) => {
+module.exports.addplan = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     let {
       name,
       price,
@@ -60,6 +67,13 @@ module.exports.addplan = (req, res) => {
 
 module.exports.getplans = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { id, admin } = req.body;
     if (!admin) {
       const user = await usermodel.findById(id);
@@ -76,6 +90,13 @@ module.exports.getplans = async (req, res) => {
 
 module.exports.getPlanDetails = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { planid, userid } = req.body;
 
     const plan = await planmodel.findById(planid);
@@ -94,11 +115,15 @@ module.exports.getPlanDetails = async (req, res) => {
 };
 module.exports.getUsersPlan = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { userid } = req.body;
     const user = await usermodel.findById(userid);
-    
-
-      
 
     if (!user) {
       res.status(200).json({ success: false, message: "User not found" });
@@ -126,6 +151,13 @@ module.exports.getUsersPlan = async (req, res) => {
 
 module.exports.userplans = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { id: usersid } = req.body;
     const user = await usermodel.findById(usersid);
     if (!user) {
@@ -144,6 +176,13 @@ module.exports.userplans = async (req, res) => {
 
 module.exports.updatevalue = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const pkrValue = parseFloat(req.body.pkrvalue);
     if (isNaN(pkrValue)) {
       return res.status(400).json({
@@ -178,6 +217,13 @@ module.exports.updatevalue = async (req, res) => {
 
 module.exports.updatePlan = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { planid: id } = req.body;
     const plan = await planmodel.findById(id);
     if (!plan) {
@@ -193,6 +239,13 @@ module.exports.updatePlan = async (req, res) => {
 };
 module.exports.deletePlan = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { id } = req.body;
     const plan = await planmodel.findById(id);
     if (!plan) {

@@ -108,7 +108,29 @@ const Users = ({ show, scroll }) => {
         toast.error(res.message || "An unexpected error occured");
         return;
       }
-      toast.success("User deleted successfully");
+      toast.success("User banned successfully");
+      setDetails({});
+    } catch (e) {
+      toast.error(e.message || "An unexpected error occured");
+    }
+  };
+  const unbanUser = async (id) => {
+    try {
+      const result = await fetch(`${apiUrl}/api/auth/unbanuser`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id,
+        }),
+      });
+      const res = await result.json();
+      if (!res.success) {
+        toast.error(res.message || "An unexpected error occured");
+        return;
+      }
+      toast.success("User unbanned successfully");
       setDetails({});
     } catch (e) {
       toast.error(e.message || "An unexpected error occured");
@@ -286,10 +308,14 @@ const Users = ({ show, scroll }) => {
               <button
                 className="userdetailbutton"
                 onClick={() => {
-                  deleteUser(details._id);
+                  if (details.banned) {
+                    unbanUser(details._id);
+                  } else {
+                    deleteUser(details._id);
+                  }
                 }}
               >
-                Delete
+                {details.banned ? "Unban" : "Ban"}
               </button>
             </div>
           </div>
@@ -400,9 +426,7 @@ const Users = ({ show, scroll }) => {
             <h3 className="ordered">Email</h3>
           </div>
           {data?.map((e) => {
-            return e.banned ? (
-              <></>
-            ) : (
+            return (
               <div
                 className="usercard"
                 onClick={() => {

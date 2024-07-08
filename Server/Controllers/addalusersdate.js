@@ -4,6 +4,13 @@ const usermodel = require("../Models/usermodel");
 
 async function updateUserPlanDates() {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     await mongoose
       .connect(
         "mongodb+srv://lcbp:lcbp@lc.ls70dgk.mongodb.net/lcbp?retryWrites=true&w=majority&appName=LC"

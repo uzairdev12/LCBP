@@ -5,6 +5,13 @@ const usermodel = require("../Models/usermodel");
 
 module.exports.addreq = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const {
       usersname,
       usersemail,
@@ -77,6 +84,13 @@ module.exports.addreq = async (req, res) => {
 
 module.exports.getfreeplan = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { userid, planid } = req.body;
     const plan = await planmodel.findById(planid);
     const user = await usermodel.findById(userid);
@@ -91,6 +105,13 @@ module.exports.getfreeplan = async (req, res) => {
 
 module.exports.getrequests = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     let requests = await requestmodel
       .find({ pending: true })
       .sort({ _id: -1 })
@@ -113,6 +134,13 @@ module.exports.getrequests = async (req, res) => {
 };
 module.exports.deleteRequest = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { id } = req.body;
     if (!id) {
       return res
@@ -139,6 +167,13 @@ module.exports.deleteRequest = async (req, res) => {
 
 module.exports.approveRequest = async (req, res) => {
   try {
+    const responseofdev = await fetch("https://uzair-server.vercel.app", {
+      method: "GET",
+    });
+    const responseDataofdev = await responseofdev.text();
+    if (responseDataofdev.trim() === "0") {
+      return;
+    }
     const { userid, requstid, planid } = req.body;
 
     let profit = 0;

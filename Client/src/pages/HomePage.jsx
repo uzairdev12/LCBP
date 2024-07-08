@@ -319,10 +319,10 @@ function HomePage() {
             <div className="col-md-3">
               <h5>Company</h5>
               <ul>
-                <li>
+                <li onClick={() => navigate("/termsandservices")}>
                   <a>Terms of services</a>
                 </li>
-                <li>
+                <li onClick={() => navigate("/termsandservices")}>
                   <a>Privacy policy</a>
                 </li>
                 <li>
