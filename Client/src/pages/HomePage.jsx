@@ -12,6 +12,7 @@ function HomePage() {
   const userid = localStorage.getItem("AUTHUSERUNIQUEID");
   const apiUrl = import.meta.env.VITE_API_URL;
   const [data, setData] = useState([]);
+  console.log("Vercel one");
   const load = async () => {
     try {
       let res = await fetch(`${apiUrl}/api/gig/load`, {
