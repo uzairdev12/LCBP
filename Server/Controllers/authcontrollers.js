@@ -634,6 +634,23 @@ module.exports.updateUserall = async (req, res) => {
           .status(404)
           .json({ success: false, message: "Plan not found" });
       }
+      if (!user.plan) {
+        console.log("in new");
+        const value = await valuesmodel.findById("66893f2d6a0e97be82e77c03");
+        value.planupgradeamount += planobj.amountpkr;
+        console.log(value.planupgradeamount);
+        console.log(planobj);
+        await value.save();
+      } else {
+        console.log("inexisting");
+        const previousplan = await planmodel.findById(user.plan);
+        console.log(previousplan);
+        console.log(planobj);
+        const value = await valuesmodel.findById("66893f2d6a0e97be82e77c03");
+        value.planupgradeamount +=
+          (planobj.amountpkr || 0) - (previousplan.amountpkr || 0);
+        await value.save();
+      }
       user.plan = plan;
       user.planpending = false;
       user.prize = planobj.boxprice;

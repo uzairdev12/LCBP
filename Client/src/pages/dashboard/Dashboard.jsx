@@ -28,6 +28,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [stats, setStats] = useState({});
   const scrollableDivRef = useRef(null);
+  const [value, setValue] = useState({});
   const [loading, setLoading] = useState(false);
 
   const scrollToTop = () => {
@@ -49,7 +50,7 @@ const Dashboard = () => {
       return;
     }
     setStats(res.stats);
-    console.log(res.stats);
+    setValue(res.value);
     setLoading(false);
     try {
     } catch (e) {
@@ -308,6 +309,48 @@ const Dashboard = () => {
                   <div className="dashboardcontainer container7">
                     <p>Paid</p>
                     <h1>{stats.paid ? formatNumber(stats.paid) : 0}</h1>
+                  </div>
+                </div>
+                <hr
+                  style={{
+                    width: "100%",
+                    height: "1px",
+                    backgroundColor: "grey",
+                    margin: "50px 0",
+                  }}
+                />
+                <h1>Today's Stats</h1>
+
+                <div className="dashboardboxes">
+                  <div className="dashboardcontainer container1">
+                    <p>New Users</p>
+                    <h1>{value.newUsers ? formatNumber(value.newUsers) : 0}</h1>
+                  </div>
+                  <div className="dashboardcontainer container2">
+                    <p>Plan Upgrade earning</p>
+                    <h1>
+                      {value.planupgradeamount
+                        ? formatNumber(value.planupgradeamount)
+                        : 0}
+                    </h1>
+                  </div>
+                  <div className="dashboardcontainer container3">
+                    <p>Plans Sold earning</p>
+                    <h1>
+                      {value.planboughtamount
+                        ? formatNumber(value.planboughtamount)
+                        : 0}
+                    </h1>
+                  </div>
+                  <div className="dashboardcontainer container4">
+                    <p>Total Earning</p>
+                    <h1>
+                      {value.planupgradeamount || value.planboughtamount
+                        ? formatNumber(
+                            value.planboughtamount + value.planupgradeamount
+                          )
+                        : 0}
+                    </h1>
                   </div>
                 </div>
                 <div className="charts">

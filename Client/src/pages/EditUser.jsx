@@ -141,7 +141,10 @@ const EditUser = () => {
         return;
       } else {
         console.log(response);
-        setPlans(response.plans);
+        const filteredPlans = response.plans.filter(
+          (plan) => plan._id !== "662327127cc61c15f06b4f83"
+        );
+        setPlans(filteredPlans);
         setData({
           ...data,
           name: response.user.name,

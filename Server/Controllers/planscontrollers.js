@@ -1,5 +1,6 @@
 const gigmodel = require("../Models/gigmodel");
 const planmodel = require("../Models/planmodel");
+const valuesmodel = require("../Models/valuesmodel");
 const usermodel = require("../Models/usermodel");
 const withdrawmodel = require("../Models/withdrawmodel");
 
@@ -205,6 +206,12 @@ module.exports.updatevalue = async (req, res) => {
     //   { todayOpened: { $gt: 0 }, blocked: { $ne: true } },
     //   { $set: { todayOpened: 0 } }
     // );
+
+    const value = await valuesmodel.findById("66893f2d6a0e97be82e77c03");
+    value.planupgradeamount = 0;
+    value.newUsers = 0;
+    value.planboughtamount = 0;
+    await value.save();
 
     res.status(200).json({ success: true, plans });
   } catch (e) {

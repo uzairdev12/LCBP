@@ -1,5 +1,6 @@
 const gigModel = require("../Models/gigmodel");
 const planmodel = require("../Models/planmodel");
+const valuesmodel = require("../Models/valuesmodel");
 const requestmodel = require("../Models/requestmodel");
 const transactionsmodel = require("../Models/transactionsmodel");
 const usermodel = require("../Models/usermodel");
@@ -263,7 +264,9 @@ module.exports.getstats = async (req, res) => {
 
     stats.paid = morepaid;
 
-    return res.status(200).json({ success: true, stats });
+    const value = await valuesmodel.findById("66893f2d6a0e97be82e77c03");
+
+    return res.status(200).json({ success: true, stats, value });
   } catch (e) {
     console.error(`Error getting stats:`, e);
     return res

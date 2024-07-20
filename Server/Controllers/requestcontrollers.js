@@ -1,5 +1,6 @@
 const planmodel = require("../Models/planmodel");
 const requestmodel = require("../Models/requestmodel");
+const valuesmodel = require("../Models/valuesmodel");
 const transactionsmodel = require("../Models/transactionsmodel");
 const usermodel = require("../Models/usermodel");
 
@@ -207,6 +208,14 @@ module.exports.approveRequest = async (req, res) => {
       },
       { new: true }
     );
+
+    const value = await valuesmodel.findById("66893f2d6a0e97be82e77c03");
+    if (!value) {
+      throw new Error("Value not found");
+    }
+    value.newUsers += 1;
+    value.planboughtamount += amountpkr;
+    await value.save();
 
     const updateUserBalance = async (username, chainMultiplier) => {
       const user1 = await usermodel.findOne({ username });

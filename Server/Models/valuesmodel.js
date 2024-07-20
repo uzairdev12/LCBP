@@ -51,6 +51,21 @@ const valueSchema = new mongoose.Schema({
     required: false,
     default: "",
   },
+  planupgradeamount: {
+    type: "number",
+    required: false,
+    default: 0,
+  },
+  planboughtamount: {
+    type: "number",
+    required: false,
+    default: 0,
+  },
+  newUsers: {
+    type: "number",
+    required: false,
+    default: 0,
+  },
 });
 
 module.exports = mongoose.model("values", valueSchema);
