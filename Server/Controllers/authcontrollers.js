@@ -190,7 +190,7 @@ module.exports.getBlocked = async (req, res, next) => {
       return;
     }
     const users = await usermodel.find(
-      { blocked: true },
+      { blocked: false },
       {
         username: 1,
       }
@@ -225,7 +225,7 @@ module.exports.changebanned = async (req, res, next) => {
 
     await userModel.updateMany(
       { username: { $in: selected } },
-      { blocked: false }
+      { blocked: true }
     );
 
     res.status(200).json({
@@ -454,6 +454,13 @@ module.exports.openBox = async (req, res) => {
         .json({ success: false, message: "Plan not found" });
     }
 
+    if (user.blocked) {
+      return res.status(404).json({
+        success: false,
+        message: "Your account has been blocked.",
+      });
+    }
+
     const { boxcooltime: cooltime, boxlimit: limit, boxprice: prize } = plan;
     const { lastOpenedBox, todayOpened } = user;
 
@@ -532,6 +539,12 @@ module.exports.openSpin = async (req, res) => {
       return res
         .status(404)
         .json({ success: false, message: "User not found" });
+    }
+    if (user.blocked) {
+      return res.status(404).json({
+        success: false,
+        message: "Your account has been blocked.",
+      });
     }
 
     const { lastOpenedSpin } = user;

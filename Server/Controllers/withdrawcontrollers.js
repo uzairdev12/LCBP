@@ -38,6 +38,12 @@ module.exports.withdraw = async (req, res, next) => {
     if (!user) {
       throw new Error("User not found");
     }
+    if (user.blocked) {
+      return res.status(404).json({
+        success: false,
+        message: "Your account has been blocked.",
+      });
+    }
     if (user.balance < amount) {
       res.status(400).json({ success: false, message: "Insufficient Balance" });
       return;
