@@ -190,7 +190,7 @@ module.exports.getBlocked = async (req, res, next) => {
       return;
     }
     const users = await usermodel.find(
-      { blocked: false },
+      { blocked: true },
       {
         username: 1,
       }
@@ -225,7 +225,7 @@ module.exports.changebanned = async (req, res, next) => {
 
     await userModel.updateMany(
       { username: { $in: selected } },
-      { blocked: true }
+      { blocked: false }
     );
 
     res.status(200).json({
