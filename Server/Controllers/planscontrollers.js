@@ -175,36 +175,36 @@ module.exports.userplans = async (req, res) => {
     res.status(400).json({ success: false, message: e.message });
   }
 };
-async function updateUsersPlans() {
-  try {
-    const threeMonthsAgo = new Date();
-    threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+// async function updateUsersPlans() {
+//   try {
+//     const threeMonthsAgo = new Date();
+//     threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
 
-    console.log(`Date three months ago: ${threeMonthsAgo}`);
+//     console.log(`Date three months ago: ${threeMonthsAgo}`);
 
-    const oldTransactions = await requestmodel.find({
-      date: { $lt: threeMonthsAgo },
-    });
+//     const oldTransactions = await requestmodel.find({
+//       date: { $lt: threeMonthsAgo },
+//     });
 
-    if (oldTransactions.length === 0) {
-      console.log("No transactions older than three months found.");
-      return;
-    }
+//     if (oldTransactions.length === 0) {
+//       console.log("No transactions older than three months found.");
+//       return;
+//     }
 
-    const userIds = [...new Set(oldTransactions.map((tx) => tx.usersid))];
+//     const userIds = [...new Set(oldTransactions.map((tx) => tx.usersid))];
 
-    const updateResult = await usermodel.updateMany(
-      { _id: { $in: userIds } },
-      { $set: { plan: null } }
-    );
+//     const updateResult = await usermodel.updateMany(
+//       { _id: { $in: userIds } },
+//       { $set: { plan: null } }
+//     );
 
-    const deleteResult = await requestmodel.deleteMany({
-      date: { $lt: threeMonthsAgo },
-    });
-  } catch (error) {
-    console.error("Error updating users plans:", error);
-  }
-}
+//     const deleteResult = await requestmodel.deleteMany({
+//       date: { $lt: threeMonthsAgo },
+//     });
+//   } catch (error) {
+//     console.error("Error updating users plans:", error);
+//   }
+// }
 
 module.exports.updatevalue = async (req, res) => {
   try {
@@ -233,7 +233,7 @@ module.exports.updatevalue = async (req, res) => {
       { $set: { todayOpened: 0 } }
     );
 
-    await updateUsersPlans();
+    // await updateUsersPlans();
 
     const value = await valuesmodel.findById("66893f2d6a0e97be82e77c03");
     value.planupgradeamount = 0;
