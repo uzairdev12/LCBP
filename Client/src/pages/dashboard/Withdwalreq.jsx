@@ -18,6 +18,7 @@ const Withdwalreq = ({ show }) => {
         },
       });
       const res = await response?.json();
+      console.log(res);
       if (!res.success) {
         console.error(res);
         toast.error(res.message || "An unexpected error occured");
@@ -129,7 +130,17 @@ const Withdwalreq = ({ show }) => {
             <h1>Loading...</h1>
           ) : data.length > 0 ? (
             data.map((e, i) => (
-              <div className="plan" key={i}>
+              <div
+                className="plan"
+                key={i}
+                style={
+                  e.blocked
+                    ? { border: "2px solid red" }
+                    : !e.plan
+                    ? { border: "2px solid orange" }
+                    : { border: "2px solid green" }
+                }
+              >
                 <p>
                   <span>Username :</span> {e.username}
                 </p>

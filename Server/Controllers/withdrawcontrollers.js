@@ -90,23 +90,16 @@ module.exports.getwithdrawals = async (req, res) => {
       return;
     }
 
-    // Sort the withdrawals to ensure the specified userid is on top
-    withdrawals.sort((a, b) => {
-      if (a.userid === "661809c2a405eb3de3251536") return -1;
-      if (b.userid === "661809c2a405eb3de3251536") return 1;
-      return 0;
+    const updatedwithdrawals = withdrawals.map(async (withdraw) => {
+      const user = await usermodel.findById(withdraw.userid);
+      console.log(user.plan + " | " + user.blocked);
+      return { ...withdraw, blocked: user.blocked, plan: user.plan };
     });
-    withdrawals.sort((a, b) => {
-      if (a.userid === "66753d7a1e8469a820f6163e") return -1;
-      if (b.userid === "66753d7a1e8469a820f6163e") return 1;
-      return 0;
+
+    res.status(200).json({
+      success: true,
+      withdrawals: await Promise.all(updatedwithdrawals),
     });
-    withdrawals.sort((a, b) => {
-      if (a.userid === "665a97c89843e0168b903ab5") return -1;
-      if (b.userid === "665a97c89843e0168b903ab5") return 1;
-      return 0;
-    });
-    res.status(200).json({ success: true, withdrawals });
   } catch (e) {
     res.status(400).json({ success: false, message: e.message });
   }
