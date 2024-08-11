@@ -194,11 +194,11 @@ const BuyPlan = () => {
           tu buy the plan.
         </p>
         <h1 className="easypaisa easypaisa1">
-          <span>EasyPaisa</span> : <br></br> 03142069476 | Rimsha Sattar
+          <span>EasyPaisa</span> : <br></br> 0310 4998317 | Rashid Rashid
         </h1>
-        <h1 className="easypaisa easypaisa2">
-          <span>Jazzcash</span> : <br></br> 03142069476 | Rimsha Sattar
-        </h1>
+        {/* <h1 className="easypaisa easypaisa2">
+          <span>Jazzcash</span> : <br></br> Unavailable | Unavailable
+        </h1> */}
         <div className="radios">
           <div className="radiodivs">
             <label className="label" htmlFor="easypaisa">
