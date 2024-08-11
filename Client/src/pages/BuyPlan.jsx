@@ -143,7 +143,7 @@ const BuyPlan = () => {
           planprice: plan.amountpkr,
           proof: data1.url,
           accountnum,
-          method,
+          method: "easypaisa",
           transactionid,
         }),
       });
@@ -190,8 +190,8 @@ const BuyPlan = () => {
           </div>
         )}
         <p className="payp">
-          Send Rs : <span>{plan.amountpkr}</span>pkr to either of these accounts
-          tu buy the plan.
+          Send Rs : <span>{plan.amountpkr}</span>pkr to either of the Easypaisa
+          account tu buy the plan.
         </p>
         <h1 className="easypaisa easypaisa1">
           <span>EasyPaisa</span> : <br></br> 0310 4998317 | Rashid Rashid
@@ -199,7 +199,7 @@ const BuyPlan = () => {
         {/* <h1 className="easypaisa easypaisa2">
           <span>Jazzcash</span> : <br></br> Unavailable | Unavailable
         </h1> */}
-        <div className="radios">
+        {/* <div className="radios">
           <div className="radiodivs">
             <label className="label" htmlFor="easypaisa">
               EasyPaisa
@@ -227,8 +227,8 @@ const BuyPlan = () => {
                 setMethod(e.target.id);
               }}
             />
-          </div>
-        </div>
+          </div> 
+        </div>*/}
         <label className="label" style={{ marginTop: "20px" }}>
           Account Number
         </label>
