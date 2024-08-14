@@ -176,7 +176,7 @@ const UserDashboard = () => {
               <p
                 onClick={() => {
                   window.open(
-                    "https://chat.whatsapp.com/BYxufkXcY4O2vhigVqTmsz",
+                    https://chat.whatsapp.com/JFhUYrCXEMCGdEptH3JY0L",
                     "_blank"
                   );
                 }}
