@@ -234,10 +234,7 @@ const UserDashboard = () => {
             {!planpending && user ? (
               <p
                 onClick={() => {
-                  window.open(
-                    "https://chat.whatsapp.com/JFhUYrCXEMCGdEptH3JY0L",
-                    "_blank"
-                  );
+                  window.open("https://chat.whatsapp.com/JFhUYrCXEMCGdEptH3JY0L","_blank");
                 }}
               >
                 Join Whatsapp Group
